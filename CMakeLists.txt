@@ -26,7 +26,7 @@ elseif(UNIX)
     set(PLATEFORME UNIX)
 else()
     set(PLATEFORME NOT_SUPPORTED)
-    message(FATAL_ERROR "This plateform is currently not supported")
+    message(FATAL_ERROR "This plateforme is currently not supported")
 endif()
 
 # Checking project structure
