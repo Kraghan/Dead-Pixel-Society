@@ -1,6 +1,6 @@
 # Dead Pixel Society project
 # Author : Aredhele
-# Date   : 2016-06-18
+# Date   : 2016-09-20
 cmake_minimum_required(VERSION 3.1)
 
 # Variables
