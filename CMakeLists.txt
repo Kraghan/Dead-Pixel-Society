@@ -74,7 +74,11 @@ set(SFML_RELEASE_LIB
         "${SFML_PATH}/lib/libsfml-system.a"
         "${SFML_PATH}/lib/libsfml-audio.a")
 
-# Getting argument
+if(NOT COMPILATION_MODE)
+    message(STATUS "(Warning) : No argument is specified, debug by default")
+    set(COMPILATION_MODE "DEBUG")
+endif()
+
 if(${COMPILATION_MODE} STREQUAL "RELEASE")
     message(STATUS "Compilation mode : RELEASE MODE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "compile flags" FORCE)
@@ -87,6 +91,7 @@ if(${COMPILATION_MODE} STREQUAL "RELEASE")
     endif()
 
     message(STATUS "Executable name : ${EXENAME}")
+
 else()
     message(STATUS "Compilation mode : DEBUG MODE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}" CACHE STRING "compile flags" FORCE)
