@@ -50,7 +50,6 @@ message(STATUS "Detected Plateforme : ${PLATEFORME}")
 message(STATUS "Game version ${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_PATCH}")
 
 # Project settings
-set(CMAKE_CXX_FLAGS "${COMPILER_FLAGS} ${DEBUG_FLAGS}" CACHE STRING "compile flags" FORCE)
 set(CMAKE_CXX_FLAGS_DEBUG "${COMPILER_FLAGS} ${DEBUG_FLAGS}" CACHE STRING "release flags" FORCE)
 set(CMAKE_CXX_FLAGS_RELEASE "${COMPILER_FLAGS} ${RELEASE_FLAGS}" CACHE STRING "debug flags" FORCE)
 
@@ -59,11 +58,56 @@ set(CMAKE_CXX_FLAGS_RELEASE "${COMPILER_FLAGS} ${RELEASE_FLAGS}" CACHE STRING "d
 file(STRINGS "CMakeConfig.txt" SFML_PATH)
 message(STATUS "SFML PATH : ${SFML_PATH}")
 
+# Global usefull variables
+set(EXENAME_RELEASE DeadPixelSociety_REL)
+set(EXENAME_DEBUG   DeadPixelSociety_DBG)
+
+set(SFML_DEBUG_LIB
+        "${SFML_PATH}/lib/libsfml-graphics-d.a"
+        "${SFML_PATH}/lib/libsfml-window-d.a"
+        "${SFML_PATH}/lib/libsfml-system-d.a"
+        "${SFML_PATH}/lib/libsfml-audio-d.a")
+
+set(SFML_RELEASE_LIB
+        "${SFML_PATH}/lib/libsfml-graphics.a"
+        "${SFML_PATH}/lib/libsfml-window.a"
+        "${SFML_PATH}/lib/libsfml-system.a"
+        "${SFML_PATH}/lib/libsfml-audio.a")
+
+# Getting argument
+if(${COMPILATION_MODE} STREQUAL "RELEASE")
+    message(STATUS "Compilation mode : RELEASE MODE")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "compile flags" FORCE)
+    set(SFML_LIB ${SFML_RELEASE_LIB})
+
+    if(PLATEFORME STREQUAL "WINDOWS")
+        set(EXENAME "${EXENAME_RELEASE}.exe")
+    elseif(PLATEFORME STREQUAL "LINUX")
+        set(EXENAME ${EXENAME_RELEASE})
+    endif()
+
+    message(STATUS "Executable name : ${EXENAME}")
+else()
+    message(STATUS "Compilation mode : DEBUG MODE")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}" CACHE STRING "compile flags" FORCE)
+    set(SFML_LIB ${SFML_DEBUG_LIB})
+
+    if(PLATEFORME STREQUAL "WINDOWS")
+        set(EXENAME "${EXENAME_DEBUG}.exe")
+    elseif(PLATEFORME STREQUAL "UNIX")
+        set(EXENAME ${EXENAME_DEBUG})
+    endif()
+
+    message(STATUS "Executable name : ${EXENAME}")
+endif()
+
+# Output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+message(STATUS "Output path : ${CMAKE_SOURCE_DIR}/bin")
+
 # include search path
 include_directories(include)
 
 # Adding sub directories
 # Sources directories
 add_subdirectory(src)
-
-
