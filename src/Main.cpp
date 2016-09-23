@@ -16,6 +16,8 @@ int main()
 
         window.clear(sf::Color::Black);
         window.display();
+
+        sf::sleep(sf::milliseconds(16));
     }
 
     return 0;

@@ -71,7 +71,7 @@ struct TypeTraits
     /*!
      * \brief   Call traits to check argument type
      */
-    typedef typename TypeTraitImpl<T, (sizeof(T) > 4)>::Type TypeSize;
+    typedef typename TypeTraitImpl<T, (sizeof(T) > 8)>::Type TypeSize;
 };
 
 #endif // __TYPE_TRAITS_HPP
