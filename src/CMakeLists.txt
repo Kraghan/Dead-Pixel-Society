@@ -5,4 +5,5 @@ add_subdirectory(memory)
 add_executable(Test Main.cpp)
 
 # TMP
-target_link_libraries(Test memory)
+target_link_libraries(Test memory
+        ${SMFL_LIB})

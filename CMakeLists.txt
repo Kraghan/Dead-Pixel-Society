@@ -111,7 +111,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 message(STATUS "Output path : ${CMAKE_SOURCE_DIR}/bin")
 
 # include search path
-include_directories(include)
+include_directories(
+        include
+        ${SFML_PATH}/include)
 
 # Adding sub directories
 # Sources directories
