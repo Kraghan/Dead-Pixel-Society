@@ -41,7 +41,7 @@ endif()
 
 # Checking CMakeConfig file
 if(NOT EXISTS ${CMAKE_SOURCE_DIR}/${PROJECT_CMAKE_CONFIG})
-    file(WRITE ${CMAKE_SOURCE_DIR}/${PROJECT_CMAKE_CONFIG} "<PATH TO SFML>")
+    file(WRITE ${CMAKE_SOURCE_DIR}/${PROJECT_CMAKE_CONFIG} "C:/../SFML | /home/../SFML")
     message(WARNING "CMakeConfig.txt file created")
 endif()
 
@@ -71,10 +71,9 @@ if(${COMPILATION_MODE} STREQUAL "RELEASE")
     message(STATUS "Compilation mode : RELEASE MODE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "compile flags" FORCE)
 
-
     if(PLATEFORME STREQUAL "WINDOWS")
         set(EXENAME "${EXENAME_RELEASE}.exe")
-        set(SFML_RELEASE_LIB
+        list(APPEND SFML_RELEASE_LIB
                 "${SFML_PATH}/lib/libsfml-graphics.a"
                 "${SFML_PATH}/lib/libsfml-window.a"
                 "${SFML_PATH}/lib/libsfml-system.a"
@@ -82,7 +81,7 @@ if(${COMPILATION_MODE} STREQUAL "RELEASE")
 
     elseif(PLATEFORME STREQUAL "LINUX")
         set(EXENAME ${EXENAME_RELEASE})
-        set(SFML_RELEASE_LIB
+        list(APPEND SFML_RELEASE_LIB
                 "${SFML_PATH}/lib/libsfml-graphics.so"
                 "${SFML_PATH}/lib/libsfml-window.so"
                 "${SFML_PATH}/lib/libsfml-system.so"
@@ -100,7 +99,7 @@ else()
 
     if(PLATEFORME STREQUAL "WINDOWS")
         set(EXENAME "${EXENAME_DEBUG}.exe")
-        set(SFML_DEBUG_LIB
+        list(APPEND SFML_DEBUG_LIB
                 "${SFML_PATH}/lib/libsfml-graphics-d.a"
                 "${SFML_PATH}/lib/libsfml-window-d.a"
                 "${SFML_PATH}/lib/libsfml-system-d.a"
@@ -108,19 +107,20 @@ else()
 
     elseif(PLATEFORME STREQUAL "UNIX")
         set(EXENAME ${EXENAME_DEBUG})
-        set(SFML_DEBUG_LIB
+        list(APPEND SFML_DEBUG_LIB
                 "${SFML_PATH}/lib/libsfml-graphics-d.so"
                 "${SFML_PATH}/lib/libsfml-window-d.so"
                 "${SFML_PATH}/lib/libsfml-system-d.so"
                 "${SFML_PATH}/lib/libsfml-audio-d.so")
     endif()
 
+    set(SFML_LIB "${SFML_DEBUG_LIB}")
     message(STATUS "Executable name : ${EXENAME}")
 endif()
 
 # Output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
-message(STATUS "Output path : ${CMAKE_SOURCE_DIR}/bin")
+message(STATUS "Output  path : ${CMAKE_SOURCE_DIR}/bin")
 
 # include search path
 include_directories(
