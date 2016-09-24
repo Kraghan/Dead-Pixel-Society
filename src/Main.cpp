@@ -1,24 +1,12 @@
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include <cstdlib>
+#include "GameEngine/GameEngine.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+    GameEngine gameEngine;
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    gameEngine.init();
+    gameEngine.start();
 
-        window.clear(sf::Color::Black);
-        window.display();
-
-        sf::sleep(sf::milliseconds(16));
-    }
-
-    return 0;
+    return EXIT_SUCCESS;
 }

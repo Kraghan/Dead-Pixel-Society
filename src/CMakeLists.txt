@@ -1,5 +1,6 @@
 # TMP
-add_subdirectory(memory)
+add_subdirectory(Memory)
+add_subdirectory(GameEngine)
 
 # TMP
 add_executable(Test Main.cpp)
@@ -7,4 +8,5 @@ add_executable(Test Main.cpp)
 # TMP
 target_link_libraries(Test
         ${SFML_LIB}
-        memory)
+        memory
+        gameEngine)
