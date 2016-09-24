@@ -108,10 +108,10 @@ else()
     elseif(PLATEFORME STREQUAL "UNIX")
         set(EXENAME ${EXENAME_DEBUG})
         list(APPEND SFML_DEBUG_LIB
-                "${SFML_PATH}/lib/libsfml-graphics-d.so"
-                "${SFML_PATH}/lib/libsfml-window-d.so"
-                "${SFML_PATH}/lib/libsfml-system-d.so"
-                "${SFML_PATH}/lib/libsfml-audio-d.so")
+                "${SFML_PATH}/lib/libsfml-graphics.so"
+                "${SFML_PATH}/lib/libsfml-window.so"
+                "${SFML_PATH}/lib/libsfml-system.so"
+                "${SFML_PATH}/lib/libsfml-audio.so")
     endif()
 
     set(SFML_LIB "${SFML_DEBUG_LIB}")
