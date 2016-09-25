@@ -65,7 +65,7 @@ public :
     /*!
      * \brief   Return the current allocator to provide access
      *          to some methods
-     * @return  A pointer on the current allocator
+     * \return  A pointer on the current allocator
      */
     Allocator * getAllocator();
 
