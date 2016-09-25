@@ -54,7 +54,12 @@ private :
     /*!
      * \brief
      */
-    const double MS_PER_UPDATE = 10.0;
+    const double MS_PER_UPDATE = 16.6;
+
+    /*!
+     * \brief   Start the game loop
+     */
+    void gameLoop();
 };
 
 #endif // __GAME_ENGINE_HPP

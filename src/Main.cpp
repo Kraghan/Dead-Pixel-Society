@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "GameEngine/GameEngine.hpp"
 
-int main()
+int main(void)
 {
     GameEngine gameEngine;
 

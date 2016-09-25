@@ -14,6 +14,7 @@
 #include <unordered_map>
 #include "TypeTraits.hpp"
 #include "DefaultAllocator.hpp"
+
 /*!
  * \class Container
  * \brief Stores U and provides basic accessors on it
@@ -61,6 +62,13 @@ public :
      */
     U * const loadResource(typename TypeTraits<T>::TypeSize key);
 
+    /*!
+     * \brief   Return the current allocator to provide access
+     *          to some methods
+     * @return  A pointer on the current allocator
+     */
+    Allocator * getAllocator();
+
 private :
 
     Allocator m_allocator;
@@ -80,6 +88,6 @@ private :
  * \see Container.inl for template impl.
  *      Avoid linker template errors
  */
-#include "Container.inl"
+#include "Memory/Container.inl"
 
 #endif // __CONTAINER_HPP

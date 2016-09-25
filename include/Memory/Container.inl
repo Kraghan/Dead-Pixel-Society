@@ -1,4 +1,4 @@
-#include "Container.hpp"
+#include "Memory/Container.hpp"
 
 template <typename T, typename U, class Allocator, class Hash>
 Container<T, U, Allocator, Hash>::Container()
@@ -10,8 +10,10 @@ template <typename T, typename U, class Allocator, class Hash>
 Container<T, U, Allocator, Hash>::~Container()
 {
     m_iterator = m_resources.begin();
-    for(; m_iterator != m_resources.end(); ++m_iterator)
-        m_allocator.deallocateResource(m_iterator->second);
+    for(; m_iterator != m_resources.end(); ++m_iterator) {
+        m_allocator.destroy(m_iterator->second);
+        m_allocator.deallocate(m_iterator->second);
+    }
 
     m_resources.clear();
 }
@@ -38,7 +40,8 @@ void Container<T, U, Allocator, Hash>
 {
     if(!checkKey(key)) return;
 
-    m_allocator.deallocateResource(m_iterator->second);
+    m_allocator.destroy(m_iterator->second);
+    m_allocator.deallocate(m_iterator->second);
     m_resources.erase(m_iterator);
 }
 
@@ -48,8 +51,17 @@ U * const Container<T, U, Allocator, Hash>
 {
     if(checkKey(key)) return nullptr;
 
-    U * resource = m_allocator.allocateResource();
+    U * resource = m_allocator.allocate();
+    m_allocator.construct(resource);
+
     m_resources.emplace(key, resource);
 
     return resource;
+}
+
+template <typename T, typename U, class Allocator, class Hash>
+Allocator * Container<T, U, Allocator, Hash>
+::getAllocator()
+{
+    return &m_allocator;
 }

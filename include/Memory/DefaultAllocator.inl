@@ -1,13 +1,25 @@
-#include "DefaultAllocator.hpp"
+#include "Memory/DefaultAllocator.hpp"
 
 template <typename T>
-inline T * const DefaultAllocator<T>::allocateResource()
+inline T * DefaultAllocator<T>::allocate() const
 {
-    return new T();
+    return new (T *)(sizeof(T));
 }
 
 template <typename T>
-inline void DefaultAllocator<T>::deallocateResource(T * resource)
+inline T * DefaultAllocator<T>::construct(T * object) const
 {
-    delete resource;
+    return new(object) T();
+}
+
+template <typename T>
+inline void DefaultAllocator<T>::destroy(T * object) const
+{
+    object->~T();
+}
+
+template <typename T>
+inline void DefaultAllocator<T>::deallocate(T * object) const
+{
+    delete object;
 }
