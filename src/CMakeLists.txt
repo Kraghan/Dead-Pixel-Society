@@ -1,6 +1,7 @@
 # TMP
 add_subdirectory(Memory)
 add_subdirectory(GameEngine)
+add_subdirectory(GraphicEngine)
 
 # TMP
 add_executable(Test Main.cpp)
