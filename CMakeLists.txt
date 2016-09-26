@@ -72,7 +72,7 @@ if(${COMPILATION_MODE} STREQUAL "RELEASE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "compile flags" FORCE)
 
     if(PLATEFORME STREQUAL "WINDOWS")
-        set(EXENAME "${EXENAME_RELEASE}.exe")
+        set(EXENAME ${EXENAME_RELEASE})
         list(APPEND SFML_RELEASE_LIB
                 "${SFML_PATH}/lib/libsfml-graphics.a"
                 "${SFML_PATH}/lib/libsfml-window.a"
@@ -98,7 +98,7 @@ else()
     set(SFML_LIB ${SFML_DEBUG_LIB})
 
     if(PLATEFORME STREQUAL "WINDOWS")
-        set(EXENAME "${EXENAME_DEBUG}.exe")
+        set(EXENAME ${EXENAME_DEBUG})
         list(APPEND SFML_DEBUG_LIB
                 "${SFML_PATH}/lib/libsfml-graphics-d.a"
                 "${SFML_PATH}/lib/libsfml-window-d.a"

@@ -46,14 +46,14 @@ struct TypeTraits
     /*!
      * \brief   Define traits template
      */
-    template <typename U, bool Size> struct TypeTraitImpl;
+    template <typename U, bool Size> struct TypeTraitsImpl;
 
     /*!
      * \brief   Case where the arguments is bigger than 32 bits
      *          (taking argument by const reference)
      */
     template <typename U>
-    struct TypeTraitImpl<U, true>
+    struct TypeTraitsImpl<U, true>
     {
         typedef const U& Type;
     };
@@ -63,7 +63,7 @@ struct TypeTraits
      *          (taking argument by value)
      */
     template <typename U>
-    struct TypeTraitImpl<U, false>
+    struct TypeTraitsImpl<U, false>
     {
         typedef typename Verify<U>::VerifiedType Type;
     };
@@ -71,7 +71,7 @@ struct TypeTraits
     /*!
      * \brief   Call traits to check argument type
      */
-    typedef typename TypeTraitImpl<T, (sizeof(T) > 8)>::Type TypeSize;
+    typedef typename TypeTraitsImpl<T, (sizeof(T) > 8)>::Type TypeSize;
 };
 
 #endif // __TYPE_TRAITS_HPP
