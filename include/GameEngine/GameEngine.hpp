@@ -10,7 +10,8 @@
 #define __GAME_ENGINE_HPP
 
 #include "GameEngine/Clock.hpp"
-#include <stdio.h>
+#include "GraphicEngine/GraphicEngine.hpp"
+
 /*!
  * \class   GameEngine
  * \brief   Handle the game loop and controls
@@ -52,9 +53,15 @@ private :
     bool m_isRunning;
 
     /*!
+     * \brief   Fixed update en render time
+     *          16.67 = 60 fps
+     */
+    const double MS_PER_UPDATE = 16.67;
+
+    /*!
      * \brief
      */
-    const double MS_PER_UPDATE = 16.6;
+    GraphicEngine m_graphicEngine;
 
     /*!
      * \brief   Start the game loop

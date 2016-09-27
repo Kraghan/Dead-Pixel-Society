@@ -40,8 +40,13 @@ void GameEngine::gameLoop()
 
         while(lag >= MS_PER_UPDATE)
         {
+            // Updating
             // TODO : update();
-            // TODO : render(lag / MS_PER_UPDATE);
+
+            // Rendering
+            m_graphicEngine.render();
+
+            // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
         }
     }
