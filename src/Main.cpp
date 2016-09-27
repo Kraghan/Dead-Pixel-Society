@@ -8,7 +8,5 @@ int main(void)
     gameEngine.init();
     gameEngine.start();
 
-    //JUST A F*CKING COMMENT
-
     return EXIT_SUCCESS;
 }
