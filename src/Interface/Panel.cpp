@@ -15,11 +15,6 @@ void Panel::addComponent(Component component)
     components.push_back(component);
 }
 
-void Panel::setBackground()
-{
-    // TODO : setBackground
-}
-
 void Panel::removeComponent(Component component)
 {
     //components.

@@ -4,42 +4,86 @@
 
 #include "Interface/Component.hpp"
 
-Component::Component(const int posX, const int posY, const unsigned int width, const unsigned int height)
+Component::Component(const int posX, const int posY, const int width, const int height, std::string strId)
 {
-    x = posX;
-    y = posY;
-    this->width = width;
-    this->height = height;
+    layer = -1;
+    point = sf::Vector2i(posX,posY);
+    dimension = sf::Vector2i(width,height);
+    std::hash<std::string> hasher;
+    ID = hasher(strId);
 }
 
 void Component::move(const int posX, const int posY)
 {
-    x = posX;
-    y = posY;
+    point = sf::Vector2i(posX,posY);
 }
 
-void Component::resize(const unsigned int width, const unsigned int height)
+void Component::move(const sf::Vector2i position)
 {
-    this->width = width;
-    this->height = height;
+    point = position;
 }
 
-const unsigned int Component::getHeight()
+void Component::resize(const int width, const int height)
 {
-    return height;
+    dimension = sf::Vector2i(width,height);
 }
 
-const unsigned int Component::getWidth()
+void Component::resize(const sf::Vector2i size)
 {
-    return width;
+    dimension = size;
+}
+
+const int Component::getHeight()
+{
+    return dimension.y;
+}
+
+const int Component::getWidth()
+{
+    return dimension.x;
+}
+
+const sf::Vector2i Component::getDimension()
+{
+    return dimension;
 }
 
 const int Component::getX()
 {
-    return x;
+    return point.x;
 }
 
 const int Component::getY()
 {
-    return y;
+    return point.y;
+}
+
+const sf::Vector2i Component::getPosition()
+{
+    return point;
+}
+
+void Component::setBackground(Sprite* s)
+{
+    background = s;
+}
+
+Sprite* Component::getBackground()
+{
+    return background;
+}
+
+void Component::setLayer(int l)
+{
+    layer = l;
+}
+
+const int Component::getLayer()
+{
+    return layer;
+}
+
+const size_t Component::getID()
+{
+    return ID;
 }

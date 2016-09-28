@@ -12,12 +12,10 @@
 class Panel : public Component{
 public:
     explicit Panel(const int posX,const int posY, const unsigned int width,const unsigned int height);
-    void setBackground();
     void addComponent(Component component);
     void removeComponent(Component component);
 
 private:
-    // TODO : Add background to panel
     std::vector <Component> components;
 };
 
