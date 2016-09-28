@@ -38,6 +38,7 @@ void GameEngine::gameLoop()
 
         // TODO : processInput();
 
+
         while(lag >= MS_PER_UPDATE)
         {
             // Updating
