@@ -10,6 +10,7 @@
 #define __GAME_ENGINE_HPP
 
 #include "GameEngine/Clock.hpp"
+#include "Memory/ResourceManager.hpp"
 #include "GraphicEngine/GraphicEngine.hpp"
 
 /*!
@@ -59,9 +60,14 @@ private :
     const double MS_PER_UPDATE = 16.67;
 
     /*!
-     * \brief
+     * \brief   The amazing graphic engine
      */
     GraphicEngine m_graphicEngine;
+
+    /*!
+     * \brief   The resource manager
+     */
+    ResourceManager m_resourceManager;
 
     /*!
      * \brief   Start the game loop

@@ -1,6 +1,9 @@
 #include "GameEngine/GameEngine.hpp"
 
-GameEngine::GameEngine() : m_isRunning(false)
+GameEngine::GameEngine()
+: m_isRunning(false)
+, m_graphicEngine()
+, m_resourceManager(&m_graphicEngine)
 {
     // TODO
 }
@@ -12,7 +15,8 @@ GameEngine::GameEngine() : m_isRunning(false)
 
 void GameEngine::init()
 {
-    // TODO
+    // Initializing other engine
+    m_graphicEngine.init(50, 50);
 }
 
 void GameEngine::start()
@@ -38,7 +42,6 @@ void GameEngine::gameLoop()
 
         // TODO : processInput();
 
-
         while(lag >= MS_PER_UPDATE)
         {
             // Updating
@@ -52,5 +55,3 @@ void GameEngine::gameLoop()
         }
     }
 }
-
-
