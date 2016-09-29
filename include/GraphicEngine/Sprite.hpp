@@ -12,8 +12,9 @@
 #define __SPRITE_HPP
 
 #include <SFML/Graphics.hpp>
+#include "GraphicEngine/RenderBase.hpp"
 
-class Sprite : public sf::Drawable, public sf::Transformable
+class Sprite : public sf::Drawable, public sf::Transformable, public RenderBase
 {
 public:
 

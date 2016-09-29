@@ -58,7 +58,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${COMPILER_FLAGS} ${RELEASE_FLAGS}" CACHE STRING "d
 file(STRINGS "CMakeConfig.txt" SFML_PATH)
 message(STATUS "SFML PATH : ${SFML_PATH}")
 
-# Global usefull variables
+# Global useful variables
 set(EXENAME_RELEASE DeadPixelSociety_REL)
 set(EXENAME_DEBUG   DeadPixelSociety_DBG)
 

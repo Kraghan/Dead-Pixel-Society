@@ -41,4 +41,12 @@ private:
     GraphicEngine * m_graphicEngine;
 };
 
+/*!
+ * \brief   Return a pointer on a free sprite
+ */
+inline Sprite * ResourceManager::getSprite()
+{
+    return m_graphicEngine->getSprite();
+}
+
 #endif // __RESOURCE_MANAGER_HPP

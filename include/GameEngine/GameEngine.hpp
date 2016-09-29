@@ -27,7 +27,7 @@ public :
      * \brief   Default Constructor
      */
     GameEngine();
-    
+
     /*!
      * \brief   Default Destructor
      */

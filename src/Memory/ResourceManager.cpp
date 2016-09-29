@@ -5,8 +5,3 @@ ResourceManager::ResourceManager(GraphicEngine * graphicEngine)
 {
     // None
 }
-
-Sprite * ResourceManager::getSprite()
-{
-    return m_graphicEngine.getSprite();
-}
