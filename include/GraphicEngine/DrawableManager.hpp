@@ -37,7 +37,7 @@ public:
      * \brief   Return an available drawable in the list
      * \return  If none, nullptr
      */
-    T const * getFreeDrawable();
+    T * getFreeDrawable();
 
     /*!
      * \brief   Return the list of drawables

@@ -41,7 +41,7 @@ public:
      * \brief   Return a free sprite
      * \return  A pointer on a engine sprite
      */
-    Sprite const * getSprite();
+    Sprite  * getSprite();
 
     /*!
      * \brief   Render all graphic object referenced in the game

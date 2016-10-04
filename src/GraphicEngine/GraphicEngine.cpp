@@ -16,7 +16,7 @@ void GraphicEngine::init(unsigned int spriteCount, unsigned int textCount)
     m_spriteManager.init(spriteCount);
 }
 
-Sprite const * GraphicEngine::getSprite()
+Sprite * GraphicEngine::getSprite()
 {
     return m_spriteManager.getFreeDrawable();
 }

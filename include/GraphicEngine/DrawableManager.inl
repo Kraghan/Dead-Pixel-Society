@@ -20,11 +20,11 @@ void DrawableManager<T>::init(unsigned int size)
 }
 
 template <typename T>
-T const * DrawableManager<T>::getFreeDrawable()
+T * DrawableManager<T>::getFreeDrawable()
 {
     for(unsigned int index = 0; index < m_size; ++index)
     {
-        if(m_drawableList[index]->isAvailable())
+        if(m_drawableList[index].isAvailable())
         {
             // Prepare the drawable
             m_drawableList[index].setLayer(-1);
@@ -32,7 +32,7 @@ T const * DrawableManager<T>::getFreeDrawable()
             m_drawableList[index].setAvailable(false);
 
             // Return it
-            return m_drawableList[index];
+            return &m_drawableList[index];
         }
     }
 
