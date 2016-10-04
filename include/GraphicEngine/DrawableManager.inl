@@ -41,7 +41,7 @@ T * DrawableManager<T>::getFreeDrawable()
 }
 
 template <typename T>
-inline T const * DrawableManager<T>::getDrawableList() const
+inline const T * DrawableManager<T>::getDrawableList() const
 {
     return m_drawableList;
 }

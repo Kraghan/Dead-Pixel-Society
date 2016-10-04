@@ -43,7 +43,7 @@ public:
      * \brief   Return the list of drawables
      * \return  The list of drawables
      */
-    T const * getDrawableList() const;
+    const T * getDrawableList() const;
 
     /*!
      * \brief   Return the count of drawables in the list

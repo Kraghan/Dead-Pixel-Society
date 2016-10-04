@@ -29,6 +29,12 @@ public:
     int  getLayer() const;
 
     /*!
+    * \brief   Return if the component is ready to be displayed
+    * \return  false or true
+    */
+    bool isReady() const;
+
+    /*!
      * \brief   Return if the component is visible
      * \return  false is the component is not visible, else true
      */
@@ -61,12 +67,19 @@ public:
 private:
 
     int m_layer;
+    bool m_ready;
     bool m_visible;
     bool m_available;
+
+    void update();
 };
 
 inline int RenderBase::getLayer() const {
     return m_layer;
+}
+
+inline bool RenderBase::isReady() const {
+    return m_ready;
 }
 
 inline bool RenderBase::isVisible() const {
@@ -79,14 +92,17 @@ inline bool RenderBase::isAvailable() const {
 
 inline void RenderBase::setLayer(const int layer) {
     m_layer = layer;
+    update();
 }
 
 inline void RenderBase::setVisible(const bool visible) {
     m_visible = visible;
+    update();
 }
 
 inline void RenderBase::setAvailable(const bool available) {
     m_available = available;
+    update();
 }
 
 #endif // __RENDER_BASE_HPP

@@ -12,7 +12,10 @@
 #define __GRAPHIC_ENGINE_HPP
 
 #include <string>
+#include <iostream>
 #include <SFML/Graphics.hpp>
+
+#include "GraphicEngine/Layer.hpp"
 #include "GraphicEngine/Sprite.hpp"
 #include "GraphicEngine/DrawableManager.hpp"
 
@@ -69,6 +72,11 @@ private:
     unsigned m_layerSize;
 
     /*!
+     * \brief   The array of layers
+     */
+    Layer * m_layers;
+
+    /*!
      * \brief   The sprite manager to handle
      *          the repartition of sprites
      */
@@ -78,6 +86,29 @@ private:
      * \brief   Draw all layers
      */
     void draw();
+
+    /*!
+     * \brief   Allocates all the layers and
+     *          initializes them with their size
+     */
+    void initLayer();
+
+    /*!
+     * \brief   Construct all layer for the future frame
+     */
+    void constructLayers();
+
+    /*!
+     * \brief   Prepare all layers for the next frame by
+     *          resetting their size to 0
+     */
+    void prepareLayer();
+
+    /*!
+     * \brief   Return a pointer on the window used by the engine
+     * \return  A pointer on the window
+     */
+    sf::RenderWindow * getWindow() const;
 };
 
 #endif // __GRAPHIC_ENGINE_HPP

@@ -69,6 +69,12 @@ public:
      */
     sf::FloatRect getGlobalBounds() const;
 
+    /*!
+     * \brief   Return the vertices of the sprite
+     * \return  The vertices of the sprite
+     */
+    const sf::Vertex * getVertices() const;
+
 private:
 
     /*!

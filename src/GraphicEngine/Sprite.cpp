@@ -95,3 +95,9 @@ void Sprite::updateTexCoords()
     m_vertices[2].texCoords = sf::Vector2f(right, top);
     m_vertices[3].texCoords = sf::Vector2f(right, bottom);
 }
+
+const sf::Vertex * Sprite::getVertices() const
+{
+    return m_vertices;
+}
+
