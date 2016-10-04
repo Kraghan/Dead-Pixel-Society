@@ -16,7 +16,9 @@ GameEngine::GameEngine()
 void GameEngine::init()
 {
     // Initializing other engine
-    m_graphicEngine.init(50, 50);
+    // 500 sprites
+    // 100 texts
+    m_graphicEngine.init(500, 100);
 }
 
 void GameEngine::start()

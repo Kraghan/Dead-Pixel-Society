@@ -13,13 +13,12 @@
 
 #include <SFML/Graphics.hpp>
 #include "GraphicEngine/Sprite.hpp"
-
-// Make a shorcut on types
-typedef unsigned int uint;
+#include "GraphicEngine/DrawableManager.hpp"
 
 class GraphicEngine
 {
 public:
+
     /*!
      * \brief   Default constructor
      */
@@ -36,13 +35,13 @@ public:
      * \param   spriteCount The number of available sprites
      * \param   textCount The number of available texts
      */
-    void init(uint spriteCount, uint textCount);
+    void init(unsigned int spriteCount, unsigned int textCount);
 
     /*!
      * \brief   Return a free sprite
      * \return  A pointer on a engine sprite
      */
-    Sprite * getSprite();
+    Sprite const * getSprite();
 
     /*!
      * \brief   Render all graphic object referenced in the game
@@ -51,10 +50,12 @@ public:
 
 private:
 
-    uint m_textCount;
-    uint m_spriteCount;
+    DrawableManager<Sprite> m_spriteManager;
 
-    Sprite * m_spriteList;
+    /*!
+     * \brief   Draw all layers
+     */
+    void draw();
 };
 
 #endif // __GRAPHIC_ENGINE_HPP

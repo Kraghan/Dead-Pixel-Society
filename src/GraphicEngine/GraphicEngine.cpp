@@ -2,34 +2,35 @@
 
 /* explicit */ GraphicEngine::GraphicEngine()
 {
-    m_textCount = 0;
-    m_spriteCount = 0;
-
-    m_spriteList = nullptr;
+    // TODO
 }
 
 /* virtual */ GraphicEngine::~GraphicEngine()
 {
-    m_textCount = 0;
-    m_spriteCount = 0;
-
-    delete m_spriteList;
+    // TODO
 }
 
-void GraphicEngine::init(uint spriteCount, uint textCount)
+void GraphicEngine::init(unsigned int spriteCount, unsigned int textCount)
 {
-    m_textCount = textCount;
-    m_spriteCount = spriteCount;
-
-    m_spriteList = new Sprite[m_spriteCount];
+    // Initializing managers
+    m_spriteManager.init(spriteCount);
 }
 
-Sprite * GraphicEngine::getSprite()
+Sprite const * GraphicEngine::getSprite()
 {
-    return nullptr;
+    return m_spriteManager.getFreeDrawable();
 }
 
 void GraphicEngine::render()
 {
+    // TODO
 
+
+
+    draw();
+}
+
+void GraphicEngine::draw()
+{
+    // TODO
 }
