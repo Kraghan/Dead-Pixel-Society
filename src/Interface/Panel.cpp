@@ -4,8 +4,8 @@
 
 #include "Interface/Panel.hpp"
 
-Panel::Panel(const int posX, const int posY, const unsigned int width, const unsigned int height)
-:Component(posX,posY,width,height)
+Panel::Panel(const int posX, const int posY, const unsigned int width, const unsigned int height, std::string strId)
+:Component(posX,posY,width,height,strId)
 {
     // TODO : Init background to none
 }
