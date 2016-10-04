@@ -11,6 +11,7 @@
 #ifndef __GRAPHIC_ENGINE_HPP
 #define __GRAPHIC_ENGINE_HPP
 
+#include <string>
 #include <SFML/Graphics.hpp>
 #include "GraphicEngine/Sprite.hpp"
 #include "GraphicEngine/DrawableManager.hpp"
@@ -32,10 +33,16 @@ public:
 
     /*!
      * \brief   Initialize the graphic engine
+     * \param   name The name of the window
+     * \param   width The width of the window
+     * \param   height The height of the window
      * \param   spriteCount The number of available sprites
      * \param   textCount The number of available texts
      */
-    void init(unsigned int spriteCount, unsigned int textCount);
+    void init(std::string const& name,
+            unsigned width, unsigned height,
+            unsigned spriteCount, unsigned textCount,
+            unsigned layerCount, unsigned layerSize);
 
     /*!
      * \brief   Return a free sprite
@@ -50,6 +57,21 @@ public:
 
 private:
 
+    /*!
+     * \brief   The sf window to display layers
+     */
+    sf::RenderWindow * m_window;
+
+    /*!
+     * \brief   Informations about layers
+     */
+    unsigned m_layerCount;
+    unsigned m_layerSize;
+
+    /*!
+     * \brief   The sprite manager to handle
+     *          the repartition of sprites
+     */
     DrawableManager<Sprite> m_spriteManager;
 
     /*!

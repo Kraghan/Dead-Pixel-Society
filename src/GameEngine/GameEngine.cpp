@@ -16,9 +16,13 @@ GameEngine::GameEngine()
 void GameEngine::init()
 {
     // Initializing other engine
-    // 500 sprites
-    // 100 texts
-    m_graphicEngine.init(500, 100);
+    // Window name
+    // Window size
+    // Sprites count
+    // Texts count
+    // Layer count
+    // Layer size
+    m_graphicEngine.init("DPS", 500, 500, 500, 100, 10, 500);
 }
 
 void GameEngine::start()
