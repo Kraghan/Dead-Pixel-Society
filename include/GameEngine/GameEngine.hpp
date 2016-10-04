@@ -70,9 +70,21 @@ private :
     ResourceManager m_resourceManager;
 
     /*!
+     * \brief   A pointer on the graphic engine
+     *          window
+     */
+    sf::RenderWindow * m_window;
+
+    /*!
      * \brief   Start the game loop
      */
     void gameLoop();
+
+    /*!
+     * \brief   Process the user input
+     *          in a non blocking way
+     */
+    void processInput();
 };
 
 #endif // __GAME_ENGINE_HPP

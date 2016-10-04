@@ -4,6 +4,7 @@ GameEngine::GameEngine()
 : m_isRunning(false)
 , m_graphicEngine()
 , m_resourceManager(&m_graphicEngine)
+, m_window(nullptr)
 {
     // TODO
 }
@@ -23,6 +24,9 @@ void GameEngine::init()
     // Layer count
     // Layer size
     m_graphicEngine.init("DPS", 500, 500, 500, 100, 10, 500);
+
+    // Getting the window
+    m_window = m_graphicEngine.getWindow();
 }
 
 void GameEngine::start()
@@ -46,7 +50,8 @@ void GameEngine::gameLoop()
 
         lag += elapsed;
 
-        // TODO : processInput();
+        // Processing inputs
+        processInput();
 
         while(lag >= MS_PER_UPDATE)
         {
@@ -58,6 +63,22 @@ void GameEngine::gameLoop()
 
             // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
+        }
+    }
+}
+
+void GameEngine::processInput()
+{
+    // Creating the receiver event object
+    sf::Event event;
+
+    // Event loop
+    while(m_window->pollEvent(event))
+    {
+        // The user wants to exit the game
+        if (event.type == sf::Event::Closed)
+        {
+            m_isRunning = false;
         }
     }
 }

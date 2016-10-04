@@ -55,6 +55,10 @@ Sprite * GraphicEngine::getSprite()
 
 void GraphicEngine::render()
 {
+    // Checking the window states
+    // If closed, Skipping
+    if(!m_window->isOpen()) return;
+
     // Construct all layers
     // Assemble all drawable into those layers
     constructLayers();

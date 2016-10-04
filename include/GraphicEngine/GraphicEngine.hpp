@@ -58,6 +58,12 @@ public:
      */
     void render();
 
+    /*!
+    * \brief   Return a pointer on the window used by the engine
+    * \return  A pointer on the window
+    */
+    sf::RenderWindow * getWindow() const;
+
 private:
 
     /*!
@@ -103,12 +109,6 @@ private:
      *          resetting their size to 0
      */
     void prepareLayer();
-
-    /*!
-     * \brief   Return a pointer on the window used by the engine
-     * \return  A pointer on the window
-     */
-    sf::RenderWindow * getWindow() const;
 };
 
 #endif // __GRAPHIC_ENGINE_HPP
