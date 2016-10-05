@@ -127,7 +127,7 @@ void GraphicEngine::draw()
     m_window->display();
 }
 
-sf::RenderWindow *GraphicEngine::getWindow() const
+sf::RenderWindow * GraphicEngine::getWindow() const
 {
     return m_window;
 }

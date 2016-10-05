@@ -57,7 +57,7 @@ void Layer::append(Sprite const * sprite)
     }
 
     // Checking layer overflow
-    if(m_size + 4 >= m_capacity)
+    if(m_size + 6 >= m_capacity)
     {
         // There is an overflow
         // Skipping
@@ -68,7 +68,7 @@ void Layer::append(Sprite const * sprite)
     // Getting the target vertices
     const sf::Vertex * _vertices = sprite->getVertices();
 
-    // Make two triangle from a triangle strip (Clockwise)
+    // Make two triangles from a triangle strip (Clockwise)
     // Copying efficiently vertices
     // So we can copy the first three triangles
     memcpy((void *)&m_vertices[m_size], _vertices, 3 * sizeof(sf::Vertex));
