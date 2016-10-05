@@ -68,17 +68,28 @@ void Layer::append(Sprite const * sprite)
     // Getting the target vertices
     const sf::Vertex * _vertices = sprite->getVertices();
 
+    // Make two triangle from a triangle strip (Clockwise)
     // Copying efficiently vertices
-    memcpy((void *)&m_vertices[m_size], _vertices, 4 * sizeof(sf::Vertex));
+    // So we can copy the first three triangles
+    memcpy((void *)&m_vertices[m_size], _vertices, 3 * sizeof(sf::Vertex));
 
-    for(unsigned i = 0; i < 4; ++i)
+    // And then we have to copy the triangles left
+    // in the array to break the triangle strip
+    memcpy((void *)&m_vertices[m_size + 3], (void *)&_vertices[1], sizeof(sf::Vertex));
+    memcpy((void *)&m_vertices[m_size + 4], (void *)&_vertices[3], sizeof(sf::Vertex));
+    memcpy((void *)&m_vertices[m_size + 5], (void *)&_vertices[2], sizeof(sf::Vertex));
+
+    // Buffering transformation
+    const sf::Transform * _transform = &sprite->getTransform();
+
+    // Iterating vertices
+    for(unsigned i = 0; i < 6; ++i)
     {
         // Applying transformation to the vertices
-        m_vertices[m_size + i].position = sprite->getTransform() *
-                                          m_vertices[m_size + i].position;
+        m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
     }
 
     // Then incrementing the size of the layer
     // and we're done
-    m_size += 4;
+    m_size += 6;
 }

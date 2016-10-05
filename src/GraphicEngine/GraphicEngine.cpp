@@ -119,7 +119,7 @@ void GraphicEngine::draw()
         // Drawing the content of the current layer
         m_window->draw(m_layers[index].getVertices(),
                        m_layers[index].getSize(),
-                       sf::TrianglesStrip,
+                       sf::Triangles,
                        m_layers[index].getState());
     }
 
