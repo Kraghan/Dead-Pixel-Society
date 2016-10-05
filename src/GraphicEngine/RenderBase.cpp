@@ -16,3 +16,10 @@ void RenderBase::update()
     // He is not available in the engine (so in use in the game)
     m_ready = !(m_layer == -1 || !m_visible || m_available);
 }
+
+void RenderBase::free()
+{
+    // The game doesn't own this
+    // sprite anymore
+    m_available = true;
+}

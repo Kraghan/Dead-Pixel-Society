@@ -64,6 +64,11 @@ public:
      */
     void setAvailable(const bool available);
 
+    /*!
+     * \brief   Get the sprite back to the engine
+     */
+    void free();
+
 private:
 
     int m_layer;
