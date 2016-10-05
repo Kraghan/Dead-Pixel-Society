@@ -43,24 +43,11 @@ void GameEngine::gameLoop()
     sf::Texture texture;
     texture.loadFromFile("../res/Kirito.png");
     Sprite * sprite1 = m_resourceManager.getSprite();
-    Sprite * sprite2 = m_resourceManager.getSprite();
-    Sprite * sprite3 = m_resourceManager.getSprite();
 
     sprite1->setLayer(1);
-    sprite2->setLayer(2);
-    sprite3->setLayer(2);
-
     sprite1->setVisible(true);
-    sprite2->setVisible(true);
-    sprite3->setVisible(true);
-
     sprite1->setTexture(texture);
-    sprite2->setTexture(texture);
-    sprite3->setTexture(texture);
-
     sprite1->setPosition(150, 80);
-    sprite2->setPosition(40, 80);
-    sprite3->setPosition(340, 80);
     // TEST ONLY
 
     double lag = 0.0;
