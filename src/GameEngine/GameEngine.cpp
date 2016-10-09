@@ -39,17 +39,6 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
-    // TEST ONLY
-    sf::Texture texture;
-    texture.loadFromFile("../res/Kirito.png");
-    Sprite * sprite1 = m_resourceManager.getSprite();
-
-    sprite1->setLayer(1);
-    sprite1->setVisible(true);
-    sprite1->setTexture(texture);
-    sprite1->setPosition(150, 80);
-    // TEST ONLY
-
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
