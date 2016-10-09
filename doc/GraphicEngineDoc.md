@@ -71,7 +71,7 @@ Here is the full example :
   /// Then we configure it
   characterSprite->setLayer(15);
   
-  /// Finally, just use the sprite as usually
+  /// Finally, just use the sprite as usual
   characterSprite->rotate(5);
   characterSprite->move(10, 10);
   
