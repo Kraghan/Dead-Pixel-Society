@@ -1,9 +1,9 @@
 ## Graphic Engine tutorial
 
 ### Summary 
-1)  Quick explanation
-2)  Usage examples
-3)  Advices
+1.  Quick explanation
+2.  Usage examples
+3.  Advices
 
 #### 1) Quick explanation
 
