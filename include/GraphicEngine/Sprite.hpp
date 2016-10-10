@@ -75,6 +75,11 @@ public:
      */
     const sf::Vertex * getVertices() const;
 
+    /*!
+     * \brief   Get the sprite back to the engine
+     */
+    static void release(Sprite *& sprite);
+
 private:
 
     /*!

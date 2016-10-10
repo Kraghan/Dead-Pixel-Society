@@ -30,15 +30,15 @@ Ok, here we go. The usage is very simple. To get a sprite :
 
 It returns a **pointer on a sprite** ready to be used. Once you have the sprite, you **own** 
 the sprite. The engine **isn't able to get the sprite back**. It's your responsibility to 
-get the sprite back to the engine. To do this, just call the following method :
+get the sprite back to the engine. To do this, just call the following **static** method :
 
 ```cplusplus
- characterSprite->free();
+ Sprite::release(characterSprite);
 ```
 
 After this, you **don't own the sprite anymore**. The engine will referenced this sprite as
-available for any demands of a free sprite. Using the address of a sprite after calling *free()*
-will lead to some undefined behaviour. (**Fixed in a very soon update**)
+available for any demands of a free sprite and your pointer on the old sprite will be set
+to nullptr. So please keep it in mind.
 
 Once you get a sprite, a bunch of methods are here to help you to manage the sprite.
 Imagine you want to display your character just after the background map. Assuming that the
@@ -59,7 +59,7 @@ Finally, you can get all information you need by calling the following :
 ```cplusplus
  int32_t characterLayer  = characterSprite->getLayer();
  bool characterVisible   = characterSprite->isVisible();
- bool characterAvailable = characterSprite->isAvailable(); ///< Deprecated
+ bool characterReady     = characterSprite->isReady();
 ```
 
 Here is the full example :
@@ -79,9 +79,14 @@ Here is the full example :
   
   /// When you won't the sprite anymore, just release it
   /// In the destructor of your object for example
-  characterSprite->free();
+  if(characterSprite != nullptr)
+  {
+        Sprite::release(characterSprite);
+  }
+  
 ```
 
 #### 3) Advices
 
-Coming soon
+Think about the life time of your sprite. Don't hesitate to get a 
+sprite back to the engine.

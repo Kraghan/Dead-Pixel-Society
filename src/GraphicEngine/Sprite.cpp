@@ -101,3 +101,17 @@ const sf::Vertex * Sprite::getVertices() const
     return m_vertices;
 }
 
+void Sprite::release(Sprite *& sprite)
+{
+    // There is no points to try to
+    // release a null pointer
+    if(sprite == nullptr) return;
+
+    // The game doesn't own this
+    // sprite anymore
+    sprite->setAvailable(true);
+
+    // Setting the pointer to nullptr
+    sprite = nullptr;
+}
+
