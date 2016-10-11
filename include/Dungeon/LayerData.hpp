@@ -11,10 +11,8 @@
 class LayerData {
 private:
     std::vector<char> m_layerData;
-    unsigned int m_layer;
 public:
-    LayerData(unsigned int layer, std::vector<char> const&layerData);
-    const unsigned int getLayerId();
+    LayerData(std::vector<char> const&layerData);
     std::vector<char> const &getLayerData();
 };
 

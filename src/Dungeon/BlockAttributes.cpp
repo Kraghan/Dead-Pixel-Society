@@ -1,7 +1,6 @@
 //
 // Created by madjo on 11/10/2016.
 //
-
 #include "Dungeon/BlockAttributes.hpp"
 
 BlockAttributes::BlockAttributes(std::string name, unsigned int spriteSize, unsigned int width, unsigned int height,
@@ -32,4 +31,26 @@ unsigned int BlockAttributes::getHeight() const {
 
 const std::vector<LayerData> &BlockAttributes::getSpritesData() const {
     return m_spritesData;
+}
+
+void BlockAttributes::debug()
+{
+    using namespace std;
+    cout<< "Name : " << m_name <<endl;
+    cout<< "Sprite size : " << m_spriteSize <<endl;
+    cout<< "Width : " << m_width <<endl;
+    cout<< "Height : " << m_height <<endl;
+
+    for(unsigned int k = 0; k < m_spritesData.size(); ++k)
+    {
+        LayerData l = m_spritesData[k];
+        vector<char> v = l.getLayerData();
+        cout<< "Layer : " << k <<endl;
+        for (unsigned int i = 0; i < m_height; ++i) {
+            for (unsigned int j = 0; j < m_width; ++j) {
+                cout << v[i*m_width + j] << " ";
+            }
+            cout<<endl;
+        }
+    }
 }

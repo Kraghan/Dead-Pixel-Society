@@ -23,7 +23,7 @@ void GraphicEngine::init(std::string const& name,
     unsigned layerCount, unsigned layerSize)
 {
     // Creating window
-    m_window = new sf::RenderWindow(sf::VideoMode(width, height), name);
+    m_window = new sf::RenderWindow(sf::VideoMode(width, height), name,sf::Style::Close);
 
     // Initializing managers
     m_spriteManager.init(spriteCount);

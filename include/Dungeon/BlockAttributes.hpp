@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include "Dungeon/LayerData.hpp"
+#include <iostream>
 
 class BlockAttributes {
 private:
@@ -29,6 +30,8 @@ public:
     unsigned int getHeight() const;
 
     const std::vector<LayerData> &getSpritesData() const;
+
+    void debug();
 };
 
 

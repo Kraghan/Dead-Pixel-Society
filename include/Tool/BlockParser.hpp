@@ -7,6 +7,9 @@
 
 #include <iostream>
 #include <string>
+#include <Dungeon/BlockAttributes.hpp>
+#include <fstream>
+#include <sstream>
 
 class BlockParser
 {
