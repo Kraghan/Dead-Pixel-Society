@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <stdint.h>
+#include <GraphicEngine/Sprite.hpp>
 
 class Block
 {
@@ -27,6 +28,12 @@ public:
      */
     virtual ~Block();
 
+    /*!
+     * \brief   Initialize the block with a block
+     *          attribute
+     */
+    void init(/*BlockAttribute * attribute */);
+
 private:
 
     uint32_t m_spriteSize;
@@ -34,8 +41,8 @@ private:
     uint32_t m_blockHeight;
     std::string m_blockName;
 
-
-
+    Sprite * m_spriteMap;
+    unsigned char * m_rawData;
 };
 
 #endif // __BLOCK_HPP
