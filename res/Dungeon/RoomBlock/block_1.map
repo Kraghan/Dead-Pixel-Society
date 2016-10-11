@@ -1,6 +1,9 @@
 META =
 {
-    NAME = "ROOM 1";
+    NAME   = "ROOM 1";
+    SIZE   = 64;
+    WIDTH  = 20;
+    HEIGHT = 11;
 }
 
 DATA =
