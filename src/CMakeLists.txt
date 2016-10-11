@@ -8,7 +8,7 @@ file(GLOB_RECURSE SOURCE_FILE *)
 
 # Creating main executable
 # Should be only the main file
-add_executable(${EXENAME} ${SOURCE_FILE} ../include/WorldMap/WorldMap.hpp WorldMap/WorldMap.cpp)
+add_executable(${EXENAME} ${SOURCE_FILE})
 
 # Linking all static libraries
 target_link_libraries(${EXENAME} ${SFML_LIB})

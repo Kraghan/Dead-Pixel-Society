@@ -7,7 +7,7 @@ ResourceManager::ResourceManager(GraphicEngine * graphicEngine)
 }
 
 sf::Texture * ResourceManager::loadTexture(std::string const& path,
-    std::string const &alias)
+    std::string const& alias)
 {
     // Allocating the resources
     sf::Texture * _texture = m_textureContainer.loadResource(alias);
