@@ -11,8 +11,11 @@
 
 #include <vector>
 #include <string>
+#include <cstring>
 #include <stdint.h>
-#include <GraphicEngine/Sprite.hpp>
+#include "GraphicEngine/Sprite.hpp"
+#include "Memory/ResourceManager.hpp"
+#include "Dungeon/BlockAttributes.hpp"
 
 class Block
 {
@@ -21,7 +24,7 @@ public:
     /*!
      * \brief   Default constructor
      */
-    explicit Block();
+    explicit Block(ResourceManager * resourceManager, std::string const& theme);
 
     /*!
      * \brief   Destructor
@@ -32,17 +35,30 @@ public:
      * \brief   Initialize the block with a block
      *          attribute
      */
-    void init(/*BlockAttribute * attribute */);
+    void init(BlockAttributes const& attribute);
 
 private:
 
+    std::string m_theme;
+    ResourceManager * m_resourceManager;
+
+    uint32_t m_layerSize;
+    uint32_t m_layerCount;
     uint32_t m_spriteSize;
     uint32_t m_blockWidth;
     uint32_t m_blockHeight;
     std::string m_blockName;
 
-    Sprite * m_spriteMap;
-    unsigned char * m_rawData;
+    char * m_rawData;
+    Sprite ** m_spriteMap;
+    uint32_t m_spriteMapSize;
+
+    /*!
+     * \brief   Methods section
+     */
+    void generateBlock();
+    void getRawData(std::vector < LayerData > & layers);
+    void setSprite(uint32_t layer, uint32_t offset, uint32_t index);
 };
 
 #endif // __BLOCK_HPP

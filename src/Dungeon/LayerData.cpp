@@ -15,7 +15,7 @@ const unsigned int LayerData::getLayerId()
     return m_layer;
 }
 
-std::vector<char> const &LayerData::getLayerData()
+std::vector<char> const& LayerData::getLayerData()
 {
     return m_layerData;
 }
