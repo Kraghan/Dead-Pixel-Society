@@ -27,7 +27,7 @@ const bool Container<T, U, Allocator, Hash>
 }
 
 template <typename T, typename U, class Allocator, class Hash>
-U * const Container<T, U, Allocator, Hash>
+U const Container<T, U, Allocator, Hash>
 ::getResource(typename TypeTraits<T>::TypeSize key)
 {
     if(!checkKey(key)) return nullptr;
@@ -46,7 +46,7 @@ void Container<T, U, Allocator, Hash>
 }
 
 template <typename T, typename U, class Allocator, class Hash>
-U * const Container<T, U, Allocator, Hash>
+U const Container<T, U, Allocator, Hash>
 ::loadResource(typename TypeTraits<T>::TypeSize key)
 {
     if(checkKey(key)) return nullptr;

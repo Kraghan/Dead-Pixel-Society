@@ -10,7 +10,7 @@ LayerData::LayerData(std::vector<char> const&layerData)
 }
 
 
-std::vector<char> const &LayerData::getLayerData()
+std::vector<char> const& LayerData::getLayerData()
 {
     return m_layerData;
 }
