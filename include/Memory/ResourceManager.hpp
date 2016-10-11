@@ -62,7 +62,7 @@ private:
     /*!
      * \brief   The container of sfml textures
      */
-    Container < std::string, sf::Texture * > m_textureContainer;
+    Container < std::string, sf::Texture > m_textureContainer;
 };
 
 #endif // __RESOURCE_MANAGER_HPP

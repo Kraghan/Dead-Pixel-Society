@@ -43,7 +43,7 @@ public :
      * \return  U* a pointer on the resource if it exists
      * \return  nullptr if the key doesn't exist
      */
-    U const getResource(typename TypeTraits<T>::TypeSize key);
+    U * const getResource(typename TypeTraits<T>::TypeSize key);
 
     /*!
      * \brief   Deallocate the memory of the objet referenced by the key
@@ -60,7 +60,7 @@ public :
      * \return  U* A pointer on the recently created resource
      * \return  nullptr Return a null pointer if the key already exists
      */
-    U const loadResource(typename TypeTraits<T>::TypeSize key);
+    U * const loadResource(typename TypeTraits<T>::TypeSize key);
 
     /*!
      * \brief   Return the current allocator to provide access

@@ -3,7 +3,7 @@
 template <typename T>
 inline T * DefaultAllocator<T>::allocate() const
 {
-    return new (T *)(sizeof(T));
+    return (T *) ::operator new (sizeof(T));
 }
 
 template <typename T>

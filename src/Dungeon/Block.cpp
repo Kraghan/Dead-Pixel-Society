@@ -58,6 +58,9 @@ void Block::init(BlockAttributes const& attribute)
 
     // Getting raw data
     getRawData(_layers);
+
+    // Warning the user for the end of the generation
+    std::cerr << "Block generated." << std::endl;
 }
 
 void Block::getRawData(std::vector < LayerData > & layers)
@@ -87,7 +90,7 @@ void Block::generateBlock()
             // Buffering current index
             uint32_t _index = layer * m_layerSize + offset;
 
-            if(m_rawData[_index] == '0')
+            if(m_rawData[_index] == constant::test::VOID_CASE)
             {
                 // Checking the case of a void tile
                 m_spriteMap[_index] = nullptr;
@@ -111,5 +114,39 @@ void Block::setSprite(uint32_t layer, uint32_t offset, uint32_t index)
     m_spriteMap[index]->setLayer(layer);
 
     // Getting the texture
-    // TODO
+    m_spriteMap[index]->setTexture(*m_resourceManager->getTexture(m_theme));
+
+    // Setting the position of the sprite
+    float _x = (offset % m_blockWidth) * m_spriteSize;
+    float _y = (offset / m_blockWidth) * m_spriteSize;
+
+    m_spriteMap[index]->setPosition(_x, _y);
+
+    // Setting the texture rect
+    setSpriteTextureRect(index);
+}
+
+void Block::setSpriteTextureRect(uint32_t index)
+{
+    // Buffering the sprite
+    Sprite * _sprite = m_spriteMap[index];
+
+    // Handling all case
+    switch(m_rawData[index])
+    {
+        case constant::test::WALL_CASE:
+        {
+            _sprite->setTextureRect(sf::IntRect(
+                    constant::test::WALL_TEXTURE_X * m_spriteSize,
+                    constant::test::WALL_TEXTURE_Y * m_spriteSize,
+                    m_spriteSize, m_spriteSize));
+        }
+
+        default:
+        {
+            // Warning the user about this
+            std::cerr << "Unhandled character ..." << std::endl;
+            break;
+        }
+    }
 }

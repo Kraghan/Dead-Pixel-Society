@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include "GraphicEngine/Sprite.hpp"
 #include "Memory/ResourceManager.hpp"
+#include "Dungeon/DungeonConstant.hpp"
 #include "Dungeon/BlockAttributes.hpp"
 
 class Block
@@ -57,6 +58,7 @@ private:
      * \brief   Methods section
      */
     void generateBlock();
+    void setSpriteTextureRect(uint32_t index);
     void getRawData(std::vector < LayerData > & layers);
     void setSprite(uint32_t layer, uint32_t offset, uint32_t index);
 };
