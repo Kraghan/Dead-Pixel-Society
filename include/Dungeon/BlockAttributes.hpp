@@ -8,15 +8,17 @@
 
 #include <string>
 #include <vector>
+#include "Dungeon/LayerData.hpp"
 
 class BlockAttributes {
 private:
     std::string m_name;
     unsigned int m_spriteSize, m_width, m_height;
-    std::vector<char> m_spritesData;
+    std::vector<LayerData> m_spritesData;
 
 public:
-    BlockAttributes(std::string name, unsigned int spriteSize, unsigned int width, unsigned int height, std::vector<char> const&spriteDatas);
+    BlockAttributes(std::string name, unsigned int spriteSize, unsigned int width, unsigned int height,
+                    std::vector<LayerData> const&spriteDatas);
 
     const std::string &getName() const;
 
@@ -26,7 +28,7 @@ public:
 
     unsigned int getHeight() const;
 
-    const std::vector<char> &getSpritesData() const;
+    const std::vector<LayerData> &getSpritesData() const;
 };
 
 
