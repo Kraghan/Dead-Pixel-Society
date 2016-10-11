@@ -1,0 +1,89 @@
+Personnage principal :
+C'est un jeune adulte qui a grandi dans le village de <insérer nom de village>.
+Il s'est fait connaitre enfant car il a affronté un ours (d'où sa cicatrice à l'oeil) et l'a tué.
+Aujourd'hui, c'est un jeune adulte tête brulé, qui ne prend pas les choses très sérieusement qui s'est spécialisé dans
+le poutrage de monstre.
+
+Village :
+Il s'agit d'un petit village moyenâgeux assez classique.
+Il y a un marchand, l'ancien du village, l'historien et le perso principal (+ d'autre mais on s'en balec)
+Le marchand permet d'acheter des armes :
+    - Les bâtons de sorcier (attaque en ligne droite à distance)
+    - Les arcs (attaque à distance en cloche)
+    - Les épées (attaque au CàC)
+L'ancien du village prodigue des conseils sur le jeu.
+Il donne des conseils sur :
+    - les nouvelles compétences
+    - l'univers
+    - le prochain donjon
+L'historien sert de point de sauvegarde.
+
+La malédiction :
+Tous les 60 ans, les habitants du village procède à un sacrifice en haut de la montagne <insérer nom de village> afin
+de s'attirer les bonnes grâces de leurs dieux et éviter leur colère (Créer les différentes divinités et leurs "domaines
+de prédilection" (environ 5 ou 6)).
+Nous arrivons maintenant au bout du délais et il est temps de gravir de nouveau la montagne pour réaliser le sacrifice
+mais depuis quelques années des créatures se sont installés dans cette montagne et attaque tout ceux essayant de la gravir.
+
+Les donjons :
+Egout :
+    - Nécessaire : arme
+    - Type de donjon : Donjon de base
+    - Spécificité : rien
+    - Boss : aucun
+    - Mobs (entre 3 et 7) :
+    - Loot de fin : Grappin
+    - Background Lore (Pourquoi on y vas ? Pourquoi il y a ces mobs là ? etc):
+
+
+Forêt de <insérer nom de forêt>:
+    - Nécessaire : Grappin
+    - Type de donjon : Donjon de base
+    - Spécificité : rien
+    - Boss : Alien
+    - Mobs (entre 3 et 7) :
+    - Loot de fin : Bombe
+    - Background Lore (Pourquoi on y vas ? Pourquoi il y a ces mobs là ? etc):
+    Il y a quelques mois, une boule de feu est tombée du ciel dans la forêt de <insérer nom de forêt>, depuis il semble
+que la faune et même la flore agissent étrangement et attaque les marchants venant vers le village et pillent leurs
+marchandises. On commence à être à court de provision et il faut faire quelque chose !
+
+Mine :
+    - Nécessaire : Boule de lumière plus que blanche
+    - Type de donjon : Donjon en profondeur
+    - Spécificité : Plongé dans le noir
+    - Boss : Une putain d'araignée géante ou une machine naine ou autre chose
+    - Mobs (entre 3 et 7) :
+    - Loot de fin : Impulsion tellurique
+    - Background Lore (Pourquoi on y vas ? Pourquoi il y a ces mobs là ? etc):
+
+
+Tour de sorcier : Bombe
+    - Nécessaire :
+    - Type de donjon : Donjon en hauteur
+    - Spécificité : rien
+    - Boss : Sorcier Namuras
+    - Mobs (entre 3 et 7) :
+    - Loot de fin : Sphère de magie plus que blanche
+    - Background Lore (Pourquoi on y vas ? Pourquoi il y a ces mobs là ? etc):
+
+
+Cathédrale : Impulsion tellurique
+    - Nécessaire : arme
+    - Type de donjon : Donjon de base
+    - Spécificité : rien
+    - Boss : Cthulhu
+    - Mobs (entre 3 et 7) :
+    - Loot de fin : Fiole d'éthérium
+    - Background Lore (Pourquoi on y vas ? Pourquoi il y a ces mobs là ? etc):
+
+
+Montagne : Fiole d'éthérium
+    - Nécessaire : arme
+    - Type de donjon : Donjon de base
+    - Spécificité : rien
+    - Boss : ?
+    - Mobs (entre 3 et 7) :
+    - Loot de fin : Crédit de fin
+    - Background Lore (Pourquoi on y vas ? Pourquoi il y a ces mobs là ? etc):
+
