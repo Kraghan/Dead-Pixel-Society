@@ -11,6 +11,7 @@
 #ifndef __RESOURCE_MANAGER_HPP
 #define __RESOURCE_MANAGER_HPP
 
+#include "Memory/Container.hpp"
 #include "GraphicEngine/Sprite.hpp"
 #include "GraphicEngine/GraphicEngine.hpp"
 
@@ -30,7 +31,25 @@ public:
      *          To hide, hide() (~ show())
      * \return  A pointer on a free sprite
      */
-    Sprite * getSprite();
+    inline Sprite * getSprite() {
+        return m_graphicEngine->getSprite();
+    }
+
+    /*!
+     * \brief   Load a texture in the texture container
+     * \param   path The path of the texture to load
+     * \param   alias The alias of the texture
+     * \return  The pointer on the newly created texture
+     */
+    sf::Texture * loadTexture(std::string const& path,
+                              std::string const& alias);
+
+    /*!
+     * \brief   Return the texture referenced by alias
+     * \param   alias The alias (name) of the texture in the map
+     * \return  A pointer on a sf::Texture or nullptr if not found
+     */
+    sf::Texture * getTexture(std::string const& alias);
 
 private:
 
@@ -39,14 +58,11 @@ private:
      *          engine to ask for sprite and text
      */
     GraphicEngine * m_graphicEngine;
-};
 
-/*!
- * \brief   Return a pointer on a free sprite
- */
-inline Sprite * ResourceManager::getSprite()
-{
-    return m_graphicEngine->getSprite();
-}
+    /*!
+     * \brief   The container of sfml textures
+     */
+    Container < std::string, sf::Texture * > m_textureContainer;
+};
 
 #endif // __RESOURCE_MANAGER_HPP
