@@ -9,7 +9,7 @@
 #ifndef __DUNGEON_HPP
 #define __DUNGEON_HPP
 
-#include <stdint.h>
+#include "Dungeon/Block.hpp"
 
 class Dungeon
 {

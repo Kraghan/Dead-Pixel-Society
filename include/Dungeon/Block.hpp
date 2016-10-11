@@ -9,6 +9,10 @@
 #ifndef __BLOCK_HPP
 #define __BLOCK_HPP
 
+#include <vector>
+#include <string>
+#include <stdint.h>
+
 class Block
 {
 public:
@@ -24,6 +28,13 @@ public:
     virtual ~Block();
 
 private:
+
+    uint32_t m_spriteSize;
+    uint32_t m_blockWidth;
+    uint32_t m_blockHeight;
+    std::string m_blockName;
+
+
 
 };
 
