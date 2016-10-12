@@ -14,13 +14,94 @@ BlockParser::~BlockParser()
 
 }
 
-BlockAttributes BlockParser::readFile(std::string file)
+void BlockParser::readMeta(std::istringstream* iss,int* type, unsigned int* width, unsigned int * height,
+                           unsigned int* size, std::string* name)
+{
+    std::string varName,trash;
+    *iss >> varName;
+    if(varName == "{")
+        return;
+    if(varName == "}"){
+        *type = 0;
+        return;
+    }
+    *iss >> trash;
+    if(varName == "NAME")
+        *iss >> *name;
+    if(varName == "SIZE")
+        *iss >> *size;
+    if(varName == "WIDTH")
+        *iss >> *width;
+    if(varName == "HEIGHT")
+        *iss >> *height;
+}
+
+void BlockParser::readLayer(std::ifstream *infile, std::istringstream* iss,int* type, unsigned int* width,
+                            unsigned int* height, std::vector<LayerData> &v)
+{
+    std::string varName,line;
+    *iss >> varName;
+    if(varName == "{") {
+        std::vector<char> vector;
+        char tampon;
+        for(unsigned int i = 0; i < *height; ++i)
+        {
+            std::getline(*infile, line);
+            std::istringstream iss2(line);
+
+            for(unsigned int j = 0; j < *width; ++j)
+            {
+                iss2 >> tampon;
+                vector.push_back(tampon);
+            }
+        }
+
+        LayerData l = LayerData(vector);
+        v.push_back(l);
+    }
+    if(varName == "}"){
+        *type = 3;
+        return;
+    }
+}
+
+void BlockParser::readCollider(std::ifstream *infile, std::istringstream* iss, int* type,
+                               const unsigned int size,std::vector<Collider> &v)
+{
+    std::string varName,line;
+    *iss >> varName;
+    if(varName == "{") {
+        unsigned int x, y, width, height;
+        char firstChar = varName[0];
+        while(firstChar != '}')
+        {
+            std::getline(*infile, line);
+            std::istringstream iss2(line);
+            iss2 >> firstChar;
+            if(firstChar == '[')
+            {
+                iss2 >> x >> y >> width >> height;
+                Collider c = Collider(x,y,width,height,size);
+                v.push_back(c);
+            }
+        }
+        return;
+    }
+    if(varName == "}"){
+        *type = 5;
+        return;
+    }
+
+}
+
+BlockComponent BlockParser::readFile(std::string file)
 {
     std::ifstream infile(file);
 
     if(infile.good())
     {
-        std::vector<LayerData> v;
+        std::vector<LayerData> v_layerData;
+        std::vector<Collider> v_collider;
         std::string name = "No name";
 
         unsigned int size = 0, width = 0, height = 0;
@@ -61,23 +142,7 @@ BlockAttributes BlockParser::readFile(std::string file)
             }
             else if(type == 1)
             {
-                std::string varName,trash;
-                iss >> varName;
-                if(varName == "{")
-                    continue;
-                if(varName == "}"){
-                    type = 0;
-                    continue;
-                }
-                iss >> trash;
-                if(varName == "NAME")
-                    iss >> name;
-                if(varName == "SIZE")
-                    iss >> size;
-                if(varName == "WIDTH")
-                    iss >> width;
-                if(varName == "HEIGHT")
-                    iss >> height;
+                this->readMeta(&iss,&type,&width,&height,&size,&name);
             }
             else if(type == 2)
             {
@@ -110,45 +175,40 @@ BlockAttributes BlockParser::readFile(std::string file)
             }
             else if(type == 4)
             {
+                this->readLayer(&infile,&iss,&type,&width,&height,v_layerData);
+            }
+            else if(type == 5)
+            {
                 std::string varName;
                 iss >> varName;
-                if(varName == "{") {
-                    std::vector<char> vector;
-                    char tampon;
-                    for(unsigned int i = 0; i < height; ++i)
-                    {
-                        std::getline(infile, line);
-                        std::istringstream iss2(line);
-
-                        for(unsigned int j = 0; j < width; ++j)
-                        {
-                            iss2 >> tampon;
-                            vector.push_back(tampon);
-                        }
-                    }
-
-                    LayerData l = LayerData(vector);
-                    v.push_back(l);
-                }
+                if(varName == "{")
+                    continue;
                 if(varName == "}"){
-                    type = 3;
+                    type = 0;
                     continue;
                 }
 
+                if(varName == "COLLIDER")
+                {
+                    type = 6;
+                }
             }
-
-
-
+            else if(type == 6)
+            {
+                readCollider(&infile,&iss,&type,size,v_collider);
+            }
         }
-        //std::cout<<"Name : "<<name<< " Width : " << width << " Height : " << height<< " Size : " << size <<std::endl;
 
-        BlockAttributes attr = BlockAttributes(name, size, width, height, v);
-        return attr;
+        BlockComponent compo = BlockComponent(name, size, width, height, v_layerData,v_collider);
+
+        return compo;
     }
     else {
+        // TODO : TO MAKE IT BETTER
         std::vector<LayerData> v;
-        BlockAttributes attr = BlockAttributes(" ", 0, 0, 0, v);
-        std::cout << "File not found" << std::endl;
+        std::vector<Collider> vv;
+        BlockComponent attr = BlockComponent("Error not found",0,0,0,v,vv);
+        std::cout << "File not found : " << file <<std::endl;
         return attr;
     }
 }

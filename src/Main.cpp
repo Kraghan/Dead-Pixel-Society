@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include "Tool/BlockComponent.hpp"
 #include "GameEngine/GameEngine.hpp"
 #include "Interface/Panel.hpp"
 #include "Interface/Component.hpp"
@@ -17,10 +18,10 @@ int main(void)
 
     BlockParser* parser = new BlockParser();
 
-    BlockAttributes attr = parser->readFile(str);
+    BlockComponent attr = parser->readFile(str);
 
     attr.debug();
-     */
+    */
 
     /*
      * Debug interface
