@@ -42,6 +42,23 @@ void GameEngine::gameLoop()
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
+    m_resourceManager.loadTexture("../res/Texture/TileTest.png", "Forest");
+
+    BlockParser parser;
+    BlockComponent blockComponent = parser.readFile(
+            "../res/Dungeon/RoomBlock/block_1.map");
+
+    BlockAttributes const& blockAttributes = blockComponent.getBlockAttribute();
+
+    Dungeon dungeon(&m_resourceManager);
+
+    std::vector < BlockAttributes * > blocks;
+    blocks.push_back((BlockAttributes * )&blockAttributes);
+    blocks.push_back((BlockAttributes * )&blockAttributes);
+    blocks.push_back((BlockAttributes * )&blockAttributes);
+
+    dungeon.init(blocks, "Forest");
+
     while(m_isRunning)
     {
         double current = Clock::getCurrentTime();

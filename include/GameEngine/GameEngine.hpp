@@ -13,6 +13,8 @@
 #include "Memory/ResourceManager.hpp"
 #include "GraphicEngine/GraphicEngine.hpp"
 
+#include "Tool/BlockParser.hpp"
+#include "Dungeon/Dungeon.hpp"
 /*!
  * \class   GameEngine
  * \brief   Handle the game loop and controls

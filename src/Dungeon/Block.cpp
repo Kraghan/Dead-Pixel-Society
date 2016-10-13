@@ -130,6 +130,7 @@ void Block::setSpriteTextureRect(uint32_t index)
                     constant::test::WALL_TEXTURE_X * m_spriteSize,
                     constant::test::WALL_TEXTURE_Y * m_spriteSize,
                     m_spriteSize, m_spriteSize));
+            break;
         }
 
         default:

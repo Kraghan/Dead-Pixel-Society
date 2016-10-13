@@ -19,10 +19,10 @@ namespace constant
         const char VOID_CASE = '0';
         const char WALL_CASE = '1';
 
-        const uint32_t VOID_TEXTURE_X = 0;
+        const uint32_t VOID_TEXTURE_X = 1;
         const uint32_t VOID_TEXTURE_Y = 0;
 
-        const uint32_t WALL_TEXTURE_X = 1;
+        const uint32_t WALL_TEXTURE_X = 0;
         const uint32_t WALL_TEXTURE_Y = 0;
     }
 }

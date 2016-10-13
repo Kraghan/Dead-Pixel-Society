@@ -24,6 +24,8 @@ public:
                    std::vector<LayerData> const& v_layerData,
                    std::vector<Collider>  const& v_collider);
 
+    BlockAttributes const& getBlockAttribute();
+
 private:
 
     BlockAttributes m_blockAttributes;
