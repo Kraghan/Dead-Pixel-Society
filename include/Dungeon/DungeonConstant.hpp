@@ -10,21 +10,11 @@
 #define __DUNGEON_CONSTANT_HPP
 
 #include <stdint.h>
-#include <SFML/Graphics.hpp>
 
-namespace constant
-{
-    namespace test
-    {
-        const char VOID_CASE = '0';
-        const char WALL_CASE = '1';
+#define VOID_CASE '0'
+#define WALL_CASE '1'
 
-        const uint32_t VOID_TEXTURE_X = 1;
-        const uint32_t VOID_TEXTURE_Y = 0;
-
-        const uint32_t WALL_TEXTURE_X = 0;
-        const uint32_t WALL_TEXTURE_Y = 0;
-    }
-}
+#define WALL_TEXTURE_X 0
+#define WALL_TEXTURE_Y 0
 
 #endif // __DUNGEON_CONSTANT_HPP

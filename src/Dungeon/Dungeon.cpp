@@ -43,5 +43,8 @@ void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
                 _attribute->getSpriteSize(),
                 _attribute->getSpritesData()
         );
+
+        // Hide the block
+        if(index != 0) _block.hide();
     }
 }

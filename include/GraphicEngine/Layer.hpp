@@ -95,6 +95,15 @@ public:
         return *m_state;
     }
 
+    /*!
+    * \brief   Return the number of sprite skipped
+    * \return  The number of sprite skipped
+    */
+    inline uint32_t getSkipped() const
+    {
+        return m_skipped;
+    }
+
 private:
 
     unsigned m_size;
@@ -103,6 +112,11 @@ private:
     sf::RenderStates * m_state;
 
     LAYER_TYPE m_type;
+
+    /*!
+     * \brief   Debug variable
+     */
+    uint32_t m_skipped;
 };
 
 #endif // __LAYER_HPP

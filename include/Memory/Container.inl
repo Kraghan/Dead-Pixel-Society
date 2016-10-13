@@ -11,7 +11,6 @@ Container<T, U, Allocator, Hash>::~Container()
 {
     m_iterator = m_resources.begin();
     for(; m_iterator != m_resources.end(); ++m_iterator) {
-        m_allocator.destroy(m_iterator->second);
         m_allocator.deallocate(m_iterator->second);
     }
 
@@ -40,7 +39,6 @@ void Container<T, U, Allocator, Hash>
 {
     if(!checkKey(key)) return;
 
-    m_allocator.destroy(m_iterator->second);
     m_allocator.deallocate(m_iterator->second);
     m_resources.erase(m_iterator);
 }

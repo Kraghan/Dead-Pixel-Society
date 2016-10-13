@@ -73,6 +73,7 @@ protected:
      * \brief   Allow the drawables and manages to access
      *          private function
      */
+    friend class GraphicEngine;
     friend class DrawableManager<Sprite>;
 
     /*!

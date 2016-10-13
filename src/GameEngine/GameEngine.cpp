@@ -16,14 +16,21 @@ GameEngine::GameEngine()
 
 void GameEngine::init()
 {
+
+    m_resourceManager.loadTexture("../res/Texture/DebugPanel.png", "DEBUG_PANEL");
+    m_resourceManager.loadFont("../res/Font/Roboto-Light.ttf", "DEBUG_FONT");
+
+
     // Initializing other engine
+    // The resource manager
     // Window name
     // Window size
     // Sprites count
     // Texts count
     // Layer count
     // Layer size
-    m_graphicEngine.init("DPS", 1280, 768, 2000, 100, 10, 500);
+    m_graphicEngine.init(&m_resourceManager,
+                         "DPS", 1280, 768, 2000, 100, 15, 2500);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -42,7 +49,7 @@ void GameEngine::gameLoop()
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
-    m_resourceManager.loadTexture("../res/Texture/TileTest.png", "Forest");
+    m_resourceManager.loadTexture("../res/Texture/TileTest.png", "FOREST");
 
     BlockParser parser;
     BlockComponent blockComponent = parser.readFile(
@@ -56,8 +63,9 @@ void GameEngine::gameLoop()
     blocks.push_back((BlockAttributes * )&blockAttributes);
     blocks.push_back((BlockAttributes * )&blockAttributes);
     blocks.push_back((BlockAttributes * )&blockAttributes);
+    blocks.push_back((BlockAttributes * )&blockAttributes);
 
-    dungeon.init(blocks, "Forest");
+    dungeon.init(blocks, "FOREST");
 
     while(m_isRunning)
     {

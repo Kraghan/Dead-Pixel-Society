@@ -17,7 +17,10 @@
 
 #include "GraphicEngine/Layer.hpp"
 #include "GraphicEngine/Sprite.hpp"
+#include "GraphicEngine/DebugPanel.hpp"
 #include "GraphicEngine/DrawableManager.hpp"
+
+#include "GameEngine/Clock.hpp"
 
 class GraphicEngine
 {
@@ -36,13 +39,15 @@ public:
 
     /*!
      * \brief   Initialize the graphic engine
+     * \param   resourceManager The resource manager
      * \param   name The name of the window
      * \param   width The width of the window
      * \param   height The height of the window
      * \param   spriteCount The number of available sprites
      * \param   textCount The number of available texts
      */
-    void init(std::string const& name,
+    void init(ResourceManager * resourceManager,
+            std::string const& name,
             unsigned width, unsigned height,
             unsigned spriteCount, unsigned textCount,
             unsigned layerCount, unsigned layerSize);
@@ -89,6 +94,28 @@ private:
     DrawableManager<Sprite> m_spriteManager;
 
     /*!
+     * \brief   The debug panel of the graphic engine
+     */
+    DebugPanel m_debugPanel;
+
+    /*!
+     * \brief   Record the time to achieve a render
+     */
+    double m_current;
+    double m_previous;
+    double m_elapsed;
+
+    uint32_t m_drawCounter;
+    double m_fpsPrevious;
+    double m_fpsCurrent;
+    double m_fpsElapsed;
+
+    /*!
+     * \brief   A pointer on the resource manager
+     */
+    ResourceManager * m_resourceManager;
+
+    /*!
      * \brief   Draw all layers
      */
     void draw();
@@ -109,6 +136,11 @@ private:
      *          resetting their size to 0
      */
     void prepareLayer();
+
+    /*!
+     * \brief   Check the elapsed time to update debug info
+     */
+    void handleTime();
 };
 
 #endif // __GRAPHIC_ENGINE_HPP

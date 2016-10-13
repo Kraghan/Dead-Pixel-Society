@@ -11,9 +11,12 @@
 #ifndef __RESOURCE_MANAGER_HPP
 #define __RESOURCE_MANAGER_HPP
 
+#include <iostream>
 #include "Memory/Container.hpp"
 #include "GraphicEngine/Sprite.hpp"
-#include "GraphicEngine/GraphicEngine.hpp"
+
+// Forward declaration
+class GraphicEngine;
 
 class ResourceManager
 {
@@ -31,9 +34,7 @@ public:
      *          To hide, hide() (~ show())
      * \return  A pointer on a free sprite
      */
-    inline Sprite * getSprite() {
-        return m_graphicEngine->getSprite();
-    }
+    Sprite * getSprite();
 
     /*!
      * \brief   Load a texture in the texture container
@@ -51,6 +52,22 @@ public:
      */
     sf::Texture * getTexture(std::string const& alias);
 
+    /*!
+     * \brief   Load a Font in the font container
+     * \param   path The path of the font to load
+     * \param   alias The alias of the font
+     * \return  The pointer on the newly created font
+     */
+    sf::Font * loadFont(std::string const& path,
+                        std::string const& alias);
+
+    /*!
+     * \brief   Return the font referenced by alias
+     * \param   alias The alias (name) of the font in the map
+     * \return  A pointer on a sf::Font or nullptr if not found
+     */
+    sf::Font * getFont(std::string const& alias);
+
 private:
 
     /*!
@@ -60,8 +77,9 @@ private:
     GraphicEngine * m_graphicEngine;
 
     /*!
-     * \brief   The container of sfml textures
+     * \brief   The container of sfml textures, Font etc.
      */
+    Container < std::string, sf::Font > m_fontContainer;
     Container < std::string, sf::Texture > m_textureContainer;
 };
 

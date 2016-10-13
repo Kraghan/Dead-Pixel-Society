@@ -6,6 +6,7 @@
 , m_vertices(nullptr)
 , m_state(nullptr)
 , m_type(LAYER_TYPE::NONE)
+, m_skipped(0)
 {
     // None
 }
@@ -36,6 +37,9 @@ void Layer::prepare()
 
     // Resetting the type
     m_type = LAYER_TYPE::NONE;
+
+    // Resetting debug
+    m_skipped = 0;
 }
 
 void Layer::append(Sprite const * sprite)
@@ -53,6 +57,7 @@ void Layer::append(Sprite const * sprite)
     {
         // Layer type and drawable type mismatched
         // Skipping
+        m_skipped++;
         return;
     }
 
@@ -61,6 +66,7 @@ void Layer::append(Sprite const * sprite)
     {
         // There is an overflow
         // Skipping
+        m_skipped++;
         return;
     }
 

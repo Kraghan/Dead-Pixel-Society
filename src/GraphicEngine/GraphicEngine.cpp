@@ -4,6 +4,13 @@
 : m_window(nullptr)
 , m_layerCount(0)
 , m_layerSize(0)
+, m_current(0)
+, m_previous(0)
+, m_elapsed(0)
+, m_drawCounter(0)
+, m_fpsPrevious(0)
+, m_fpsCurrent(0)
+, m_resourceManager(nullptr)
 {
     // None
 }
@@ -17,11 +24,15 @@
     delete [] m_layers;
 }
 
-void GraphicEngine::init(std::string const& name,
+void GraphicEngine::init(ResourceManager * resourceManager,
+    std::string const& name,
     unsigned width, unsigned height,
     unsigned spriteCount, unsigned textCount,
     unsigned layerCount, unsigned layerSize)
 {
+    // Getting the manager
+    m_resourceManager = resourceManager;
+
     // Creating window
     m_window = new sf::RenderWindow(sf::VideoMode(width, height), name,sf::Style::Close);
 
@@ -34,6 +45,13 @@ void GraphicEngine::init(std::string const& name,
 
     // See : initLayer()
     initLayer();
+
+    // Initializing the debug panel
+    m_debugPanel.init(m_resourceManager, spriteCount, textCount);
+    m_debugPanel.m_layerCount = m_layerCount;
+
+    // Setting fps counter
+    m_fpsPrevious = Clock::getCurrentTime();
 }
 
 void GraphicEngine::initLayer()
@@ -55,6 +73,8 @@ Sprite * GraphicEngine::getSprite()
 
 void GraphicEngine::render()
 {
+    m_previous = Clock::getCurrentTime();
+
     // Checking the window states
     // If closed, Skipping
     if(!m_window->isOpen()) return;
@@ -70,6 +90,9 @@ void GraphicEngine::render()
     // Resetting all layer's size
     // and render state
     prepareLayer();
+
+    // Resetting info in the debug panel
+    m_debugPanel.reset();
 }
 
 void GraphicEngine::constructLayers()
@@ -81,6 +104,9 @@ void GraphicEngine::constructLayers()
     // Iterating the list
     for(unsigned index = 0; index < _spritesCount; ++index)
     {
+        // Extracting info
+        if(!_sprites[index].isAvailable()) m_debugPanel.m_spriteInUse++;
+
         // The sprite is in use
         // So we can add him to a layer
         if(_sprites[index].isReady())
@@ -93,6 +119,11 @@ void GraphicEngine::constructLayers()
                 m_layers[_sprites[index].getLayer()].append(&_sprites[index]);
             }
         }
+    }
+
+    for(uint32_t i = 0; i < m_layerCount; ++i)
+    {
+        m_debugPanel.m_appendSkipped += m_layers[i].getSkipped();
     }
 }
 
@@ -121,13 +152,48 @@ void GraphicEngine::draw()
                        m_layers[index].getSize(),
                        sf::Triangles,
                        m_layers[index].getState());
+
+        m_debugPanel.m_fpsCount++;
     }
+
+    handleTime();
+
+    // Displaying debug panel
+    m_debugPanel.draw(m_window);
 
     // Swapping buffers
     m_window->display();
+
+    // Incrementing draw counter
+    m_drawCounter++;
+}
+
+void GraphicEngine::handleTime()
+{
+    // Updating debug panel
+    m_current = Clock::getCurrentTime();
+    m_elapsed = m_current - m_previous;
+    m_previous = m_current;
+
+    m_debugPanel.m_renderTime = m_elapsed;
+
+    // Checking time
+    m_fpsCurrent = Clock::getCurrentTime();
+    m_fpsElapsed = m_fpsCurrent - m_fpsPrevious;
+
+    if(m_fpsElapsed >= 200)
+    {
+        double _fps = (m_drawCounter / (m_fpsElapsed / 200)) * 5;
+
+        m_debugPanel.m_fps = _fps;
+        m_fpsPrevious = m_fpsCurrent;
+        m_drawCounter = 0;
+    }
 }
 
 sf::RenderWindow * GraphicEngine::getWindow() const
 {
     return m_window;
 }
+
+

@@ -72,7 +72,7 @@ void Block::generateBlock()
             // Buffering index
             uint32_t _index =  i * m_blockWidth + j;
 
-            if(_data[_index] == constant::test::VOID_CASE)
+            if(_data[_index] == VOID_CASE)
             {
                 // Checking the case of a void tile
                 _sprites[_index] = nullptr;
@@ -124,11 +124,11 @@ void Block::setSpriteTextureRect(uint32_t index)
     // Handling all case
     switch(_data[index])
     {
-        case constant::test::WALL_CASE:
+        case WALL_CASE:
         {
             _sprite->setTextureRect(sf::IntRect(
-                    constant::test::WALL_TEXTURE_X * m_spriteSize,
-                    constant::test::WALL_TEXTURE_Y * m_spriteSize,
+                    WALL_TEXTURE_X * m_spriteSize,
+                    WALL_TEXTURE_Y * m_spriteSize,
                     m_spriteSize, m_spriteSize));
             break;
         }
