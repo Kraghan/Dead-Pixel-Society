@@ -11,7 +11,7 @@ PhysicAttributes::PhysicAttributes(std::vector<Collider> const&colliders)
 
 void PhysicAttributes::debug()
 {
-    for(int i = 0; i < m_colliders.size(); ++i)
+    for(unsigned i = 0; i < m_colliders.size(); ++i)
     {
         m_colliders[i].debug();
     }
