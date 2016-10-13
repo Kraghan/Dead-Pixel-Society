@@ -23,7 +23,7 @@ void GameEngine::init()
     // Texts count
     // Layer count
     // Layer size
-    m_graphicEngine.init("DPS", 1280, 720, 500, 100, 10, 500);
+    m_graphicEngine.init("DPS", 1280, 720, 2000, 100, 10, 500);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();

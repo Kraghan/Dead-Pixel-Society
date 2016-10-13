@@ -13,10 +13,11 @@
 #include <string>
 #include <cstring>
 #include <stdint.h>
+
+#include "Dungeon/LayerData.hpp"
 #include "GraphicEngine/Sprite.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "Dungeon/DungeonConstant.hpp"
-#include "Dungeon/BlockAttributes.hpp"
 
 class Block
 {
@@ -36,31 +37,44 @@ public:
      * \brief   Initialize the block with a block
      *          attribute
      */
-    void init(BlockAttributes const& attribute);
+    void init(std::string const& name, uint32_t width, uint32_t height,
+              uint32_t spriteSize, std::vector < LayerData > const& layerData);
+
+    /*!
+     * \brief   Hide the blocks
+     */
+    void hide();
+
+    /*!
+     * \brief   Show the blocks
+     */
+    void show();
 
 private:
 
     std::string m_theme;
     ResourceManager * m_resourceManager;
 
-    uint32_t m_layerSize;
-    uint32_t m_layerCount;
     uint32_t m_spriteSize;
     uint32_t m_blockWidth;
     uint32_t m_blockHeight;
     std::string m_blockName;
 
-    char * m_rawData;
-    Sprite ** m_spriteMap;
-    uint32_t m_spriteMapSize;
+    std::vector < std::vector < char > > m_rawData;
+    std::vector < std::vector < Sprite * > > m_spriteMap;
 
     /*!
-     * \brief   Methods section
+     * \brief   Generation Methods section
      */
     void generateBlock();
+    void setSprite(uint32_t x, uint32_t y, uint32_t index);
     void setSpriteTextureRect(uint32_t index);
-    void getRawData(std::vector < LayerData > & layers);
-    void setSprite(uint32_t layer, uint32_t offset, uint32_t index);
+    void getRawData(std::vector < char > const& data);
+
+    /*!
+     * \brief General
+     */
+    void setVisible(bool visible);
 };
 
 #endif // __BLOCK_HPP

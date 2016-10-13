@@ -10,6 +10,7 @@
 #define __DUNGEON_HPP
 
 #include "Dungeon/Block.hpp"
+#include "Dungeon/BlockAttributes.hpp"
 
 class Dungeon
 {
@@ -18,20 +19,31 @@ public:
     /*!
      * \brief   Default constructor
      */
-    explicit Dungeon();
+    explicit Dungeon(ResourceManager * resourceManager);
 
     /*!
      * \brief   Destructor
      */
     virtual ~Dungeon();
 
+    /*!
+     * \brief   Initialize the dungeon with a block attribute
+     * @param   blockAttributes
+     */
+    void init(std::vector < BlockAttributes * > const& blocks,
+              std::string const& theme);
+
 private:
 
-    /*!
-     * \brief   The block count of
-     *          the dungeon, see Block.hpp
-     */
+    std::string m_theme;
     uint32_t m_blockCount;
+    uint32_t m_currentBlock;
+
+    ResourceManager * m_resourceManager;
+    /*!
+     * \brief   The list of blocks
+     */
+    std::vector < Block > m_blocks;
 };
 
 #endif // __DUNGEON_HPP
