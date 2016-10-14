@@ -12,6 +12,8 @@
 #define __RESOURCE_MANAGER_HPP
 
 #include <iostream>
+
+#include "Tool/BlockParser.hpp"
 #include "Memory/Container.hpp"
 #include "GraphicEngine/Sprite.hpp"
 
@@ -68,6 +70,22 @@ public:
      */
     sf::Font * getFont(std::string const& alias);
 
+    /*!
+    * \brief   Load a BlockComponent in the block component container
+    * \param   path The path of the BlockAttribute to load
+    * \param   alias The alias of the BlockAttribute
+    * \return  The pointer on the newly created BlockAttribute
+    */
+    BlockComponent * loadBlockComponent(std::string const& path,
+                        std::string const& alias);
+
+    /*!
+     * \brief   Return the BlockAttribute referenced by alias
+     * \param   alias The alias (name) of the BlockAttribute in the map
+     * \return  A pointer on a BlockAttribute or nullptr if not found
+     */
+    BlockComponent * getBlockComponent(std::string const& alias);
+
 private:
 
     /*!
@@ -81,6 +99,12 @@ private:
      */
     Container < std::string, sf::Font > m_fontContainer;
     Container < std::string, sf::Texture > m_textureContainer;
+    Container < std::string, BlockComponent > m_blockComponentContainer;
+
+    /*!
+     * \brief   The block parser to extract block components
+     */
+    BlockParser m_blockParser;
 };
 
 #endif // __RESOURCE_MANAGER_HPP

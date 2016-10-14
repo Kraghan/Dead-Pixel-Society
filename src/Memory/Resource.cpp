@@ -21,6 +21,12 @@ Resource::Resource(Resource::TYPE _type,
             break;
         }
 
+        case Resource::BLOCK :
+        {
+            path = BLOCK_PATH + _name + BLOCK_TEXT;
+            break;
+        }
+
         case Resource::TEXTURE :
         {
             path = TEXTURE_PATH + _name + TEXTURE_EXT;

@@ -15,6 +15,9 @@ void ResourceLoader::init()
     // Loading fonts
     m_resources.push_back(Resource(Resource::TYPE::FONT, "RL","DEBUG_FONT"));
 
+    // Loading blocks
+    m_resources.push_back(Resource(Resource::TYPE::BLOCK, "block_1", "BLOCK_1"));
+
     // Loading textures
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "DebugPanel", "DEBUG_PANEL"));
@@ -39,6 +42,12 @@ void ResourceLoader::load(ResourceManager * manager)
             case Resource::TYPE::SOUND :
             {
                 // manager->loadSound(_res.path, _res.alias);
+                break;
+            }
+
+            case Resource::TYPE::BLOCK :
+            {
+                // manager->loadBlockComponent(_res.path, _res.alias);
                 break;
             }
 

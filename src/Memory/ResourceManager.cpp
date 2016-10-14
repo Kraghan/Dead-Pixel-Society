@@ -45,14 +45,38 @@ sf::Font * ResourceManager::loadFont(std::string const& path,
     return  _font;
 }
 
+BlockComponent * ResourceManager::loadBlockComponent(std::string const& path,
+    std::string const& alias)
+{
+    // Allocating the resources
+    BlockComponent * _block = m_blockComponentContainer.loadResource(alias);
+
+    // Checking the pointer
+    if(_block == nullptr) return nullptr;
+
+    // Loading the block
+    BlockComponent block = m_blockParser.readFile(path);
+
+    // Assigning value
+    *_block = block;
+
+    // Returning value
+    return  _block;
+}
+
 sf::Texture * ResourceManager::getTexture(std::string const& alias)
 {
     return m_textureContainer.getResource(alias);
 }
 
-sf::Font *ResourceManager::getFont(std::string const &alias)
+sf::Font * ResourceManager::getFont(std::string const& alias)
 {
     return m_fontContainer.getResource(alias);
+}
+
+BlockComponent * ResourceManager::getBlockComponent(std::string const& alias)
+{
+    return m_blockComponentContainer.getResource(alias);
 }
 
 Sprite * ResourceManager::getSprite()

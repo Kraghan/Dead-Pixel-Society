@@ -9,9 +9,13 @@
 #ifndef __GAME_ENGINE_HPP
 #define __GAME_ENGINE_HPP
 
+#include "GameEngine/Game.hpp"
 #include "GameEngine/Clock.hpp"
+#include "GameEngine/TimeManager.hpp"
+
 #include "Memory/ResourceLoader.hpp"
 #include "Memory/ResourceManager.hpp"
+
 #include "GraphicEngine/GraphicEngine.hpp"
 
 #include "Tool/BlockParser.hpp"
@@ -93,6 +97,11 @@ private :
      *          in a non blocking way
      */
     void processInput();
+
+    /*!
+     * \brief   Update the game
+     */
+    void update();
 };
 
 #endif // __GAME_ENGINE_HPP
