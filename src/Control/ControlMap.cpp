@@ -34,6 +34,7 @@ ControlMap::ControlMap(int up,int down,int left,int right,int attack,int jump,in
     m_map_menu[left] = Actions::PREVIOUS;
     m_map_menu[down] = Actions::NEXT;
     m_map_menu[right] = Actions::NEXT;
+    m_map_menu[-1] = Actions::VALIDATE;
     m_map_menu[validate] = Actions::VALIDATE;
     m_map_menu[exit] = Actions::EXIT;
     m_map_menu[pause] = Actions::PAUSE;

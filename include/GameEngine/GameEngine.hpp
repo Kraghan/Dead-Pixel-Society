@@ -16,6 +16,7 @@
 
 #include "Tool/BlockParser.hpp"
 #include "Dungeon/Dungeon.hpp"
+#include "Interface/Event.hpp"
 /*!
  * \class   GameEngine
  * \brief   Handle the game loop and controls
