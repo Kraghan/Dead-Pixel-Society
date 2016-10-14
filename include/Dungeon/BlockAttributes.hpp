@@ -1,5 +1,5 @@
 //
-// Created by madjo on 11/10/2016.
+// Created by Kraghan on 11/10/2016.
 //
 
 #ifndef PROJECT_BLOCKATTRIBUTES_HPP

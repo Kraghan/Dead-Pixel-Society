@@ -9,6 +9,7 @@
 #ifndef __GAME_ENGINE_HPP
 #define __GAME_ENGINE_HPP
 
+#include <Control/ControlMap.hpp>
 #include "GameEngine/Clock.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "GraphicEngine/GraphicEngine.hpp"
@@ -70,6 +71,11 @@ private :
      * \brief   The resource manager
      */
     ResourceManager m_resourceManager;
+
+    /*!
+     * \brief   The control mapping
+     */
+    ControlMap m_controlMap;
 
     /*!
      * \brief   A pointer on the graphic engine

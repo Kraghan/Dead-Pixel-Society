@@ -5,6 +5,7 @@ GameEngine::GameEngine()
 , m_graphicEngine()
 , m_resourceManager(&m_graphicEngine)
 , m_window(nullptr)
+, m_controlMap()
 {
     // TODO
 }
@@ -38,6 +39,7 @@ void GameEngine::init()
 
 void GameEngine::start()
 {
+    m_controlMap.debug();
     if(m_isRunning) return;
 
     m_isRunning = true;
@@ -104,6 +106,14 @@ void GameEngine::processInput()
         if (event.type == sf::Event::Closed)
         {
             m_isRunning = false;
+        }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            std::cout<< event.key.code << std::endl;
+        }
+        else if (event.type == sf::Event::JoystickButtonPressed)
+        {
+            std::cout<< event.joystickButton.button << std::endl;
         }
     }
 }

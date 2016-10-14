@@ -1,9 +1,7 @@
 #include <cstdlib>
-#include "Tool/BlockComponent.hpp"
 #include "GameEngine/GameEngine.hpp"
 #include "Interface/Panel.hpp"
 #include "Interface/Component.hpp"
-#include "Tool/BlockParser.hpp"
 int main(void)
 {
 
@@ -11,17 +9,6 @@ int main(void)
 
     gameEngine.init();
     gameEngine.start();
-
-    /*
-     * Debug parseur
-    std::string str = "C:\\Users\\madjo\\OneDrive\\Jeux\\Dead-Pixel-Society\\res\\Dungeon\\RoomBlock\\block_1.map";
-
-    BlockParser* parser = new BlockParser();
-
-    BlockComponent attr = parser->readFile(str);
-
-    attr.debug();
-    */
 
     /*
      * Debug interface
