@@ -75,6 +75,12 @@ public:
      */
     void wireframe(bool state);
 
+    /*!
+     * \brief   Set the framerate of the engine
+     * \param   framerate The target framerate
+     */
+    void setFramerate(double framerate);
+
 private:
 
     /*!
@@ -105,6 +111,12 @@ private:
     DebugPanel m_debugPanel;
 
     /*!
+     * \brief   The framerate of the game
+     */
+    double m_framerate;
+    double m_delta;
+
+    /*!
      * \brief   Record the time to achieve a render
      */
     double m_current;
@@ -115,6 +127,11 @@ private:
     double m_fpsPrevious;
     double m_fpsCurrent;
     double m_fpsElapsed;
+
+    double m_currentRender;
+    double m_previousRender;
+    double m_elapsedRender;
+    double m_renderLag;
 
     /*!
      * \brief   When true, display the game in wireframe !

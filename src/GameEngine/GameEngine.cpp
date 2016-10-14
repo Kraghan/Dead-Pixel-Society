@@ -44,9 +44,7 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
-    double lag = 0.0;
-    double previous = Clock::getCurrentTime();
-
+    // TMP
     BlockParser parser;
     BlockComponent blockComponent = parser.readFile(
             "../res/Dungeon/RoomBlock/block_1.map");
@@ -62,9 +60,16 @@ void GameEngine::gameLoop()
     blocks.push_back((BlockAttributes * )&blockAttributes);
 
     dungeon.init(blocks, "FOREST");
+    // TMP
+
 
     // Activating wire-frame
+    // Setting the framerate
     m_graphicEngine.wireframe(true);
+    m_graphicEngine.setFramerate(120.0);
+
+    double lag = 0.0;
+    double previous = Clock::getCurrentTime();
 
     while(m_isRunning)
     {
@@ -81,7 +86,7 @@ void GameEngine::gameLoop()
         {
             // Updating
             // TODO : update();
-            
+
             // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
         }

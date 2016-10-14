@@ -4,12 +4,19 @@
 : m_window(nullptr)
 , m_layerCount(0)
 , m_layerSize(0)
+, m_framerate(60)
+, m_delta(0)
 , m_current(0)
 , m_previous(0)
 , m_elapsed(0)
 , m_drawCounter(0)
 , m_fpsPrevious(0)
 , m_fpsCurrent(0)
+, m_fpsElapsed(0)
+, m_currentRender(0)
+, m_previousRender(0)
+, m_elapsedRender(0)
+, m_renderLag(0)
 , m_wireframe(false)
 , m_resourceManager(nullptr)
 {
@@ -53,6 +60,12 @@ void GraphicEngine::init(ResourceManager * resourceManager,
 
     // Setting fps counter
     m_fpsPrevious = Clock::getCurrentTime();
+
+    // Computing delta
+    m_delta = (1 / m_framerate) * 1000;
+
+    // Setting time
+    m_previousRender = Clock::getCurrentTime();
 }
 
 void GraphicEngine::initLayer()
@@ -74,6 +87,24 @@ Sprite * GraphicEngine::getSprite()
 
 void GraphicEngine::render()
 {
+    // Checking if its the time to render
+    m_currentRender = Clock::getCurrentTime();
+    m_elapsedRender = m_currentRender - m_previousRender;
+
+    m_previousRender = m_currentRender;
+    m_renderLag += m_elapsedRender;
+
+    if(m_renderLag < m_delta)
+    {
+        // It's not yet the time to render
+        // Skipping draw frame
+        return;
+    }
+
+    // It's time to draw
+    m_renderLag -= m_delta;
+
+    // Getting time
     m_previous = Clock::getCurrentTime();
 
     // Checking the window states
@@ -205,6 +236,14 @@ void GraphicEngine::wireframe(bool state)
     {
         m_layers[i].setWireframe(state);
     }
+}
+
+void GraphicEngine::setFramerate(double framerate)
+{
+    m_framerate = framerate;
+
+    // Re-computing delta (time step)
+    m_delta = (1 / m_framerate) * 1000;
 }
 
 
