@@ -4,9 +4,8 @@ GameEngine::GameEngine()
 : m_isRunning(false)
 , m_graphicEngine()
 , m_resourceManager(&m_graphicEngine)
-, m_controlMap()
 , m_window(nullptr)
-
+, m_controlMap()
 {
     // TODO
 }
@@ -204,7 +203,7 @@ void GameEngine::processInput()
                 position = sf::Vector2i(event.mouseMove.x,event.mouseMove.y);
             }
 
-            std::cout<< "Action : " << action <<std::endl;
+            // std::cout<< "Action : " << action <<std::endl;
 
             Event e = Event(position,type,isPressed);
 
