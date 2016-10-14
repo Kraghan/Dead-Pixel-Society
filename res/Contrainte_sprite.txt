@@ -1,5 +1,5 @@
 Taille de sprite pour donjon (mur et sol) : 64*64;
 
-Taille de la fenêtre : 1280 x 720;
+Taille de la fenêtre : 1280 x 768;
 
-Nombre de sprite par écrans : 20 x 11;
+Nombre de sprite par écrans : 20 x 12;

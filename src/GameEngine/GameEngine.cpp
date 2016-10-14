@@ -31,7 +31,7 @@ void GameEngine::init()
     // Layer count
     // Layer size
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 2000, 100, 15, 2500);
+                         "DPS", 1280, 768, 2000, 100, 15, 4000);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -68,6 +68,9 @@ void GameEngine::gameLoop()
     blocks.push_back((BlockAttributes * )&blockAttributes);
 
     dungeon.init(blocks, "FOREST");
+
+    // Activating wire-frame
+    m_graphicEngine.wireframe(true);
 
     while(m_isRunning)
     {

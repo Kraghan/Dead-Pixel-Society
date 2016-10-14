@@ -73,15 +73,15 @@ private :
     ResourceManager m_resourceManager;
 
     /*!
-     * \brief   The control mapping
-     */
-    ControlMap m_controlMap;
-
-    /*!
      * \brief   A pointer on the graphic engine
      *          window
      */
     sf::RenderWindow * m_window;
+
+    /*!
+     * \brief   The control mapping
+     */
+    ControlMap m_controlMap;
 
     /*!
      * \brief   Start the game loop

@@ -104,6 +104,23 @@ public:
         return m_skipped;
     }
 
+    /*!
+     * \brief   Set the wireframe mode to state
+     * \param   state The state of the wireframe mode
+     */
+    inline void setWireframe(bool state)
+    {
+        m_wireframe = state;
+    }
+
+    /*!
+     * \brief   Return the layer primitive
+     */
+    inline sf::PrimitiveType getPrimitive() const
+    {
+        return m_layerPrimitive;
+    }
+
 private:
 
     unsigned m_size;
@@ -117,6 +134,16 @@ private:
      * \brief   Debug variable
      */
     uint32_t m_skipped;
+
+    /*!
+     * \brief   When true, display the game in wireframe !
+     */
+    bool m_wireframe;
+
+    /*!
+     * \brief   Define the layer primitive
+     */
+    sf::PrimitiveType m_layerPrimitive;
 };
 
 #endif // __LAYER_HPP

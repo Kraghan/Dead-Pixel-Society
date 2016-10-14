@@ -24,6 +24,7 @@ void Layer::init(unsigned layerSize)
     m_capacity = layerSize;
     m_state = new sf::RenderStates();
     m_vertices = new sf::Vertex[m_capacity];
+    m_layerPrimitive = sf::Triangles;
 }
 
 void Layer::prepare()
@@ -49,9 +50,17 @@ void Layer::append(Sprite const * sprite)
     {
         m_type = LAYER_TYPE::SPRITE;
 
-        // On the first time, we have
-        // set the render states
-        m_state->texture = sprite->getTexture();
+        if(!m_wireframe)
+        {
+            // On the first time, we have
+            // set the render states
+            m_state->texture = sprite->getTexture();
+            m_layerPrimitive = sf::Triangles;
+        }
+        else
+        {
+            m_layerPrimitive = sf::Lines;
+        }
     }
     else if(m_type == LAYER_TYPE::TEXT)
     {
@@ -61,8 +70,11 @@ void Layer::append(Sprite const * sprite)
         return;
     }
 
+    uint32_t inc = 6;
+    if(m_wireframe) inc = 10;
+
     // Checking layer overflow
-    if(m_size + 6 >= m_capacity)
+    if(m_size + inc >= m_capacity)
     {
         // There is an overflow
         // Skipping
@@ -74,28 +86,68 @@ void Layer::append(Sprite const * sprite)
     // Getting the target vertices
     const sf::Vertex * _vertices = sprite->getVertices();
 
-    // Make two triangles from a triangle strip (Clockwise)
-    // Copying efficiently vertices
-    // So we can copy the first three triangles
-    memcpy((void *)&m_vertices[m_size], _vertices, 3 * sizeof(sf::Vertex));
-
-    // And then we have to copy the triangles left
-    // in the array to break the triangle strip
-    memcpy((void *)&m_vertices[m_size + 3], (void *)&_vertices[1], sizeof(sf::Vertex));
-    memcpy((void *)&m_vertices[m_size + 4], (void *)&_vertices[3], sizeof(sf::Vertex));
-    memcpy((void *)&m_vertices[m_size + 5], (void *)&_vertices[2], sizeof(sf::Vertex));
-
-    // Buffering transformation
-    const sf::Transform * _transform = &sprite->getTransform();
-
-    // Iterating vertices
-    for(unsigned i = 0; i < 6; ++i)
+    if(m_wireframe)
     {
-        // Applying transformation to the vertices
-        m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
-    }
+        // First line
+        memcpy((void *)&m_vertices[m_size + 0], &_vertices[0], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 1], &_vertices[1], sizeof(sf::Vertex));
 
-    // Then incrementing the size of the layer
-    // and we're done
-    m_size += 6;
+        // Second line
+        memcpy((void *)&m_vertices[m_size + 2], &_vertices[1], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 3], &_vertices[2], sizeof(sf::Vertex));
+
+        // Third line
+        memcpy((void *)&m_vertices[m_size + 4], &_vertices[2], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 5], &_vertices[0], sizeof(sf::Vertex));
+
+        // Fourth line
+        memcpy((void *)&m_vertices[m_size + 6], &_vertices[1], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 7], &_vertices[3], sizeof(sf::Vertex));
+
+        // Fifth line
+        memcpy((void *)&m_vertices[m_size + 8], &_vertices[3], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 9], &_vertices[2], sizeof(sf::Vertex));
+
+        // Buffering transformation
+        const sf::Transform * _transform = &sprite->getTransform();
+
+        // Iterating vertices
+        for(unsigned i = 0; i < inc; ++i)
+        {
+            // Applying transformation to the vertices
+            m_vertices[m_size + i].position  = *_transform * m_vertices[m_size + i].position;
+            m_vertices[m_size + i].texCoords = sf::Vector2f(0.0f, 0.0f);
+            m_vertices[m_size + i].color     = sf::Color::Blue;
+        }
+
+        // A wireframe shape is 5 triangles
+        m_size += inc;
+    }
+    else
+    {
+        // Make two triangles from a triangle strip (Clockwise)
+        // Copying efficiently vertices
+        // So we can copy the first three triangles
+        memcpy((void *)&m_vertices[m_size + 0], _vertices, 3 * sizeof(sf::Vertex));
+
+        // And then we have to copy the triangles left
+        // in the array to break the triangle strip
+        memcpy((void *)&m_vertices[m_size + 3], (void *)&_vertices[1], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 4], (void *)&_vertices[3], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + 5], (void *)&_vertices[2], sizeof(sf::Vertex));
+
+        // Buffering transformation
+        const sf::Transform * _transform = &sprite->getTransform();
+
+        // Iterating vertices
+        for(unsigned i = 0; i < inc; ++i)
+        {
+            // Applying transformation to the vertices
+            m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
+        }
+
+        // Then incrementing the size of the layer
+        // and we're done
+        m_size += inc;
+    }
 }

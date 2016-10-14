@@ -69,6 +69,12 @@ public:
     */
     sf::RenderWindow * getWindow() const;
 
+    /*!
+     * \brief   Set the wireframe mode
+     * \param   state true to activate, false to disabled
+     */
+    void wireframe(bool state);
+
 private:
 
     /*!
@@ -109,6 +115,11 @@ private:
     double m_fpsPrevious;
     double m_fpsCurrent;
     double m_fpsElapsed;
+
+    /*!
+     * \brief   When true, display the game in wireframe !
+     */
+    bool m_wireframe;
 
     /*!
      * \brief   A pointer on the resource manager

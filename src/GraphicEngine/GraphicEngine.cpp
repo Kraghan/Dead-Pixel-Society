@@ -10,6 +10,7 @@
 , m_drawCounter(0)
 , m_fpsPrevious(0)
 , m_fpsCurrent(0)
+, m_wireframe(false)
 , m_resourceManager(nullptr)
 {
     // None
@@ -150,7 +151,7 @@ void GraphicEngine::draw()
         // Drawing the content of the current layer
         m_window->draw(m_layers[index].getVertices(),
                        m_layers[index].getSize(),
-                       sf::Triangles,
+                       m_layers[index].getPrimitive(),
                        m_layers[index].getState());
 
         m_debugPanel.m_fpsCount++;
@@ -194,6 +195,16 @@ void GraphicEngine::handleTime()
 sf::RenderWindow * GraphicEngine::getWindow() const
 {
     return m_window;
+}
+
+void GraphicEngine::wireframe(bool state)
+{
+    m_wireframe = state;
+
+    for(uint32_t i = 0; i < m_layerCount; ++i)
+    {
+        m_layers[i].setWireframe(state);
+    }
 }
 
 
