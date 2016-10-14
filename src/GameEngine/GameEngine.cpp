@@ -2,9 +2,10 @@
 
 GameEngine::GameEngine()
 : m_isRunning(false)
-, m_graphicEngine()
-, m_resourceManager(&m_graphicEngine)
 , m_window(nullptr)
+, m_graphicEngine()
+, m_resourceLoader()
+, m_resourceManager(&m_graphicEngine)
 , m_controlMap()
 {
     // TODO
@@ -17,21 +18,17 @@ GameEngine::GameEngine()
 
 void GameEngine::init()
 {
-
-    m_resourceManager.loadTexture("../res/Texture/DebugPanel.png", "DEBUG_PANEL");
-    m_resourceManager.loadFont("../res/Font/Roboto-Light.ttf", "DEBUG_FONT");
-
+    // Loading and getting resources
+    m_resourceLoader.init();
+    m_resourceLoader.load(&m_resourceManager);
 
     // Initializing other engine
-    // The resource manager
-    // Window name
-    // Window size
-    // Sprites count
-    // Texts count
-    // Layer count
-    // Layer size
+    // m_physicEngine.init();
+    // m_soundEngine.init();
+
+    // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 2000, 100, 15, 4000);
+                         "DPS", 1280, 768, 2000, 100, 15, 2500);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -49,8 +46,6 @@ void GameEngine::gameLoop()
 {
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
-
-    m_resourceManager.loadTexture("../res/Texture/TileTest.png", "FOREST");
 
     BlockParser parser;
     BlockComponent blockComponent = parser.readFile(
@@ -86,13 +81,13 @@ void GameEngine::gameLoop()
         {
             // Updating
             // TODO : update();
-
-            // Rendering
-            m_graphicEngine.render();
-
+            
             // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
         }
+
+        // Rendering
+        m_graphicEngine.render();
     }
 }
 

@@ -9,14 +9,17 @@
 #ifndef __GAME_ENGINE_HPP
 #define __GAME_ENGINE_HPP
 
-#include <Control/ControlMap.hpp>
 #include "GameEngine/Clock.hpp"
+#include "Memory/ResourceLoader.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "GraphicEngine/GraphicEngine.hpp"
 
 #include "Tool/BlockParser.hpp"
 #include "Dungeon/Dungeon.hpp"
 #include "Interface/Event.hpp"
+
+#include "Control/ControlMap.hpp"
+
 /*!
  * \class   GameEngine
  * \brief   Handle the game loop and controls
@@ -66,18 +69,14 @@ private :
     /*!
      * \brief   The amazing graphic engine
      */
+    sf::RenderWindow * m_window;
     GraphicEngine m_graphicEngine;
 
     /*!
-     * \brief   The resource manager
+     * \brief   The resource managers
      */
+    ResourceLoader m_resourceLoader;
     ResourceManager m_resourceManager;
-
-    /*!
-     * \brief   A pointer on the graphic engine
-     *          window
-     */
-    sf::RenderWindow * m_window;
 
     /*!
      * \brief   The control mapping
