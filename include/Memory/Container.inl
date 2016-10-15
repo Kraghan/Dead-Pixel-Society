@@ -68,6 +68,9 @@ template <typename T, typename U, class Allocator, class Hash>
 U * const Container<T, U, Allocator, Hash>
 ::getRandom()
 {
+    // Checking size
+    if(m_resources.size() == 0) return nullptr;
+
     // Generation seed
     long long seed = std::chrono::system_clock::now().time_since_epoch().count();
 

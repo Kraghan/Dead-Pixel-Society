@@ -4,6 +4,7 @@ Resource::Resource(Resource::TYPE _type,
     DungeonTheme const& _theme,
     std::string const& _alias)
 {
+    type = _type;
     alias = _alias;
     theme = _theme;
 }

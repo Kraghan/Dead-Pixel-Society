@@ -19,6 +19,7 @@ void ResourceLoader::init()
     m_resources.push_back(Resource(Resource::TYPE::BLOCK, "block_1", "BLOCK_1"));
     m_resources.push_back(Resource(Resource::TYPE::BLOCK, "block_2", "BLOCK_2"));
     m_resources.push_back(Resource(Resource::TYPE::BLOCK, "block_3", "BLOCK_3"));
+    m_resources.push_back(Resource(Resource::TYPE::BLOCK, "block_4", "BLOCK_4"));
 
     // Loading textures
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "FOREST"));

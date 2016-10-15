@@ -86,6 +86,11 @@ private :
     ResourceManager m_resourceManager;
 
     /*!
+     * \brief   The main class
+     */
+    Game m_game;
+
+    /*!
      * \brief   The control mapping
      */
     ControlMap m_controlMap;

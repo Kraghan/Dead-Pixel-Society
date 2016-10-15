@@ -6,6 +6,7 @@ GameEngine::GameEngine()
 , m_graphicEngine()
 , m_resourceLoader()
 , m_resourceManager(&m_graphicEngine)
+, m_game()
 , m_controlMap()
 {
     // TODO
@@ -28,7 +29,7 @@ void GameEngine::init()
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 2000, 100, 15, 5000);
+                         "DPS", 1280, 768, 2000, 100, 15, 2000);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -41,8 +42,13 @@ void GameEngine::init()
 
 void GameEngine::start()
 {
+    // The game is already running
     if(m_isRunning) return;
 
+    // Launching internal class game
+    m_game.init(&m_resourceManager);
+
+    // Setting game loop attribute
     m_isRunning = true;
     gameLoop();
 }
@@ -80,7 +86,7 @@ void GameEngine::gameLoop()
 void GameEngine::update()
 {
     // Updating the game
-    // game.update(MS_PER_UPDATE * TimeManager::TimeScale);
+    m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()

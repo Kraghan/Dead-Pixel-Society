@@ -45,6 +45,9 @@ void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
         );
 
         // Hide the block
-        if(index != 0) _block.hide();
+        if(index != 0)
+        {
+            _block.hide();
+        }
     }
 }

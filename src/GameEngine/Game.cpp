@@ -1,7 +1,8 @@
 #include "GameEngine/Game.hpp"
 
 /* explicit */ Game::Game()
-: m_resourceManager(nullptr)
+: m_dungeon(nullptr)
+, m_resourceManager(nullptr)
 {
     // None
 }
@@ -14,6 +15,12 @@
 void Game::init(ResourceManager * resourceManager)
 {
     m_resourceManager = resourceManager;
+
+    // TMP
+    m_dungeonFactory.init(m_resourceManager);
+
+    // Creating a random dungeon
+    m_dungeon = m_dungeonFactory.generateDungeon();
 }
 
 void Game::update(double dt)
