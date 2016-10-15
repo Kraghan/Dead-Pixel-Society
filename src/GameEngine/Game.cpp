@@ -21,6 +21,9 @@ void Game::init(ResourceManager * resourceManager)
 
     // Creating a random dungeon
     m_dungeon = m_dungeonFactory.generateDungeon();
+
+    // Creating the player
+    m_player.init(m_resourceManager);
 }
 
 void Game::update(double dt)

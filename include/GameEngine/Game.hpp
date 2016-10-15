@@ -12,6 +12,7 @@
 #include "GameEngine/Updatable.hpp"
 #include "Memory/ResourceManager.hpp"
 
+#include "Player/Player.hpp"
 #include "Dungeon/DungeonFactory.hpp"
 
 class Game : public Updatable
@@ -41,10 +42,10 @@ public:
 
 private:
 
+    Player m_player;
     Dungeon * m_dungeon;
     DungeonFactory m_dungeonFactory;
     ResourceManager * m_resourceManager;
-
 };
 
 #endif // __GAME_HPP

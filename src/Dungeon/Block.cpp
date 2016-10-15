@@ -13,7 +13,20 @@
 
 /* virtual */ Block::~Block()
 {
-    // None
+    // Hide or Show the blocks
+    for(uint32_t index = 0; index < m_spriteMap.size(); ++index)
+    {
+        // Buffering the vector
+        std::vector < Sprite * > & _sprites = m_spriteMap[index];
+
+        for(uint32_t i = 0; i < _sprites.size(); ++i)
+        {
+            if(_sprites[i] != nullptr)
+            {
+                Sprite::release(_sprites[i]);
+            }
+        }
+    }
 }
 
 void Block::init(

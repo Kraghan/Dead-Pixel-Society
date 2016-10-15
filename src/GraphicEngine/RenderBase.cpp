@@ -6,6 +6,8 @@ RenderBase::RenderBase()
     m_ready = false;
     m_visible = true;
     m_available = true;
+
+    m_wireColor = sf::Color::Blue;
 }
 
 void RenderBase::update()

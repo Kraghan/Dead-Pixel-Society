@@ -3,6 +3,7 @@
 /* explicit */ Dungeon::Dungeon(ResourceManager * resourceManager)
 : m_theme(nullptr)
 , m_blockCount(0)
+, m_dungeonSize(0)
 , m_currentBlock(0)
 , m_resourceManager(resourceManager)
 {
@@ -11,7 +12,10 @@
 
 /* virtual */ Dungeon::~Dungeon()
 {
-    // None
+    for(uint32_t index = 0; index < m_blocks.size(); ++index)
+    {
+        delete m_blocks[index];
+    }
 }
 
 void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
@@ -29,14 +33,14 @@ void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
     for(uint32_t index = 0; index < blocks.size(); ++index)
     {
         // Creating the block
-        m_blocks.push_back(Block(m_resourceManager, m_theme));
+        m_blocks.push_back(new Block(m_resourceManager, m_theme));
 
         // Buffering variables
-        Block & _block = m_blocks.back();
+        Block * _block = m_blocks.back();
         BlockAttributes * _attribute = blocks[index];
 
         // Initializing the block
-        _block.init(
+        _block->init(
                 _attribute->getName(),
                 _attribute->getWidth(),
                 _attribute->getHeight(),
@@ -47,7 +51,49 @@ void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
         // Hide the block
         if(index != 0)
         {
-            _block.hide();
+            _block->hide();
         }
+
+        m_dungeonSize++;
     }
+}
+
+bool Dungeon::nextBlock()
+{
+    // The dungeon is over !
+    if(m_currentBlock + 1 >= m_dungeonSize)
+    {
+        m_blocks[m_currentBlock]->hide();
+        return false;
+    }
+
+    // There is a next block
+    // Hiding the current block
+    m_blocks[m_currentBlock]->hide();
+
+    // Incrementing the current block
+    m_currentBlock++;
+
+    // Showing the next one
+    m_blocks[m_currentBlock]->show();
+}
+
+bool Dungeon::previousBlock()
+{
+    // The player wants to go out
+    if(m_currentBlock - 1 < 0)
+    {
+        m_blocks[m_currentBlock]->hide();
+        return false;
+    }
+
+    // There is a next block
+    // Hiding the current block
+    m_blocks[m_currentBlock]->hide();
+
+    // Decrementing the current block
+    m_currentBlock--;
+
+    // Showing the previous one
+    m_blocks[m_currentBlock]->show();
 }

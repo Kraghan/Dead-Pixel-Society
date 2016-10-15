@@ -67,6 +67,22 @@ public:
         update();
     }
 
+    /*!
+     * \brief   Set the visible wireframe color
+     * \param   color The color to set
+     */
+    inline void setWireColor(const sf::Color color) {
+        m_wireColor = color;
+    }
+
+    /*!
+     * \brief   Return the current color of the wireframe mode for the sprite
+     * \return  The color of the wireframe mode
+     */
+    inline sf::Color getWireColor() const {
+        return m_wireColor;
+    }
+
 protected:
 
     /*!
@@ -104,6 +120,8 @@ private:
     bool m_ready;
     bool m_visible;
     bool m_available;
+
+    sf::Color m_wireColor;
 };
 
 #endif // __RENDER_BASE_HPP
