@@ -64,6 +64,23 @@ BlockComponent * ResourceManager::loadBlockComponent(std::string const& path,
     return  _block;
 }
 
+
+DungeonTheme * ResourceManager::loadDungeonTheme(DungeonTheme const& theme,
+    std::string const& alias)
+{
+    // Allocating the resources
+    DungeonTheme * _theme = m_dungeonThemeContainer.loadResource(alias);
+
+    // Checking the pointer
+    if(_theme == nullptr) return nullptr;
+
+    // Assigning value
+    *_theme = theme;
+
+    // Returning value
+    return  _theme;
+}
+
 sf::Texture * ResourceManager::getTexture(std::string const& alias)
 {
     return m_textureContainer.getResource(alias);
@@ -82,4 +99,19 @@ BlockComponent * ResourceManager::getBlockComponent(std::string const& alias)
 Sprite * ResourceManager::getSprite()
 {
     return m_graphicEngine->getSprite();
+}
+
+DungeonTheme * ResourceManager::getDungeonTheme(std::string const& alias)
+{
+    return m_dungeonThemeContainer.getResource(alias);
+}
+
+DungeonTheme * ResourceManager::getRandomTheme()
+{
+    return m_dungeonThemeContainer.getRandom();
+}
+
+BlockComponent * ResourceManager::getRandomBlockComponent()
+{
+    return m_blockComponentContainer.getRandom();
 }

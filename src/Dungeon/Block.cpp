@@ -1,6 +1,6 @@
 #include "Dungeon/Block.hpp"
 
-/* explicit */ Block::Block(ResourceManager * resourceManager, std::string const& theme)
+/* explicit */ Block::Block(ResourceManager * resourceManager, DungeonTheme * theme)
 : m_theme(theme)
 , m_resourceManager(resourceManager)
 , m_spriteSize(0)
@@ -99,7 +99,7 @@ void Block::setSprite(uint32_t x, uint32_t y, uint32_t index)
     _sprites[index]->setLayer(m_spriteMap.size() - 1);
 
     // Getting the texture
-    _sprites[index]->setTexture(*m_resourceManager->getTexture(m_theme));
+    _sprites[index]->setTexture(*m_resourceManager->getTexture(m_theme->getThemeKey()));
 
     // Setting the position of the sprite
     float _x = x * m_spriteSize;

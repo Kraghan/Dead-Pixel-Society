@@ -10,6 +10,7 @@
 #define __DUNGEON_HPP
 
 #include "Dungeon/Block.hpp"
+#include "Dungeon/DungeonTheme.hpp"
 #include "Dungeon/BlockAttributes.hpp"
 
 class Dungeon
@@ -31,11 +32,11 @@ public:
      * @param   blockAttributes
      */
     void init(std::vector < BlockAttributes * > const& blocks,
-              std::string const& theme);
+              DungeonTheme * theme);
 
 private:
 
-    std::string m_theme;
+    DungeonTheme * m_theme;
     uint32_t m_blockCount;
     uint32_t m_currentBlock;
 

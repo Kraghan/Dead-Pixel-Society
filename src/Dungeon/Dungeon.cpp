@@ -1,7 +1,7 @@
 #include "Dungeon/Dungeon.hpp"
 
 /* explicit */ Dungeon::Dungeon(ResourceManager * resourceManager)
-: m_theme("")
+: m_theme(nullptr)
 , m_blockCount(0)
 , m_currentBlock(0)
 , m_resourceManager(resourceManager)
@@ -15,7 +15,7 @@
 }
 
 void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
-    std::string const& theme)
+    DungeonTheme * theme)
 {
     // Initializing values to default
     m_theme = theme;

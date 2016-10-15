@@ -16,6 +16,7 @@
 #include "Tool/BlockParser.hpp"
 #include "Memory/Container.hpp"
 #include "GraphicEngine/Sprite.hpp"
+#include "Dungeon/DungeonTheme.hpp"
 
 // Forward declaration
 class GraphicEngine;
@@ -71,11 +72,11 @@ public:
     sf::Font * getFont(std::string const& alias);
 
     /*!
-    * \brief   Load a BlockComponent in the block component container
-    * \param   path The path of the BlockAttribute to load
-    * \param   alias The alias of the BlockAttribute
-    * \return  The pointer on the newly created BlockAttribute
-    */
+     * \brief   Load a BlockComponent in the block component container
+     * \param   path The path of the BlockAttribute to load
+     * \param   alias The alias of the BlockAttribute
+     * \return  The pointer on the newly created BlockAttribute
+     */
     BlockComponent * loadBlockComponent(std::string const& path,
                         std::string const& alias);
 
@@ -85,6 +86,28 @@ public:
      * \return  A pointer on a BlockAttribute or nullptr if not found
      */
     BlockComponent * getBlockComponent(std::string const& alias);
+
+    /*!
+     * \brief   Load a DungeonTheme in the dungeon theme container
+     * \param   path The path of the DungeonTheme to load
+     * \param   alias The alias of the DungeonTheme
+     * \return  The pointer on the newly created DungeonTheme
+     */
+    DungeonTheme * loadDungeonTheme(DungeonTheme const& theme,
+                                    std::string const& alias);
+
+    /*!
+     * \brief   Return the DungeonTheme referenced by alias
+     * \param   alias The alias (name) of the DungeonTheme in the map
+     * \return  A pointer on a DungeonTheme or nullptr if not found
+     */
+    DungeonTheme * getDungeonTheme(std::string const& alias);
+
+    /*!
+     * \brief   Return random values
+     */
+    DungeonTheme * getRandomTheme();
+    BlockComponent * getRandomBlockComponent();
 
 private:
 
@@ -99,6 +122,7 @@ private:
      */
     Container < std::string, sf::Font > m_fontContainer;
     Container < std::string, sf::Texture > m_textureContainer;
+    Container < std::string, DungeonTheme > m_dungeonThemeContainer;
     Container < std::string, BlockComponent > m_blockComponentContainer;
 
     /*!

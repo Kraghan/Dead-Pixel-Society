@@ -11,6 +11,8 @@
 #ifndef __CONTAINER_HPP
 #define __CONTAINER_HPP
 
+#include <chrono>
+#include <algorithm>
 #include <unordered_map>
 #include "TypeTraits.hpp"
 #include "DefaultAllocator.hpp"
@@ -68,6 +70,12 @@ public :
      * \return  A pointer on the current allocator
      */
     Allocator * getAllocator();
+
+    /*!
+     * \brief   Return a random value in the map
+     * \return  A random value
+     */
+    U * const getRandom();
 
 private :
 

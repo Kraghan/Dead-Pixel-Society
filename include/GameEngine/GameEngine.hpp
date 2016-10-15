@@ -65,10 +65,13 @@ private :
     bool m_isRunning;
 
     /*!
-     * \brief   Fixed update en render time
-     *          16.67 = 60 fps
+     * \brief   Fixed update (ups = update per second)
+     *          16.67 =  60 ups
+     *          11.11 =  90 ups
+     *           8.33 = 120 ups
+     *           4.16 = 240 ups
      */
-    const double MS_PER_UPDATE = 16.67;
+    const double MS_PER_UPDATE = 11.11;
 
     /*!
      * \brief   The amazing graphic engine

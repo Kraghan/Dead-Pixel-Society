@@ -28,7 +28,7 @@ void GameEngine::init()
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 2000, 100, 15, 2500);
+                         "DPS", 1280, 768, 2000, 100, 15, 5000);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -49,24 +49,6 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
-    // TMP
-    BlockParser parser;
-    BlockComponent blockComponent = parser.readFile(
-            "../res/Dungeon/Block/block_1.map");
-
-    BlockAttributes const& blockAttributes = blockComponent.getBlockAttribute();
-
-    Dungeon dungeon(&m_resourceManager);
-
-    std::vector < BlockAttributes * > blocks;
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-
-    dungeon.init(blocks, "FOREST");
-    // TMP
-
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 

@@ -1,6 +1,15 @@
 #include "Memory/Resource.hpp"
 
 Resource::Resource(Resource::TYPE _type,
+    DungeonTheme const& _theme,
+    std::string const& _alias)
+{
+    alias = _alias;
+    theme = _theme;
+}
+
+
+Resource::Resource(Resource::TYPE _type,
     std::string const& _name,
     std::string const& _alias)
 {
