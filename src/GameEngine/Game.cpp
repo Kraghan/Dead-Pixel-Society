@@ -18,15 +18,15 @@ void Game::init(ResourceManager * resourceManager)
 
     // TMP
     m_dungeonFactory.init(m_resourceManager);
-
-    // Creating a random dungeon
     m_dungeon = m_dungeonFactory.generateDungeon();
-
-    // Creating the player
     m_player.init(m_resourceManager);
+    // TMP
+
+    // m_stateMachine.pushState(m_worldMapState); ///< Soon
 }
 
 void Game::update(double dt)
 {
-    // Updating game
+    // Updating the game
+    m_stateMachine.update(dt);
 }
