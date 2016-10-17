@@ -19,7 +19,7 @@ public:
     ControlMap(int up,int down,int left,int right,int attack,int jump,int activate,int validate,int exit,int pause,
                int c_attack,int c_jump,int c_activate,int c_validate,int c_exit,int c_pause);
 
-    Actions getAction(int keyPressed);
+    Actions getAction(int keyPressed) const;
 
     void debug();
 };

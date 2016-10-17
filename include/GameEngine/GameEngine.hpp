@@ -9,6 +9,7 @@
 #ifndef __GAME_ENGINE_HPP
 #define __GAME_ENGINE_HPP
 
+#include <Control/EventConverter.hpp>
 #include "GameEngine/Game.hpp"
 #include "GameEngine/Clock.hpp"
 #include "GameEngine/TimeManager.hpp"
@@ -94,6 +95,11 @@ private :
      * \brief   The control mapping
      */
     ControlMap m_controlMap;
+
+    /*!
+     * \brief   The sfml event converter
+     */
+    EventConverter m_eventConverter;
 
     /*!
      * \brief   Start the game loop
