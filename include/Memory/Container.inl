@@ -63,3 +63,29 @@ Allocator * Container<T, U, Allocator, Hash>
 {
     return &m_allocator;
 }
+
+template <typename T, typename U, class Allocator, class Hash>
+U * const Container<T, U, Allocator, Hash>
+::getRandom()
+{
+    // Checking size
+    if(m_resources.size() == 0) return nullptr;
+
+    // Generation seed
+    long long seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    // Creating buffer to shuffle value
+    std::vector < U * > _buffer;
+
+    // Filling the vector
+    for(auto it = m_resources.begin(); it != m_resources.end(); ++it)
+    {
+        _buffer.push_back(it->second);
+    }
+
+    // Shuffle the vector
+    std::shuffle(_buffer.begin(), _buffer.end(), std::default_random_engine(seed));
+
+    // Returnin the first iterator value
+    return *_buffer.begin();
+}

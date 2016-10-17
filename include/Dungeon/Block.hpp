@@ -14,9 +14,11 @@
 #include <cstring>
 #include <stdint.h>
 
-#include "Dungeon/LayerData.hpp"
 #include "GraphicEngine/Sprite.hpp"
 #include "Memory/ResourceManager.hpp"
+
+#include "Dungeon/LayerData.hpp"
+#include "Dungeon/DungeonTheme.hpp"
 #include "Dungeon/DungeonConstant.hpp"
 
 class Block
@@ -26,7 +28,7 @@ public:
     /*!
      * \brief   Default constructor
      */
-    explicit Block(ResourceManager * resourceManager, std::string const& theme);
+    explicit Block(ResourceManager * resourceManager, DungeonTheme * theme);
 
     /*!
      * \brief   Destructor
@@ -52,7 +54,7 @@ public:
 
 private:
 
-    std::string m_theme;
+    DungeonTheme * m_theme;
     ResourceManager * m_resourceManager;
 
     uint32_t m_spriteSize;

@@ -6,6 +6,7 @@ GameEngine::GameEngine()
 , m_graphicEngine()
 , m_resourceLoader()
 , m_resourceManager(&m_graphicEngine)
+, m_game()
 , m_controlMap()
 {
     // TODO
@@ -28,22 +29,33 @@ void GameEngine::init()
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 500000, 100, 15, 2500);
+                         "DPS", 1280, 768, 2000, 100, 15, 2000);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
+
+    // Activating wire-frame
+    // Setting the framerate
+    m_graphicEngine.wireframe(true);
+    m_graphicEngine.setFramerate(120.0);
 }
 
 void GameEngine::start()
 {
+    // The game is already running
     if(m_isRunning) return;
 
+    // Launching internal class game
+    m_game.init(&m_resourceManager);
+
+    // Setting game loop attribute
     m_isRunning = true;
     gameLoop();
 }
 
 void GameEngine::gameLoop()
 {
+<<<<<<< HEAD
     // TMP
     BlockParser parser;
     BlockComponent blockComponent = parser.readFile(
@@ -68,6 +80,8 @@ void GameEngine::gameLoop()
     m_graphicEngine.wireframe(true);
     m_graphicEngine.setFramerate(500.0);
 
+=======
+>>>>>>> 99148e5aa550b6a9f717b7ad9369b9081611be1b
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
@@ -85,7 +99,7 @@ void GameEngine::gameLoop()
         while(lag >= MS_PER_UPDATE)
         {
             // Updating
-            // TODO : update();
+            update();
 
             // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
@@ -94,6 +108,12 @@ void GameEngine::gameLoop()
         // Rendering
         m_graphicEngine.render();
     }
+}
+
+void GameEngine::update()
+{
+    // Updating the game
+    m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()

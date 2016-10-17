@@ -1,16 +1,23 @@
-//
-// Created by Kraghan on 11/10/2016.
-//
-
 #include "Dungeon/LayerData.hpp"
 
-LayerData::LayerData(std::vector<char> const&layerData)
+/* explicit */ LayerData::LayerData()
+{
+    // None
+}
+
+/* explicit */ LayerData::LayerData(std::vector<char> const&layerData)
 {
     m_layerData = layerData;
 }
 
+/* virtual */ LayerData::~LayerData()
+{
+    // None
+}
 
-std::vector<char> const& LayerData::getLayerData()
+std::vector <char> const& LayerData::getLayerData()
 {
     return m_layerData;
 }
+
+

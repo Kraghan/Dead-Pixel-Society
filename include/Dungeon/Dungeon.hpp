@@ -10,6 +10,7 @@
 #define __DUNGEON_HPP
 
 #include "Dungeon/Block.hpp"
+#include "Dungeon/DungeonTheme.hpp"
 #include "Dungeon/BlockAttributes.hpp"
 
 class Dungeon
@@ -31,19 +32,33 @@ public:
      * @param   blockAttributes
      */
     void init(std::vector < BlockAttributes * > const& blocks,
-              std::string const& theme);
+              DungeonTheme * theme);
+
+    /*!
+     * \brief   Change the current block for the next one
+     * \return  Return false if there's no next block (end of dungeon)
+     */
+    bool nextBlock();
+
+    /*!
+     * \brief   Change the current block for the previous one
+     * \return  Return false if there's no previous block (exit of dungeon)
+     */
+    bool previousBlock();
 
 private:
 
-    std::string m_theme;
+    DungeonTheme * m_theme;
     uint32_t m_blockCount;
+    uint32_t m_dungeonSize;
     uint32_t m_currentBlock;
 
     ResourceManager * m_resourceManager;
+
     /*!
      * \brief   The list of blocks
      */
-    std::vector < Block > m_blocks;
+    std::vector < Block * > m_blocks;
 };
 
 #endif // __DUNGEON_HPP

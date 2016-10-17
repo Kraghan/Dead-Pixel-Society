@@ -1,5 +1,12 @@
 #include "Tool/BlockComponent.hpp"
 
+/* explicit */ BlockComponent::BlockComponent()
+: m_blockAttributes()
+, m_physicAttributes()
+{
+    // None
+}
+
 BlockComponent::BlockComponent(
   std::string const& name
 , unsigned int size

@@ -9,9 +9,13 @@
 #ifndef __GAME_ENGINE_HPP
 #define __GAME_ENGINE_HPP
 
+#include "GameEngine/Game.hpp"
 #include "GameEngine/Clock.hpp"
+#include "GameEngine/TimeManager.hpp"
+
 #include "Memory/ResourceLoader.hpp"
 #include "Memory/ResourceManager.hpp"
+
 #include "GraphicEngine/GraphicEngine.hpp"
 
 #include "Tool/BlockParser.hpp"
@@ -61,8 +65,11 @@ private :
     bool m_isRunning;
 
     /*!
-     * \brief   Fixed update en render time
-     *          16.67 = 60 fps
+     * \brief   Fixed update (ups = update per second)
+     *          16.67 =  60 ups
+     *          11.11 =  90 ups
+     *           8.33 = 120 ups
+     *           4.16 = 240 ups
      */
     const double MS_PER_UPDATE = 8.67;
 
@@ -79,6 +86,11 @@ private :
     ResourceManager m_resourceManager;
 
     /*!
+     * \brief   The main class
+     */
+    Game m_game;
+
+    /*!
      * \brief   The control mapping
      */
     ControlMap m_controlMap;
@@ -93,6 +105,11 @@ private :
      *          in a non blocking way
      */
     void processInput();
+
+    /*!
+     * \brief   Update the game
+     */
+    void update();
 };
 
 #endif // __GAME_ENGINE_HPP

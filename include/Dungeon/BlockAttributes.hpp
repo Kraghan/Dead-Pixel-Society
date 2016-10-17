@@ -32,6 +32,8 @@ public:
     const std::vector<LayerData> &getSpritesData() const;
 
     void debug();
+
+    BlockAttributes();
 };
 
 

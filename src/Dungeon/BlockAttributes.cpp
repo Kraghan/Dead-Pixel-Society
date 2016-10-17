@@ -3,6 +3,12 @@
 //
 #include "Dungeon/BlockAttributes.hpp"
 
+BlockAttributes::BlockAttributes()
+{
+
+}
+
+
 BlockAttributes::BlockAttributes(std::string name, unsigned int spriteSize, unsigned int width, unsigned int height,
                                  std::vector<LayerData> const&spriteDatas)
 {
@@ -54,3 +60,4 @@ void BlockAttributes::debug()
         }
     }
 }
+

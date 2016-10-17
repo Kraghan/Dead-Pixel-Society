@@ -2,6 +2,7 @@
 
 DebugPanel::DebugPanel()
 : m_fps(0.0f)
+, m_delta(0)
 , m_renderTime(0.0f)
 , m_fpsCount(0)
 , m_textInUse(0)
@@ -73,9 +74,9 @@ void DebugPanel::setTextContent()
 {
     // Updating all text content with the new values
     m_information[0].setString(ENGINE_VERSION);
-    m_information[1].setString(std::string("FPS : ")           + fix::to_string(m_fps));
-    m_information[3].setString(std::string("Frame : ")         + fix::to_string(m_fpsCount));
-    m_information[6].setString(std::string("Layer count : ")   + fix::to_string(m_layerCount));
+    m_information[1].setString(std::string("FPS : ")             + fix::to_string(m_fps));
+    m_information[3].setString(std::string("Frame : ")           + fix::to_string(m_fpsCount));
+    m_information[6].setString(std::string("Layer count : ")     + fix::to_string(m_layerCount));
     m_information[7].setString(std::string("Append skipped : ")  + fix::to_string(m_appendSkipped));
 
     m_information[2].setString(std::string("Render : ") +

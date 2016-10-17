@@ -1,6 +1,6 @@
 #include "Dungeon/Block.hpp"
 
-/* explicit */ Block::Block(ResourceManager * resourceManager, std::string const& theme)
+/* explicit */ Block::Block(ResourceManager * resourceManager, DungeonTheme * theme)
 : m_theme(theme)
 , m_resourceManager(resourceManager)
 , m_spriteSize(0)
@@ -13,7 +13,20 @@
 
 /* virtual */ Block::~Block()
 {
-    // None
+    // Hide or Show the blocks
+    for(uint32_t index = 0; index < m_spriteMap.size(); ++index)
+    {
+        // Buffering the vector
+        std::vector < Sprite * > & _sprites = m_spriteMap[index];
+
+        for(uint32_t i = 0; i < _sprites.size(); ++i)
+        {
+            if(_sprites[i] != nullptr)
+            {
+                Sprite::release(_sprites[i]);
+            }
+        }
+    }
 }
 
 void Block::init(
@@ -61,9 +74,6 @@ void Block::generateBlock()
     std::vector < char > const& _data = m_rawData.back();
     std::vector < Sprite * > & _sprites = m_spriteMap.back();
 
-    // Reserving space
-    _sprites.reserve(m_blockWidth * m_blockHeight);
-
     // Iterating raw data
     for(uint32_t i = 0; i < m_blockHeight; ++i)
     {
@@ -75,7 +85,7 @@ void Block::generateBlock()
             if(_data[_index] == VOID_CASE)
             {
                 // Checking the case of a void tile
-                _sprites[_index] = nullptr;
+                _sprites.push_back(nullptr);
             }
             else
             {
@@ -93,19 +103,22 @@ void Block::setSprite(uint32_t x, uint32_t y, uint32_t index)
     std::vector < Sprite * > & _sprites = m_spriteMap.back();
 
     // Getting a sprite
-    _sprites[index] = m_resourceManager->getSprite();
+    _sprites.push_back(m_resourceManager->getSprite());
+
+    // Buffering the new sprite
+    Sprite * _sprite = _sprites.back();
 
     // Setting his layer
-    _sprites[index]->setLayer(m_spriteMap.size() - 1);
+    _sprite->setLayer(m_spriteMap.size() - 1);
 
     // Getting the texture
-    _sprites[index]->setTexture(*m_resourceManager->getTexture(m_theme));
+    _sprite->setTexture(*m_resourceManager->getTexture(m_theme->getThemeKey()));
 
     // Setting the position of the sprite
     float _x = x * m_spriteSize;
     float _y = y * m_spriteSize;
 
-    _sprites[index]->setPosition(_x, _y);
+    _sprite->setPosition(_x, _y);
 
     // Setting the texture rect
     setSpriteTextureRect(index);
@@ -118,8 +131,7 @@ void Block::setSpriteTextureRect(uint32_t index)
     std::vector < Sprite * > const& _sprites = m_spriteMap.back();
 
     // Buffering sprite
-    Sprite * _sprite = _sprites[index];
-
+    Sprite * _sprite = _sprites.back();
 
     // Handling all case
     switch(_data[index])
@@ -160,11 +172,11 @@ void Block::setVisible(bool visible)
         // Buffering the vector
         std::vector < Sprite * > const& _sprites = m_spriteMap[index];
 
-        for(Sprite * _sprite : _sprites)
+        for(uint32_t i = 0; i < _sprites.size(); ++i)
         {
-            if(_sprite != nullptr)
+            if(_sprites[i] != nullptr)
             {
-                _sprite->setVisible(visible);
+                _sprites[i]->setVisible(visible);
             }
         }
     }

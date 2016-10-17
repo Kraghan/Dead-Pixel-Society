@@ -1,6 +1,16 @@
 #include "Memory/Resource.hpp"
 
 Resource::Resource(Resource::TYPE _type,
+    DungeonTheme const& _theme,
+    std::string const& _alias)
+{
+    type = _type;
+    alias = _alias;
+    theme = _theme;
+}
+
+
+Resource::Resource(Resource::TYPE _type,
     std::string const& _name,
     std::string const& _alias)
 {
@@ -18,6 +28,12 @@ Resource::Resource(Resource::TYPE _type,
         case Resource::SOUND :
         {
             path = SOUND_PATH + _name + SOUND_EXT;
+            break;
+        }
+
+        case Resource::BLOCK :
+        {
+            path = BLOCK_PATH + _name + BLOCK_TEXT;
             break;
         }
 

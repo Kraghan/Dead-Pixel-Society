@@ -9,6 +9,11 @@ class BlockComponent
 public:
 
     /*!
+     * \brief   Default constructor !
+     */
+    explicit BlockComponent();
+
+    /*!
      * \brief   Constructor
      * \param   name The name of the block
      * \param   size The size of a sprite

@@ -55,6 +55,7 @@ public:
      * \brief   Debug information
      */
     double m_fps;
+    double m_delta;
     double m_renderTime;
     uint32_t m_fpsCount;
     uint32_t m_textInUse;

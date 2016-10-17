@@ -4,6 +4,11 @@
 
 #include "PhysicEngine/PhysicAttributes.hpp"
 
+PhysicAttributes::PhysicAttributes() {
+
+}
+
+
 PhysicAttributes::PhysicAttributes(std::vector<Collider> const&colliders)
 {
     m_colliders = colliders;
@@ -16,3 +21,4 @@ void PhysicAttributes::debug()
         m_colliders[i].debug();
     }
 }
+
