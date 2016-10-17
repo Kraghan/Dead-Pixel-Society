@@ -28,7 +28,7 @@ void GameEngine::init()
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 2000, 100, 15, 2500);
+                         "DPS", 1280, 768, 500000, 100, 15, 2500);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -66,7 +66,7 @@ void GameEngine::gameLoop()
     // Activating wire-frame
     // Setting the framerate
     m_graphicEngine.wireframe(true);
-    m_graphicEngine.setFramerate(120.0);
+    m_graphicEngine.setFramerate(500.0);
 
     double lag = 0.0;
     double previous = Clock::getCurrentTime();

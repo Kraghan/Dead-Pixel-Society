@@ -64,7 +64,7 @@ private :
      * \brief   Fixed update en render time
      *          16.67 = 60 fps
      */
-    const double MS_PER_UPDATE = 16.67;
+    const double MS_PER_UPDATE = 8.67;
 
     /*!
      * \brief   The amazing graphic engine

@@ -55,7 +55,7 @@ void DebugPanel::init(ResourceManager * resourceManager,
         _text.setPosition(TEXT_POS_X, TEXT_POS_Y + (index *
                          (CHAR_SIZE + TEXT_OFFSET)));
 
-        _text.setFillColor(sf::Color::White);
+        _text.setColor(sf::Color::White);
         _text.setCharacterSize(CHAR_SIZE);
     }
 
@@ -91,8 +91,8 @@ void DebugPanel::setTextContent()
         fix::to_string(((100 / (float)m_textCount)) * (float)m_textInUse)
         + "%)");
 
-    if(m_appendSkipped != 0) m_information[7].setFillColor(sf::Color::Red);
-    else m_information[7].setFillColor(sf::Color::Green);
+    if(m_appendSkipped != 0) m_information[7].setColor(sf::Color::Red);
+    else m_information[7].setColor(sf::Color::Green);
 }
 
 void DebugPanel::draw(sf::RenderWindow * window)
