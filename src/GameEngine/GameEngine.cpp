@@ -55,7 +55,6 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
-<<<<<<< HEAD
     // TMP
     BlockParser parser;
     BlockComponent blockComponent = parser.readFile(
@@ -71,7 +70,7 @@ void GameEngine::gameLoop()
     blocks.push_back((BlockAttributes * )&blockAttributes);
     blocks.push_back((BlockAttributes * )&blockAttributes);
 
-    dungeon.init(blocks, "FOREST");
+    dungeon.init(blocks, new DungeonTheme("FOREST","FOREST","BG_FOREST"));
     // TMP
 
 
@@ -80,8 +79,6 @@ void GameEngine::gameLoop()
     m_graphicEngine.wireframe(true);
     m_graphicEngine.setFramerate(500.0);
 
-=======
->>>>>>> 99148e5aa550b6a9f717b7ad9369b9081611be1b
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
