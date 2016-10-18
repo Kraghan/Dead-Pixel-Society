@@ -18,11 +18,11 @@ void Game::init(ResourceManager * resourceManager)
     m_resourceManager = resourceManager;
 
 
-    WorldMap m(m_resourceManager);
+    WorldMap *m = new WorldMap(m_resourceManager);
     // TMP
-    //m_dungeonFactory.init(m_resourceManager);
-    //m_dungeon = m_dungeonFactory.generateDungeon();
-    //m_player.init(m_resourceManager);
+    m_dungeonFactory.init(m_resourceManager);
+    m_dungeon = m_dungeonFactory.generateDungeon();
+    m_player.init(m_resourceManager);
     // TMP
 
     // m_stateMachine.pushState(m_worldMapState); ///< Soon

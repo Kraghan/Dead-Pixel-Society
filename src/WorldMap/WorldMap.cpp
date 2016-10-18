@@ -13,7 +13,7 @@ WorldMap::WorldMap(ResourceManager *m) {
 
     for(int i = 0 ; i < 20 ; i++){
         for(int j = 0 ; j < 10 ; j++){
-            m_tab[i][j] = 0;//rand() % 2 + 1;
+            m_tab[i][j] = rand() % 2 + 1;
             printf("%d", m_tab[i][j]);
         }
         printf("\n");
@@ -40,7 +40,7 @@ WorldMap::~WorldMap() {
 
     for(int i = 0 ; i < 20 ; i++){
         for(int j = 0 ; j < 11 ; j++){
-            delete(m_s[i][j]);
+            Sprite::release(m_s[i][j]);
         }
     }
 }
