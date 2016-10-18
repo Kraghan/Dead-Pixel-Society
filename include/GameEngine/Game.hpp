@@ -16,6 +16,7 @@
 #include "StateMachine/StateMachine.hpp"
 #include "GameState/WorldMapState.hpp"
 #include "GameState/DungeonState.hpp"
+#include "GameState/PauseState.hpp"
 
 class Game : public Updatable
 {
@@ -45,6 +46,8 @@ public:
 private:
 
     StateMachine m_stateMachine;
+
+    PauseState m_pauseState;
     DungeonState m_dungeonState;
     WorldMapState m_worldMapState;
 

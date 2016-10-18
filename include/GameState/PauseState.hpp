@@ -1,30 +1,28 @@
 /*!
- * \brief   Header of the class DungeonState
- * \file    DungeonState.hpp
+ * \brief   Header of the class PauseState
+ * \file    PauseState.hpp
  * \author  Aredhele
  * \version 0.1
  * \date    18/10/2016
  */
 
-#ifndef __DUNGEON_STATE_HPP
-#define __DUNGEON_STATE_HPP
+#ifndef __PAUSE_STATE_HPP
+#define __PAUSE_STATE_HPP
 
 #include "GameEngine/Singleton.hpp"
 #include "Memory/ResourceManager.hpp"
-#include "Dungeon/DungeonFactory.hpp"
 
 /// Include previous and next states
-#include "GameState/WorldMapState.hpp"
 #include "StateMachine/StateMachine.hpp"
 
-class DungeonState : public GameState, public Singleton < DungeonState >
+class PauseState : public GameState, public Singleton < PauseState >
 {
 public:
 
     /*!
      * \brief    Constructor
      */
-    explicit DungeonState();
+    explicit PauseState();
 
     /*!
      * \brief     Init method
@@ -36,7 +34,7 @@ public:
     /*!
      * \brief   Destructor
      */
-    virtual ~DungeonState();
+    virtual ~PauseState();
 
     /*!
      * \brief   Function called when a state is pushed
@@ -60,9 +58,6 @@ private:
 
     StateMachine * m_stateMachine;
     ResourceManager * m_resourceManager;
-
-    Dungeon * m_dungeon;
-    DungeonFactory m_dungeonFactory;
 };
 
-#endif // __DUNGEON_STATE_HPP
+#endif // __PAUSE_STATE_HPP

@@ -16,6 +16,7 @@ void Game::init(ResourceManager * resourceManager)
     m_resourceManager = resourceManager;
 
     // Initializing states
+    m_pauseState.init(&m_stateMachine, m_resourceManager);
     m_dungeonState.init(&m_stateMachine, m_resourceManager);
     m_worldMapState.init(&m_stateMachine, m_resourceManager);
 

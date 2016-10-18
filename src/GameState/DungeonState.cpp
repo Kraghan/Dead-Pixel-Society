@@ -3,6 +3,7 @@
 /* explicit */ DungeonState::DungeonState()
 : m_stateMachine(nullptr)
 , m_resourceManager(nullptr)
+, m_dungeon(nullptr)
 {
     DungeonState::instance = nullptr;
 }
@@ -14,6 +15,9 @@ void DungeonState::init(StateMachine  * stateMachine,
 
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
+
+    // Initializing the factory
+    m_dungeonFactory.init(m_resourceManager);
 }
 
 /* virtual */ DungeonState::~DungeonState()
@@ -28,6 +32,8 @@ void DungeonState::init(StateMachine  * stateMachine,
 
 bool DungeonState::onEnter()
 {
+    // New dungeon for each onEnter()
+    m_dungeon = m_dungeonFactory.generateDungeon();
     return true;
 }
 
