@@ -116,11 +116,11 @@ void Layer::append(Sprite const * sprite)
         {
             // Applying transformation to the vertices
             m_vertices[m_size + i].position  = *_transform * m_vertices[m_size + i].position;
+
             m_vertices[m_size + i].texCoords = sf::Vector2f(0.0f, 0.0f);
             m_vertices[m_size + i].color     = sprite->getWireColor();
         }
 
-        // A wireframe shape is 5 triangles
         m_size += inc;
     }
     else

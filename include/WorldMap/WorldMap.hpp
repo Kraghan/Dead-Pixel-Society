@@ -22,7 +22,6 @@ private:
 public:
     WorldMap(ResourceManager *m);
     ~WorldMap();
-
 };
 
 #endif //PROJECT_WORLDMAP_HPP

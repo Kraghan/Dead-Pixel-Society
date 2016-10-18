@@ -1,8 +1,6 @@
 #include "StateMachine/GameState.hpp"
-#include "StateMachine/StateMachine.hpp"
 
-/* explicit */ GameState::GameState(StateMachine * stateMachine)
-: m_stateMachine(stateMachine)
+/* explicit */ GameState::GameState()
 {
     // None
 }

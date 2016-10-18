@@ -1,9 +1,6 @@
-#include <WorldMap/WorldMap.hpp>
 #include "GameEngine/Game.hpp"
 
 /* explicit */ Game::Game()
-: m_dungeon(nullptr)
-, m_resourceManager(nullptr)
 {
     // None
 }
@@ -15,17 +12,15 @@
 
 void Game::init(ResourceManager * resourceManager)
 {
+    // Getting resources
     m_resourceManager = resourceManager;
 
+    // Initializing states
+    m_dungeonState.init(&m_stateMachine, m_resourceManager);
+    m_worldMapState.init(&m_stateMachine, m_resourceManager);
 
-    WorldMap *m = new WorldMap(m_resourceManager);
-    // TMP
-    m_dungeonFactory.init(m_resourceManager);
-    m_dungeon = m_dungeonFactory.generateDungeon();
-    m_player.init(m_resourceManager);
-    // TMP
-
-    // m_stateMachine.pushState(m_worldMapState); ///< Soon
+    // Pushing the first state =)
+    m_stateMachine.pushState(&m_worldMapState);
 }
 
 void Game::update(double dt)

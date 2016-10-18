@@ -1,4 +1,3 @@
-#include <WorldMap/WorldMap.hpp>
 #include "GameEngine/GameEngine.hpp"
 
 GameEngine::GameEngine()
@@ -31,15 +30,15 @@ void GameEngine::init()
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 2000, 100, 15, 2000);
+                         "DPS", 1280, 768, 1500, 100, 15, 2000);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(false);
-    m_graphicEngine.setFramerate(120.0);
+    m_graphicEngine.wireframe(true);
+    m_graphicEngine.setFramerate(120);
 }
 
 void GameEngine::start()
@@ -105,6 +104,6 @@ void GameEngine::processInput()
             m_isRunning = false;
         }
 
-        EventProcessed e = m_eventConverter.processEvent(event, &m_controlMap);
+        // EventProcessed e = m_eventConverter.processEvent(event, &m_controlMap);
     }
 }

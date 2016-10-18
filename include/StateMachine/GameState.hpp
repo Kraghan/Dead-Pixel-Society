@@ -11,9 +11,6 @@
 
 #include "GameEngine/Updatable.hpp"
 
-// Forward declaration
-class StateMachine;
-
 class GameState : public Updatable
 {
 public:
@@ -21,7 +18,7 @@ public:
     /*!
      * \brief   Default constructor
      */
-    explicit GameState(StateMachine * stateMachine);
+    explicit GameState();
 
     /*!
      * \brief   Destructor
@@ -39,10 +36,6 @@ public:
      * \return  True if the state can be popped
      */
     virtual bool onExit() = 0;
-
-private:
-
-    StateMachine * m_stateMachine;
 };
 
 #endif // __GAME_STATE_HPP

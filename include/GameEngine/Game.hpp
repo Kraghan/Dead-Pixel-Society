@@ -12,12 +12,10 @@
 #include "GameEngine/Updatable.hpp"
 #include "Memory/ResourceManager.hpp"
 
-// TMP
-#include "Player/Player.hpp"
-#include "Dungeon/DungeonFactory.hpp"
-// TMP
-
+/// Including all games states
 #include "StateMachine/StateMachine.hpp"
+#include "GameState/WorldMapState.hpp"
+#include "GameState/DungeonState.hpp"
 
 class Game : public Updatable
 {
@@ -47,12 +45,8 @@ public:
 private:
 
     StateMachine m_stateMachine;
-
-    // TMP
-    Player m_player;
-    Dungeon * m_dungeon;
-    DungeonFactory m_dungeonFactory;
-    // TMP
+    DungeonState m_dungeonState;
+    WorldMapState m_worldMapState;
 
     ResourceManager * m_resourceManager;
 };

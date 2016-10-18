@@ -39,7 +39,7 @@ WorldMap::WorldMap(ResourceManager *m) {
 WorldMap::~WorldMap() {
 
     for(int i = 0 ; i < 20 ; i++){
-        for(int j = 0 ; j < 11 ; j++){
+        for(int j = 0 ; j < 11; j++){
             Sprite::release(m_s[i][j]);
         }
     }
