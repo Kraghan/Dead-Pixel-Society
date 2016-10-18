@@ -5,6 +5,8 @@
 #ifndef PROJECT_COLLIDERRIGIDBODYBINDING_HPP
 #define PROJECT_COLLIDERRIGIDBODYBINDING_HPP
 
+#include "Collider.hpp"
+#include "RigidBody.hpp"
 
 class ColliderRigidBodyBinding {
 public:
@@ -17,9 +19,13 @@ public:
 
     bool hasCollider();
     bool hasRigidBody();
+    bool isFree();
+    void setUsed();
+    void setFree();
 private:
     Collider* m_collider;
     RigidBody* m_rigidBody;
+    bool m_isFree;
 };
 
 

@@ -2,7 +2,7 @@
 // Created by kraghan on 18/10/16.
 //
 
-#include "ColliderRigidBodyBinding.hpp"
+#include "PhysicEngine/ColliderRigidBodyBinding.hpp"
 
 ColliderRigidBodyBinding::ColliderRigidBodyBinding()
 {
@@ -41,4 +41,19 @@ bool ColliderRigidBodyBinding::hasCollider()
 bool ColliderRigidBodyBinding::hasRigidBody()
 {
     return m_rigidBody != nullptr;
+}
+
+bool ColliderRigidBodyBinding::isFree()
+{
+    return m_isFree;
+}
+
+void ColliderRigidBodyBinding::setUsed()
+{
+    m_isFree = false;
+}
+
+void ColliderRigidBodyBinding::setFree()
+{
+   m_isFree = true;
 }

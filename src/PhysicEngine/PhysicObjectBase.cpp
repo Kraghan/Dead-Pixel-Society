@@ -5,13 +5,16 @@
 #include "PhysicEngine/PhysicObjectBase.hpp"
 PhysicObjectBase::PhysicObjectBase()
 {
+    m_id = 0;
     m_isFree = true;
     m_isReady = false;
     m_hitBox = sf::IntRect(-1,-1,0,0);
     m_size = 0;
 }
 
-void PhysicObjectBase::init(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int size)
+void PhysicObjectBase::init(unsigned int x, unsigned int y,
+                            unsigned int width, unsigned int height, unsigned
+                            int size)
 {
     m_hitBox = sf::IntRect(x,y,width,height);
     m_size = size;
@@ -52,4 +55,14 @@ void PhysicObjectBase::setFree()
 {
     m_isFree = true;
     m_isReady = false;
+}
+
+unsigned int PhysicObjectBase::getId()
+{
+    return m_id;
+}
+
+void PhysicObjectBase::setId(unsigned int id)
+{
+    m_id = id;
 }
