@@ -1,3 +1,4 @@
+#include <WorldMap/WorldMap.hpp>
 #include "GameEngine/GameEngine.hpp"
 
 GameEngine::GameEngine()
@@ -37,7 +38,7 @@ void GameEngine::init()
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(true);
+    m_graphicEngine.wireframe(false);
     m_graphicEngine.setFramerate(120.0);
 }
 

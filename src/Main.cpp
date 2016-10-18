@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <WorldMap/WorldMap.hpp>
 #include "GameEngine/GameEngine.hpp"
 #include "Interface/Panel.hpp"
 #include "Interface/Component.hpp"
