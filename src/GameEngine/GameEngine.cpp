@@ -98,13 +98,12 @@ void GameEngine::processInput()
     // Event loop
     while(m_window->pollEvent(event))
     {
-
         // The user wants to exit the game
         if (event.type == sf::Event::Closed)
         {
             m_isRunning = false;
         }
 
-        EventProcessed e = m_eventConverter.processEvent(event,&m_controlMap);
+        EventProcessed e = m_eventConverter.processEvent(event, &m_controlMap);
     }
 }
