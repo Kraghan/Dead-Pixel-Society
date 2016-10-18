@@ -14,19 +14,17 @@ PhysicEngine::~PhysicEngine()
 
 }
 
-void PhysicEngine::init()
+void PhysicEngine::init(ResourceManager* manager, unsigned int count_colliders,
+                        unsigned int count_rigidBodies, float gravity)
 {
 
 }
 
 void PhysicEngine::update(double dt)
 {
-    for(unsigned int i = 0; i < m_solidBody.size(); ++i)
+    for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
-        if()
-        {
 
-        }
     }
 }
 
@@ -42,14 +40,14 @@ const Collider* PhysicEngine::getCollider()
     }
 }
 
-const RigidBody* PhysicEngine::getSolidBody()
+const RigidBody* PhysicEngine::getRigidBody()
 {
-    for(unsigned int i = 0; i < m_solidBody.size(); ++i)
+    for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
-        if(m_solidBody[i]->isFree())
+        if(m_rigidBody[i]->isFree())
         {
-            m_solidBody[i]->setUsed();
-            return m_solidBody[i];
+            m_rigidBody[i]->setUsed();
+            return m_rigidBody[i];
         }
     }
 }

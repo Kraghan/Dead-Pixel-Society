@@ -24,13 +24,15 @@ public:
 
     const Collider* getCollider();
 
-    const RigidBody* getSolidBody();
+    const RigidBody* getRigidBody();
 
     bool isColliding(Collider* collider);
+
+
 private:
 
     std::vector<Collider*> m_colliders;
 
-    std::vector<RigidBody*> m_solidBody;
+    std::vector<RigidBody*> m_rigidBody;
 };
 #endif //PROJECT_PHYSICENGINE_HPP
