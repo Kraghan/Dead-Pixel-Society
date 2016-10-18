@@ -56,30 +56,6 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
-    // TMP
-    BlockParser parser;
-    BlockComponent blockComponent = parser.readFile(
-            "../res/Dungeon/RoomBlock/block_1.map");
-
-    BlockAttributes const& blockAttributes = blockComponent.getBlockAttribute();
-
-    Dungeon dungeon(&m_resourceManager);
-
-    std::vector < BlockAttributes * > blocks;
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-    blocks.push_back((BlockAttributes * )&blockAttributes);
-
-    dungeon.init(blocks, new DungeonTheme("FOREST","FOREST","BG_FOREST"));
-    // TMP
-
-
-    // Activating wire-frame
-    // Setting the framerate
-    m_graphicEngine.wireframe(true);
-    m_graphicEngine.setFramerate(500.0);
-
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
@@ -130,6 +106,5 @@ void GameEngine::processInput()
         }
 
         EventProcessed e = m_eventConverter.processEvent(event,&m_controlMap);
-        std::cout<< *e.getAction() << std::endl;
     }
 }

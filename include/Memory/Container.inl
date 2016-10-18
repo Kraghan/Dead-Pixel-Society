@@ -86,6 +86,6 @@ U * const Container<T, U, Allocator, Hash>
     // Shuffle the vector
     std::shuffle(_buffer.begin(), _buffer.end(), std::default_random_engine(seed));
 
-    // Returnin the first iterator value
+    // Returning the first iterator value
     return *_buffer.begin();
 }

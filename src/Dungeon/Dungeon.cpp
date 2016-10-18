@@ -76,6 +76,8 @@ bool Dungeon::nextBlock()
 
     // Showing the next one
     m_blocks[m_currentBlock]->show();
+
+    return false;
 }
 
 bool Dungeon::previousBlock()
@@ -96,4 +98,6 @@ bool Dungeon::previousBlock()
 
     // Showing the previous one
     m_blocks[m_currentBlock]->show();
+
+    return false;
 }
