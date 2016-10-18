@@ -16,15 +16,20 @@ public:
 
     virtual void init(unsigned int x, unsigned int y, unsigned int width,
                       unsigned int height, unsigned int size, float mass,
-                      float velocity, float acceleration);
+                      float acceleration, sf::Vector2f velocityMax);
 
     float getMass();
 
-    float getVelocity();
+    sf::Vector2f getVelocity();
 
     float getAcceleration();
+
+    void accelerate(float gravity);
+
+    void move();
 private:
-    float m_mass, m_velocity, m_acceleration;
+    float m_mass, m_acceleration;
+    sf::Vector2f m_velocity, m_velocityMax;
 };
 
 

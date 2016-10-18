@@ -22,6 +22,8 @@ public:
 
     bool isFree();
 
+    bool isReady();
+
     sf::Vector2i getPosition();
 
     sf::Vector2u getDimension();
@@ -37,6 +39,8 @@ public:
     unsigned int getId();
 
     void setId(unsigned int id);
+
+    void move(int x, int y);
 };
 
 
