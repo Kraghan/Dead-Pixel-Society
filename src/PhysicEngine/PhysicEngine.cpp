@@ -29,10 +29,48 @@ void PhysicEngine::update(double dt)
 {
     for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
+        // No processing if rigidBody not used or not ready
+        if(m_rigidBody[i]->isFree() || !m_rigidBody[i]->isReady())
+        {
+            continue;
+        }
+
+        // Calculate new velocities
+        m_rigidBody[i]->accelerate(m_gravity);
+
+        // Calculate new positions
+        m_rigidBody[i]->move();
+
+        // Search associated collider
         Collider* collider = getColliderAssociated(m_rigidBody[i]);
         if(collider != nullptr)
         {
+            // Calculate new collider positions
+            collider->move(m_rigidBody[i]);
 
+            // Testing collisions
+            sf::IntRect collision;
+            Collider* collideWith = isColliding(collider,&collision);
+            if(collideWith != nullptr)
+            {
+                sf::Vector2i newPos = collider->getPosition();
+                if(collision.top == collider->getHitBox().top)
+                {
+                    newPos.y = 0;
+                }
+                else if(collision.top > collider->getHitBox().top)
+                {
+                    newPos.y = 0;
+                }
+                if(collision.left == collider->getHitBox().left)
+                {
+                    newPos.x = 0;
+                }
+                else if(collision.left > collider->getHitBox().left)
+                {
+                    newPos.x = 0;
+                }
+            }
         }
     }
 }
@@ -81,9 +119,22 @@ collider)
     return nullptr;
 }
 
-bool PhysicEngine::isColliding(Collider* object)
+Collider* PhysicEngine::isColliding(Collider* collider,sf::IntRect*
+intersection)
 {
-    return false;
+    for(unsigned int i = 0; i < m_colliders.size(); ++i)
+    {
+        // Ignore if m_collider[i] == collider
+        if(m_colliders[i]->getId() == collider->getId())
+            continue;
+
+        if(m_colliders[i]->getHitBox().intersects(collider->getHitBox(),
+                                                  *intersection))
+        {
+            return m_colliders[i];
+        }
+    }
+    return nullptr;
 }
 
 Collider* PhysicEngine::getColliderAssociated(RigidBody* rigidBody)

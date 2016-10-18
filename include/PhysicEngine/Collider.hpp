@@ -10,10 +10,13 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include "PhysicObjectBase.hpp"
+#include "RigidBody.hpp"
 
 class Collider : public PhysicObjectBase{
 public:
     Collider();
+
+    void move(RigidBody* rigidBody);
 };
 
 

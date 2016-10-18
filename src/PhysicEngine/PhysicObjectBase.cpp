@@ -26,6 +26,11 @@ bool PhysicObjectBase::isFree()
     return m_isFree;
 }
 
+bool PhysicObjectBase::isReady()
+{
+    return m_isReady;
+}
+
 sf::Vector2i PhysicObjectBase::getPosition()
 {
     return sf::Vector2i(m_hitBox.left,m_hitBox.top);
@@ -65,4 +70,10 @@ unsigned int PhysicObjectBase::getId()
 void PhysicObjectBase::setId(unsigned int id)
 {
     m_id = id;
+}
+
+void PhysicObjectBase::move(int x, int y)
+{
+    m_hitBox.left = x;
+    m_hitBox.top = y;
 }

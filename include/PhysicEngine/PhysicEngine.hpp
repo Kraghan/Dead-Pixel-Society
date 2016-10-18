@@ -28,7 +28,7 @@ public:
 
     const RigidBody* getRigidBody();
 
-    bool isColliding(Collider* collider);
+    Collider* isColliding(Collider* collider, sf::IntRect* collision);
 
     ColliderRigidBodyBinding* bindRigidBodyAndCollider(RigidBody* rigidBody,
                                                        Collider* collider);
