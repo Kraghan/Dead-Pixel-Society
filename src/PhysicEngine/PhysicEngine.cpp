@@ -9,7 +9,7 @@ PhysicEngine::PhysicEngine()
 
 }
 
-virtual PhysicEngine::~PhysicEngine()
+PhysicEngine::~PhysicEngine()
 {
 
 }
@@ -19,7 +19,7 @@ void PhysicEngine::init()
 
 }
 
-virtual void PhysicEngine::update(double dt)
+void PhysicEngine::update(double dt)
 {
 
 }
