@@ -8,15 +8,12 @@
 
 #include <iostream>
 #include <SFML/System.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include "PhysicObjectBase.hpp"
 
-class Collider {
-private:
-    sf::Vector2u m_position, m_dimension;
-    unsigned int m_size;
+class Collider : public PhysicObjectBase{
 public:
-    Collider(unsigned int x, unsigned int y, unsigned int width, unsigned int height, unsigned int size);
-
-    void debug();
+    Collider();
 };
 
 

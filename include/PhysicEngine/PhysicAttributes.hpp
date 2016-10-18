@@ -16,8 +16,6 @@ private:
 public:
     PhysicAttributes(std::vector<Collider> const&colliders);
 
-    void debug();
-
     PhysicAttributes();
 };
 

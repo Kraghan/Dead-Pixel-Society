@@ -81,8 +81,8 @@ void BlockParser::readCollider(std::ifstream *infile, std::istringstream* iss, i
             if(firstChar == '[')
             {
                 iss2 >> x >> y >> width >> height;
-                Collider c = Collider(x,y,width,height,size);
-                v.push_back(c);
+                v.push_back(Collider());
+                v.back().init(x,y,width,height,size);
             }
         }
         return;

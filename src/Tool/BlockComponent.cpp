@@ -24,7 +24,6 @@ BlockComponent::BlockComponent(
 void BlockComponent::debug()
 {
     m_blockAttributes.debug();
-    m_physicAttributes.debug();
 }
 
 BlockAttributes const &BlockComponent::getBlockAttribute()
