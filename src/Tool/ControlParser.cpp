@@ -170,7 +170,7 @@ void ControlParser::readMenuController(std::ifstream* infile, int* c_validate, i
 
 ControlMap ControlParser::readSetting()
 {
-    std::string path = "..\\settings\\control.ini", line;
+    std::string path = "../settings/control.ini", line;
 
     std::ifstream infile(path);
 
