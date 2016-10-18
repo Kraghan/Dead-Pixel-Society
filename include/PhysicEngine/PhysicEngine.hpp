@@ -6,6 +6,7 @@
 #define PROJECT_PHYSICENGINE_HPP
 
 
+#include <Memory/ResourceManager.hpp>
 #include "GameEngine/Updatable.hpp"
 #include "Collider.hpp"
 #include "RigidBody.hpp"
@@ -13,8 +14,11 @@
 class PhysicEngine : public Updatable{
 public:
     PhysicEngine();
+
     virtual ~PhysicEngine();
-    void init();
+
+    void init(ResourceManager* manager, unsigned int count_colliders,
+              unsigned int count_rigidBodies, float gravity);
 
     virtual void update(double dt);
 

@@ -21,7 +21,13 @@ void PhysicEngine::init()
 
 void PhysicEngine::update(double dt)
 {
+    for(unsigned int i = 0; i < m_solidBody.size(); ++i)
+    {
+        if()
+        {
 
+        }
+    }
 }
 
 const Collider* PhysicEngine::getCollider()
