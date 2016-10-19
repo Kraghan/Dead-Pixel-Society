@@ -6,22 +6,15 @@
 #define PROJECT_GAMECONTEXT_HPP
 
 
-class GameContext {
+#include <GameEngine/Singleton.hpp>
+
+class GameContext : public Singleton <GameContext> {
 
 private:
     bool m_menu,m_controller;
-    static GameContext* m_context;
     GameContext();
 
 public:
-    static GameContext* getContext()
-    {
-        if(m_context == nullptr)
-        {
-            m_context = new GameContext();
-        }
-        return m_context;
-    }
     void setMenuContext();
     void setGameContext();
     void setControllerContext();
