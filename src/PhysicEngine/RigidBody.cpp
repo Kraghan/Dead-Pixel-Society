@@ -10,11 +10,10 @@ RigidBody::RigidBody()
 
 }
 
-void RigidBody::init(unsigned int x, unsigned int y, unsigned int width,
-                     unsigned int height, unsigned int size, float mass,
-                     float acceleration, sf::Vector2f velocityMax)
+void RigidBody::init(unsigned int x, unsigned int y, float mass,
+                     float acceleration, float velocityMax)
 {
-    PhysicObjectBase::init(x,y,width,height,size);
+    PhysicObjectBase::init(x,y,0,0,0);
     m_mass = mass;
     m_velocity = sf::Vector2f(0.0f,0.0f);
     m_acceleration = acceleration;
@@ -38,27 +37,17 @@ float RigidBody::getAcceleration()
 
 void RigidBody::accelerate(float gravity)
 {
-    m_velocity.y -= gravity*m_mass;
+    m_velocity.y += gravity*m_mass;
     m_velocity.x += m_acceleration;
 
-    if(m_velocity.y < -m_velocityMax.y)
+    if(m_velocity.x < -m_velocityMax)
     {
-        m_velocity.y = -m_velocityMax.y;
+        m_velocity.x = -m_velocityMax;
     }
 
-    if(m_velocity.y > -m_velocityMax.y)
+    if(m_velocity.x > m_velocityMax)
     {
-        m_velocity.y = m_velocityMax.y;
-    }
-
-    if(m_velocity.x < -m_velocityMax.x)
-    {
-        m_velocity.x = -m_velocityMax.x;
-    }
-
-    if(m_velocity.x > -m_velocityMax.x)
-    {
-        m_velocity.x = m_velocityMax.x;
+        m_velocity.x = m_velocityMax;
     }
 }
 

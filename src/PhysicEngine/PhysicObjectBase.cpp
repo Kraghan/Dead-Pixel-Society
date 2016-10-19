@@ -16,7 +16,7 @@ void PhysicObjectBase::init(unsigned int x, unsigned int y,
                             unsigned int width, unsigned int height, unsigned
                             int size)
 {
-    m_hitBox = sf::FloatRect(x,y,width,height);
+    m_hitBox = sf::FloatRect(x*size,y*size,width*size,height*size);
     m_size = size;
     m_isReady = true;
 }

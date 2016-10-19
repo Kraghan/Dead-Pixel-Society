@@ -15,13 +15,14 @@ void DungeonState::init(StateMachine  * stateMachine,
 
     m_physicEngine.init(resourceManager,3,3,3,9.80);
     rigid = m_physicEngine.getRigidBody();
-    rigid->init(50,0,0,0,0,1.0f,0.0f,sf::Vector2f(0.0f,500.0f));
+    rigid->init(1,1,1.0f,0.0f,500.0f);
     Collider* c = m_physicEngine.getCollider();
-    c->init((unsigned int)rigid->getPosition().x,(unsigned int) rigid->getPosition().y,64,64,
-            64);
+    c->init((unsigned int)rigid->getPosition().x,(unsigned int)
+                    rigid->getPosition().y,1,1,64);
     m_physicEngine.bindRigidBodyAndCollider(rigid,c);
     c = m_physicEngine.getCollider();
-    c->init(0,11*64,20*64,64,64);
+    c->init(0,11,20,1,64);
+    std::cout<< c->getDimension().x << " " << c->getDimension().y <<std::endl;
     test = resourceManager->getSprite();
     test->setTexture(*resourceManager->getTexture("PLAYER"));
     test->setLayer(10);

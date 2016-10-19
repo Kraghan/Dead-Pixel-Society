@@ -50,6 +50,8 @@ void PhysicEngine::update(double dt)
 
         // Calculate new velocities
         m_rigidBody[i].accelerate(m_gravity);
+        std::cout<< m_rigidBody[i].getPosition().x << " " << m_rigidBody[i]
+                .getPosition().y<< std::endl;
 
         // Calculate new positions
         m_rigidBody[i].moveAuto(dt);
@@ -123,7 +125,6 @@ Collider* PhysicEngine::getCollider()
 
 RigidBody* PhysicEngine::getRigidBody()
 {
-    std::cout<< m_rigidBody.size() <<std::endl;
     for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
         if(m_rigidBody[i].isFree())
