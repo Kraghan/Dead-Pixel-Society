@@ -26,7 +26,7 @@ public:
 
     void accelerate(float gravity);
 
-    void move();
+    void moveAuto(double dt);
 private:
     float m_mass, m_acceleration;
     sf::Vector2f m_velocity, m_velocityMax;

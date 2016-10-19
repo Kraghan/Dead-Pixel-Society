@@ -62,9 +62,10 @@ void RigidBody::accelerate(float gravity)
     }
 }
 
-void RigidBody::move()
+void RigidBody::moveAuto(double dt)
 {
-    sf::Vector2i pos = getPosition();
-    PhysicObjectBase::move((int)(pos.x+m_velocity.x),(int)(pos.y+m_velocity.y));
+    sf::Vector2f pos = getPosition();
+    PhysicObjectBase::move((float)(pos.x+(m_velocity.x * dt)),(float)(pos.y+
+            (m_velocity.y*dt)));
 }
 

@@ -8,7 +8,7 @@ PhysicObjectBase::PhysicObjectBase()
     m_id = 0;
     m_isFree = true;
     m_isReady = false;
-    m_hitBox = sf::IntRect(-1,-1,0,0);
+    m_hitBox = sf::FloatRect(-1.0f,-1.0f,0.0f,0.0f);
     m_size = 0;
 }
 
@@ -16,7 +16,7 @@ void PhysicObjectBase::init(unsigned int x, unsigned int y,
                             unsigned int width, unsigned int height, unsigned
                             int size)
 {
-    m_hitBox = sf::IntRect(x,y,width,height);
+    m_hitBox = sf::FloatRect(x,y,width,height);
     m_size = size;
     m_isReady = true;
 }
@@ -31,17 +31,17 @@ bool PhysicObjectBase::isReady()
     return m_isReady;
 }
 
-sf::Vector2i PhysicObjectBase::getPosition()
+sf::Vector2f PhysicObjectBase::getPosition()
 {
-    return sf::Vector2i(m_hitBox.left,m_hitBox.top);
+    return sf::Vector2f(m_hitBox.left,m_hitBox.top);
 }
 
-sf::Vector2u PhysicObjectBase::getDimension()
+sf::Vector2f PhysicObjectBase::getDimension()
 {
-    return sf::Vector2u((unsigned int)m_hitBox.width,(unsigned int)m_hitBox.height);
+    return sf::Vector2f(m_hitBox.width,m_hitBox.height);
 }
 
-sf::IntRect PhysicObjectBase::getHitBox()
+sf::FloatRect PhysicObjectBase::getHitBox()
 {
     return m_hitBox;
 }
@@ -72,7 +72,7 @@ void PhysicObjectBase::setId(unsigned int id)
     m_id = id;
 }
 
-void PhysicObjectBase::move(int x, int y)
+void PhysicObjectBase::move(float x, float y)
 {
     m_hitBox.left = x;
     m_hitBox.top = y;

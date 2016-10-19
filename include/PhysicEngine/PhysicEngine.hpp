@@ -24,11 +24,11 @@ public:
 
     virtual void update(double dt);
 
-    const Collider* getCollider();
+    Collider* getCollider();
 
-    const RigidBody* getRigidBody();
+    RigidBody* getRigidBody();
 
-    Collider* isColliding(Collider* collider, sf::IntRect* collision);
+    Collider* isColliding(Collider* collider, sf::FloatRect* collision);
 
     ColliderRigidBodyBinding* bindRigidBodyAndCollider(RigidBody* rigidBody,
                                                        Collider* collider);
@@ -40,10 +40,10 @@ private:
 
     float m_gravity;
 
-    std::vector<Collider*> m_colliders;
+    std::vector<Collider> m_colliders;
 
-    std::vector<RigidBody*> m_rigidBody;
+    std::vector<RigidBody> m_rigidBody;
 
-    std::vector<ColliderRigidBodyBinding*> m_rigidBodiesWithColliders;
+    std::vector<ColliderRigidBodyBinding> m_rigidBodiesWithColliders;
 };
 #endif //PROJECT_PHYSICENGINE_HPP

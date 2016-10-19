@@ -9,6 +9,7 @@
 #ifndef __DUNGEON_STATE_HPP
 #define __DUNGEON_STATE_HPP
 
+#include <PhysicEngine/PhysicEngine.hpp>
 #include "GameEngine/Singleton.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "Dungeon/DungeonFactory.hpp"
@@ -60,6 +61,10 @@ private:
 
     StateMachine * m_stateMachine;
     ResourceManager * m_resourceManager;
+    PhysicEngine m_physicEngine;
+
+    RigidBody* rigid;
+    Sprite* test;
 
     Dungeon * m_dungeon;
     DungeonFactory m_dungeonFactory;

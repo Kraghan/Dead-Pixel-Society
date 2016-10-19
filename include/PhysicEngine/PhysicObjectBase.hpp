@@ -10,7 +10,7 @@
 
 class PhysicObjectBase {
 private:
-    sf::IntRect m_hitBox;
+    sf::FloatRect m_hitBox;
     unsigned int m_size;
     bool m_isFree, m_isReady;
     unsigned int m_id;
@@ -24,11 +24,11 @@ public:
 
     bool isReady();
 
-    sf::Vector2i getPosition();
+    sf::Vector2f getPosition();
 
-    sf::Vector2u getDimension();
+    sf::Vector2f getDimension();
 
-    sf::IntRect getHitBox();
+    sf::FloatRect getHitBox();
 
     unsigned int getSize();
 
@@ -40,7 +40,7 @@ public:
 
     void setId(unsigned int id);
 
-    void move(int x, int y);
+    void move(float x, float y);
 };
 
 

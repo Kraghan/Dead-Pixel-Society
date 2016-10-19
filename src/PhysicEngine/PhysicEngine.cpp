@@ -20,84 +20,117 @@ void PhysicEngine::init(ResourceManager* manager, unsigned int count_colliders,
 {
     m_ressourceManager = manager;
     m_colliders.reserve(count_colliders);
+    for(unsigned int i = 0; i < m_colliders.capacity(); ++i)
+    {
+        m_colliders.push_back(Collider());
+    }
+
     m_rigidBody.reserve(count_rigidBodies);
+    for(unsigned int i = 0; i < m_rigidBody.capacity(); ++i)
+    {
+        m_rigidBody.push_back(RigidBody());
+    }
+
     m_rigidBodiesWithColliders.reserve(count_rigidBodiesWithColliders);
+    for(unsigned int i = 0; i < m_rigidBodiesWithColliders.capacity(); ++i)
+    {
+        m_rigidBodiesWithColliders.push_back(ColliderRigidBodyBinding());
+    }
     m_gravity = gravity;
 }
 
 void PhysicEngine::update(double dt)
 {
+    dt /= 1000;
     for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
         // No processing if rigidBody not used or not ready
-        if(m_rigidBody[i]->isFree() || !m_rigidBody[i]->isReady())
-        {
+        if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
             continue;
-        }
 
         // Calculate new velocities
-        m_rigidBody[i]->accelerate(m_gravity);
+        m_rigidBody[i].accelerate(m_gravity);
 
         // Calculate new positions
-        m_rigidBody[i]->move();
+        m_rigidBody[i].moveAuto(dt);
 
         // Search associated collider
-        Collider* collider = getColliderAssociated(m_rigidBody[i]);
+        Collider* collider = getColliderAssociated(&m_rigidBody[i]);
         if(collider != nullptr)
         {
             // Calculate new collider positions
-            collider->move(m_rigidBody[i]);
+            collider->moveRigidBody(&m_rigidBody[i],dt);
 
             // Testing collisions
-            sf::IntRect collision;
+            sf::FloatRect collision;
             Collider* collideWith = isColliding(collider,&collision);
-            if(collideWith != nullptr)
+            sf::Vector2f oldPos = collider->getPosition();
+            while(collideWith != nullptr)
             {
-                sf::Vector2i newPos = collider->getPosition();
-                if(collision.top == collider->getHitBox().top)
+                sf::Vector2f newPos = collider->getPosition();
+                // Velocity x positive
+                if(m_rigidBody[i].getVelocity().x > 0)
                 {
-                    newPos.y = 0;
+                    newPos.x -= collision.width;
                 }
-                else if(collision.top > collider->getHitBox().top)
+                // Velocity x negative
+                else if(m_rigidBody[i].getVelocity().x < 0)
                 {
-                    newPos.y = 0;
+                    newPos.x += collision.width;
                 }
-                if(collision.left == collider->getHitBox().left)
+
+                // Velocity y positive
+                if(m_rigidBody[i].getVelocity().y > 0)
                 {
-                    newPos.x = 0;
+                    newPos.y -= collision.height;
                 }
-                else if(collision.left > collider->getHitBox().left)
+                    // Velocity y negative
+                else if(m_rigidBody[i].getVelocity().y < 0)
                 {
-                    newPos.x = 0;
+                    newPos.y += collision.height;
                 }
+
+                collider->PhysicObjectBase::move(newPos.x, newPos.y);
+
+                collideWith = isColliding(collider,&collision);
             }
+
+            // Set new position to the rigidBody
+            sf::Vector2f newColliderPos = collider->getPosition();
+            float diffX = oldPos.x-newColliderPos.x;
+            float diffY = oldPos.y-newColliderPos.y;
+
+            m_rigidBody[i].move(m_rigidBody[i].getPosition().x-diffX,
+                                 m_rigidBody[i].getPosition().y-diffY);
+
         }
     }
 }
 
-const Collider* PhysicEngine::getCollider()
+Collider* PhysicEngine::getCollider()
 {
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
-        if(m_colliders[i]->isFree())
+        if(m_colliders[i].isFree())
         {
-            m_colliders[i]->setUsed();
-            m_colliders[i]->setId(i);
-            return m_colliders[i];
+            m_colliders[i].setUsed();
+            m_colliders[i].setId(i);
+            return &m_colliders[i];
         }
     }
     return nullptr;
 }
 
-const RigidBody* PhysicEngine::getRigidBody()
+RigidBody* PhysicEngine::getRigidBody()
 {
+    std::cout<< m_rigidBody.size() <<std::endl;
     for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
-        if(m_rigidBody[i]->isFree())
+        if(m_rigidBody[i].isFree())
         {
-            m_rigidBody[i]->setUsed();
-            m_rigidBody[i]->setId(i);
-            return m_rigidBody[i];
+            m_rigidBody[i].setUsed();
+            m_rigidBody[i].setId(i);
+            return &m_rigidBody[i];
         }
     }
     return nullptr;
@@ -109,29 +142,29 @@ collider)
 {
     for(unsigned int i = 0; i < m_rigidBodiesWithColliders.size(); ++i)
     {
-        if(m_rigidBodiesWithColliders[i]->isFree())
+        if(m_rigidBodiesWithColliders[i].isFree())
         {
-            m_rigidBodiesWithColliders[i]->setUsed();
-            m_rigidBodiesWithColliders[i]->init(collider,body);
-            return m_rigidBodiesWithColliders[i];
+            m_rigidBodiesWithColliders[i].setUsed();
+            m_rigidBodiesWithColliders[i].init(collider,body);
+            return &m_rigidBodiesWithColliders[i];
         }
     }
     return nullptr;
 }
 
-Collider* PhysicEngine::isColliding(Collider* collider,sf::IntRect*
+Collider* PhysicEngine::isColliding(Collider* collider,sf::FloatRect*
 intersection)
 {
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
         // Ignore if m_collider[i] == collider
-        if(m_colliders[i]->getId() == collider->getId())
+        if(m_colliders[i].getId() == collider->getId())
             continue;
 
-        if(m_colliders[i]->getHitBox().intersects(collider->getHitBox(),
+        if(m_colliders[i].getHitBox().intersects(collider->getHitBox(),
                                                   *intersection))
         {
-            return m_colliders[i];
+            return &m_colliders[i];
         }
     }
     return nullptr;
@@ -141,13 +174,13 @@ Collider* PhysicEngine::getColliderAssociated(RigidBody* rigidBody)
 {
     for(unsigned int i = 0; i < m_rigidBodiesWithColliders.size();++i)
     {
-        if(m_rigidBodiesWithColliders[i]->isFree())
+        if(m_rigidBodiesWithColliders[i].isFree())
             continue;
 
-        if(m_rigidBodiesWithColliders[i]->getRigidBody()->getId() ==
+        if(m_rigidBodiesWithColliders[i].getRigidBody()->getId() ==
                 rigidBody->getId())
         {
-            return m_rigidBodiesWithColliders[i]->getCollider();
+            return m_rigidBodiesWithColliders[i].getCollider();
         }
     }
 
