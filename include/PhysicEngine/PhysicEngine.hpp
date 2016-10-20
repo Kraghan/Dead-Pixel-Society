@@ -28,7 +28,16 @@ public:
 
     RigidBody* getRigidBody();
 
-    Collider* isColliding(Collider* collider, sf::FloatRect* collision);
+    Collider* isColliding(Collider* collider, sf::FloatRect* collision,
+                          std::string direction);
+
+    bool isCollidingDown(Collider* collider, sf::FloatRect* intersection);
+
+    bool isCollidingUp(Collider* collider, sf::FloatRect* intersection);
+
+    bool isCollidingRight(Collider* collider, sf::FloatRect* intersection);
+
+    bool isCollidingLeft(Collider* collider, sf::FloatRect* intersection);
 
     ColliderRigidBodyBinding* bindRigidBodyAndCollider(RigidBody* rigidBody,
                                                        Collider* collider);

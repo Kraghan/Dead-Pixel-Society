@@ -48,13 +48,23 @@ void PhysicEngine::update(double dt)
         if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
             continue;
 
-        // Calculate new velocities
-        m_rigidBody[i].accelerate(m_gravity);
-        std::cout<< m_rigidBody[i].getVelocity().x << " " << m_rigidBody[i]
-                .getVelocity().y<< std::endl;
+        Collider* colliderAssociated = getColliderAssociated(&m_rigidBody[i]);
 
-        // Calculate new positions
-        m_rigidBody[i].moveAuto(dt);
+        sf::FloatRect intersection;
+
+        if(colliderAssociated == nullptr || !isCollidingDown
+                (colliderAssociated, &intersection))
+            m_rigidBody[i].applyGravity(dt,m_gravity);
+
+
+
+    }
+}
+
+/*
+ // No processing if rigidBody not used or not ready
+        if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
+            continue;
 
         // Search associated collider
         Collider* collider = getColliderAssociated(&m_rigidBody[i]);
@@ -73,14 +83,16 @@ void PhysicEngine::update(double dt)
                 // Velocity x positive
                 if(m_rigidBody[i].getVelocity().x > 0)
                 {
-                    newPos.x -= collision.width;
+                    //newPos.x -= collision.width;
                     m_rigidBody[i].stopMovementX();
+                    m_rigidBody[i].stopMovingToLeft();
                 }
                 // Velocity x negative
                 else if(m_rigidBody[i].getVelocity().x < 0)
                 {
-                    newPos.x += collision.width;
+                    //newPos.x += collision.width;
                     m_rigidBody[i].stopMovementX();
+                    m_rigidBody[i].stopMovingToRight();
                 }
 
                 // Velocity y positive
@@ -109,9 +121,16 @@ void PhysicEngine::update(double dt)
             m_rigidBody[i].move(m_rigidBody[i].getPosition().x-diffX,
                                  m_rigidBody[i].getPosition().y-diffY);
 
+            std::cout<< m_rigidBody[i].getVelocity().x << " " << m_rigidBody[i]
+                    .getVelocity().y<< std::endl;
         }
-    }
-}
+
+        // Calculate new velocities
+        m_rigidBody[i].accelerate(m_gravity);
+
+        // Calculate new positions
+        m_rigidBody[i].moveAuto(dt);
+ */
 
 Collider* PhysicEngine::getCollider()
 {
@@ -158,7 +177,7 @@ collider)
 }
 
 Collider* PhysicEngine::isColliding(Collider* collider,sf::FloatRect*
-intersection)
+intersection, std::string direction)
 {
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
@@ -169,10 +188,78 @@ intersection)
         if(m_colliders[i].getHitBox().intersects(collider->getHitBox(),
                                                   *intersection))
         {
-            return &m_colliders[i];
+            if(direction=="DOWN"
+               && intersection->top < collider->getHitBox().top)
+            {
+                return &m_colliders[i];
+            }
+            else if(direction=="RIGHT"
+                    && intersection->left > collider->getHitBox().left)
+            {
+                return &m_colliders[i];
+            }
+            else if(direction=="LEFT"
+                    && intersection->left < collider->getHitBox().left)
+            {
+                return &m_colliders[i];
+            }
+            else if(direction=="UP"
+                    && intersection->top > collider->getHitBox().top)
+            {
+                return &m_colliders[i];
+            }
+            else
+            {
+                return &m_colliders[i];
+            }
         }
     }
     return nullptr;
+}
+
+bool PhysicEngine::isCollidingDown(Collider* collider, sf::FloatRect*
+intersection)
+{
+    Collider* c = isColliding(collider,intersection,"DOWN");
+    if(c == nullptr)
+    {
+        intersection = nullptr;
+        return false;
+    }
+    return true;
+}
+
+bool PhysicEngine::isCollidingUp(Collider* collider, sf::FloatRect* intersection)
+{
+    Collider* c = isColliding(collider,intersection,"UP");
+    if(c == nullptr)
+    {
+        intersection = nullptr;
+        return false;
+    }
+    return true;
+}
+
+bool PhysicEngine::isCollidingRight(Collider* collider, sf::FloatRect* intersection)
+{
+    Collider* c = isColliding(collider,intersection,"RIGHT");
+    if(c == nullptr)
+    {
+        intersection = nullptr;
+        return false;
+    }
+    return true;
+}
+
+bool PhysicEngine::isCollidingLeft(Collider* collider, sf::FloatRect* intersection)
+{
+    Collider* c = isColliding(collider,intersection,"LEFT");
+    if(c == nullptr)
+    {
+        intersection = nullptr;
+        return false;
+    }
+    return true;
 }
 
 Collider* PhysicEngine::getColliderAssociated(RigidBody* rigidBody)

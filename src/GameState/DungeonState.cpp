@@ -14,32 +14,25 @@ void DungeonState::init(StateMachine  * stateMachine,
     DungeonState::instance = this;
 
     Collider* playerCollider = resourceManager->getCollider();
-    playerCollider->init(0,0,1,1,64);
+    playerCollider->init(10,0,1,1,64);
 
     playerRigidBody = resourceManager->getRigidBody();
-    playerRigidBody->init(5,1,64,1.0f,0.0f,500.0f);
+    playerRigidBody->init(10,0,64,1.0f,10.0f,500.0f);
+    playerRigidBody->startMovingToLeft();
     resourceManager->bindColliderToRigidBody(playerCollider,playerRigidBody);
 
     Collider* floorCollider = resourceManager->getCollider();
-    floorCollider->init(0,10,20,11,64);
+    floorCollider->init(0,11,20,1,64);
+    Collider* leftWallCollider = resourceManager->getCollider();
+    leftWallCollider->init(0,0,1,12,64);
+    Collider* rightWallCollider = resourceManager->getCollider();
+    rightWallCollider->init(20,11,1,12,64);
 
     test = resourceManager->getSprite();
     test->setTexture(*resourceManager->getTexture("PLAYER"));
     test->setLayer(10);
     test->setPosition(playerRigidBody->getPosition());
 
-/*  m_physicEngine.init(resourceManager,3,3,3,9.80);
-    rigid = m_physicEngine.getRigidBody();
-    rigid->init(0,0,64,1.0f,0.0f,500.0f);
-    Collider* c = m_physicEngine.getCollider();
-    c->init((unsigned int)rigid->getPosition().x,(unsigned int)
-                    rigid->getPosition().y,1,1,64);
-    m_physicEngine.bindRigidBodyAndCollider(rigid,c);
-    c = m_physicEngine.getCollider();
-    c->init(0,11,20,1,64);
-    std::cout<< c->getDimension().x << " " << c->getDimension().y <<std::endl;
-
-*/
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
 

@@ -23,16 +23,27 @@ public:
 
     float getAcceleration();
 
-    void accelerate(float gravity);
+    void applyGravity(double dt, float gravity);
+
+    void accelerate();
 
     void moveAuto(double dt);
 
     void stopMovementX();
 
     void stopMovementY();
+
+    void startMovingToLeft();
+
+    void startMovingToRight();
+
+    void stopMovingToLeft();
+
+    void stopMovingToRight();
 private:
     float m_mass, m_acceleration,m_velocityMax;
     sf::Vector2f m_velocity;
+    bool toLeft, toRight;
 };
 
 
