@@ -78,6 +78,11 @@ private :
     GraphicEngine m_graphicEngine;
 
     /*!
+     * \brief   The more amazing physic engine
+     */
+    PhysicEngine m_physicEngine;
+
+    /*!
      * \brief   The resource managers
      */
     ResourceLoader m_resourceLoader;

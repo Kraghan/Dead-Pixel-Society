@@ -14,8 +14,8 @@ class RigidBody : public PhysicObjectBase{
 public:
     RigidBody();
 
-    virtual void init(unsigned int x, unsigned int y, float mass,
-                      float acceleration, float velocityMax);
+    virtual void init(unsigned int x, unsigned int y, unsigned int size, float
+        mass, float acceleration, float velocityMax);
 
     float getMass();
 
@@ -26,6 +26,10 @@ public:
     void accelerate(float gravity);
 
     void moveAuto(double dt);
+
+    void stopMovementX();
+
+    void stopMovementY();
 private:
     float m_mass, m_acceleration,m_velocityMax;
     sf::Vector2f m_velocity;

@@ -13,6 +13,7 @@
 
 #include <iostream>
 
+
 #include "Tool/BlockParser.hpp"
 #include "Memory/Container.hpp"
 #include "GraphicEngine/Sprite.hpp"
@@ -20,6 +21,8 @@
 
 // Forward declaration
 class GraphicEngine;
+
+class PhysicEngine;
 
 class ResourceManager
 {
@@ -29,7 +32,8 @@ public:
      * \brief   Constructor
      * @param   graphicEngine A pointer on the graphic engine
      */
-    explicit ResourceManager(GraphicEngine * graphicEngine);
+    explicit ResourceManager(GraphicEngine * graphicEngine, PhysicEngine*
+    physicEngine);
 
     /*!
      * \brief   Return a free sprite from the graphic engine
@@ -109,6 +113,36 @@ public:
     DungeonTheme * getRandomTheme();
     BlockComponent * getRandomBlockComponent();
 
+    /*!
+     * \brief   Return a free collider from the
+     *          physic engine. Return nullptr if all the
+     *          colliders are in use.
+     */
+    Collider* getCollider();
+
+    /*!
+     * \brief   Return a free rigidBody from the
+     *          physic engine. Return nullptr if all the
+     *          rigidBodies are in use.
+     */
+    RigidBody* getRigidBody();
+
+    /*!
+     * \brief   Bind a collider to a rigidBody to apply
+     *          physics
+     */
+    void bindColliderToRigidBody(Collider* collider, RigidBody* rigidBody);
+
+    /*!
+     * \brief   Return a collider associated to the
+     *          rigidBody. Return nullptr if the rigid
+     *          body isn't associated to any collider
+     */
+    Collider* getColliderBindedToRigidBody(RigidBody* rigidBody);
+
+    // TODO BETTER
+    PhysicEngine* getPhysicEngine();
+
 private:
 
     /*!
@@ -129,6 +163,12 @@ private:
      * \brief   The block parser to extract block components
      */
     BlockParser m_blockParser;
+
+    /*!
+     * \brief   Contains a pointer on the physic
+     *          engine to ask colliders and rigidBodies
+     */
+    PhysicEngine* m_physicEngine;
 };
 
 #endif // __RESOURCE_MANAGER_HPP

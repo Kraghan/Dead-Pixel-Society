@@ -61,9 +61,8 @@ private:
 
     StateMachine * m_stateMachine;
     ResourceManager * m_resourceManager;
-    PhysicEngine m_physicEngine;
 
-    RigidBody* rigid;
+    RigidBody* playerRigidBody;
     Sprite* test;
 
     Dungeon * m_dungeon;

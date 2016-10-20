@@ -4,8 +4,9 @@ GameEngine::GameEngine()
 : m_isRunning(false)
 , m_window(nullptr)
 , m_graphicEngine()
+, m_physicEngine()
 , m_resourceLoader()
-, m_resourceManager(&m_graphicEngine)
+, m_resourceManager(&m_graphicEngine, &m_physicEngine)
 , m_game()
 , m_controlMap()
 , m_eventConverter()
@@ -31,6 +32,8 @@ void GameEngine::init()
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
                          "DPS", 1280, 768, 1500, 100, 15, 2000);
+
+    m_physicEngine.init(&m_resourceManager,50,20,20,9.80);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();

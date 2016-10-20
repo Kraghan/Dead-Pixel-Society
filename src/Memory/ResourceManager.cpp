@@ -1,8 +1,11 @@
 #include "Memory/ResourceManager.hpp"
 #include "GraphicEngine/GraphicEngine.hpp"
+#include "PhysicEngine/PhysicEngine.hpp"
 
-ResourceManager::ResourceManager(GraphicEngine * graphicEngine)
+ResourceManager::ResourceManager(GraphicEngine * graphicEngine,PhysicEngine*
+physicEngine)
 : m_graphicEngine(graphicEngine)
+, m_physicEngine(physicEngine)
 {
     // None
 }
@@ -114,4 +117,29 @@ DungeonTheme * ResourceManager::getRandomTheme()
 BlockComponent * ResourceManager::getRandomBlockComponent()
 {
     return m_blockComponentContainer.getRandom();
+}
+
+Collider *ResourceManager::getCollider()
+{
+    return m_physicEngine->getCollider();
+}
+
+RigidBody *ResourceManager::getRigidBody()
+{
+    return m_physicEngine->getRigidBody();
+}
+
+void ResourceManager::bindColliderToRigidBody(Collider *collider,
+                                              RigidBody *rigidBody)
+{
+    m_physicEngine->bindRigidBodyAndCollider(rigidBody,collider);
+}
+
+Collider *ResourceManager::getColliderBindedToRigidBody(RigidBody *rigidBody)
+{
+    return m_physicEngine->getColliderAssociated(rigidBody);
+}
+
+PhysicEngine *ResourceManager::getPhysicEngine() {
+    return m_physicEngine;
 }

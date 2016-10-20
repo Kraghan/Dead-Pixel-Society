@@ -10,10 +10,11 @@ RigidBody::RigidBody()
 
 }
 
-void RigidBody::init(unsigned int x, unsigned int y, float mass,
+void RigidBody::init(unsigned int x, unsigned int y, unsigned int size, float
+mass,
                      float acceleration, float velocityMax)
 {
-    PhysicObjectBase::init(x,y,0,0,0);
+    PhysicObjectBase::init(x,y,0,0,size);
     m_mass = mass;
     m_velocity = sf::Vector2f(0.0f,0.0f);
     m_acceleration = acceleration;
@@ -56,5 +57,13 @@ void RigidBody::moveAuto(double dt)
     sf::Vector2f pos = getPosition();
     PhysicObjectBase::move((float)(pos.x+(m_velocity.x * dt)),(float)(pos.y+
             (m_velocity.y*dt)));
+}
+
+void RigidBody::stopMovementX() {
+    m_velocity.x = 0.0f;
+}
+
+void RigidBody::stopMovementY() {
+    m_velocity.y = 0.0f;
 }
 

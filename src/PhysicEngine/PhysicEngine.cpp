@@ -50,8 +50,8 @@ void PhysicEngine::update(double dt)
 
         // Calculate new velocities
         m_rigidBody[i].accelerate(m_gravity);
-        std::cout<< m_rigidBody[i].getPosition().x << " " << m_rigidBody[i]
-                .getPosition().y<< std::endl;
+        std::cout<< m_rigidBody[i].getVelocity().x << " " << m_rigidBody[i]
+                .getVelocity().y<< std::endl;
 
         // Calculate new positions
         m_rigidBody[i].moveAuto(dt);
@@ -74,22 +74,26 @@ void PhysicEngine::update(double dt)
                 if(m_rigidBody[i].getVelocity().x > 0)
                 {
                     newPos.x -= collision.width;
+                    m_rigidBody[i].stopMovementX();
                 }
                 // Velocity x negative
                 else if(m_rigidBody[i].getVelocity().x < 0)
                 {
                     newPos.x += collision.width;
+                    m_rigidBody[i].stopMovementX();
                 }
 
                 // Velocity y positive
                 if(m_rigidBody[i].getVelocity().y > 0)
                 {
                     newPos.y -= collision.height;
+                    m_rigidBody[i].stopMovementY();
                 }
                     // Velocity y negative
                 else if(m_rigidBody[i].getVelocity().y < 0)
                 {
                     newPos.y += collision.height;
+                    m_rigidBody[i].stopMovementY();
                 }
 
                 collider->PhysicObjectBase::move(newPos.x, newPos.y);
