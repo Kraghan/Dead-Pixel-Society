@@ -27,8 +27,6 @@ public:
 
     void accelerate();
 
-    void moveAuto(double dt);
-
     void stopMovementX();
 
     void stopMovementY();
@@ -40,10 +38,18 @@ public:
     void stopMovingToLeft();
 
     void stopMovingToRight();
+
+    bool isMovingLeft();
+
+    bool isMovingRight();
+
+    void goOnLeft(double dt);
+
+    void goOnRight(double dt);
 private:
     float m_mass, m_acceleration,m_velocityMax;
     sf::Vector2f m_velocity;
-    bool toLeft, toRight;
+    bool m_toLeft, m_toRight;
 };
 
 

@@ -19,8 +19,8 @@ mass,
     m_velocity = sf::Vector2f(0.0f,0.0f);
     m_acceleration = acceleration;
     m_velocityMax = velocityMax;
-    toLeft = false;
-    toRight = false;
+    m_toLeft = false;
+    m_toRight = false;
 }
 
 float RigidBody::getMass()
@@ -48,9 +48,9 @@ void RigidBody::applyGravity(double dt, float gravity)
 
 void RigidBody::accelerate()
 {
-    if(toRight)
+    if(m_toRight)
         m_velocity.x += m_acceleration;
-    if(toLeft)
+    if(m_toLeft)
         m_velocity.x -= m_acceleration;
 
     if(m_velocity.x < -m_velocityMax)
@@ -64,13 +64,6 @@ void RigidBody::accelerate()
     }
 }
 
-void RigidBody::moveAuto(double dt)
-{
-    sf::Vector2f pos = getPosition();
-    PhysicObjectBase::move((float)(pos.x+(m_velocity.x * dt)),(float)(pos.y+
-            (m_velocity.y*dt)));
-}
-
 void RigidBody::stopMovementX() {
     m_velocity.x = 0.0f;
 }
@@ -80,18 +73,42 @@ void RigidBody::stopMovementY() {
 }
 
 void RigidBody::startMovingToLeft() {
-    toLeft = true;
+    m_toLeft = true;
 }
 
 void RigidBody::startMovingToRight() {
-    toRight = true;
+    m_toRight = true;
 }
 
 void RigidBody::stopMovingToLeft() {
-    toLeft = false;
+    m_toLeft = false;
 }
 
 void RigidBody::stopMovingToRight() {
-    toRight = false;
+    m_toRight = false;
+}
+
+bool RigidBody::isMovingLeft() {
+    return m_toLeft;
+}
+
+bool RigidBody::isMovingRight() {
+    return m_toRight;
+}
+
+void RigidBody::goOnLeft(double dt) {
+    m_velocity.x -= m_acceleration;
+    if(m_velocity.x < -m_velocityMax)
+        m_velocity.x = -m_velocityMax;
+
+    move(getPosition().x+(m_velocity.y*(float)dt),getPosition().y);
+}
+
+void RigidBody::goOnRight(double dt) {
+    m_velocity.x += m_acceleration;
+    if(m_velocity.x > m_velocityMax)
+        m_velocity.x = m_velocityMax;
+
+    move(getPosition().x+m_velocity.y*(float)dt,getPosition().y);
 }
 

@@ -13,20 +13,22 @@ void DungeonState::init(StateMachine  * stateMachine,
 {
     DungeonState::instance = this;
 
+    unsigned int x = 6,y = 0;
+
     Collider* playerCollider = resourceManager->getCollider();
-    playerCollider->init(10,0,1,1,64);
+    playerCollider->init(x,y,1,1,64);
 
     playerRigidBody = resourceManager->getRigidBody();
-    playerRigidBody->init(10,0,64,1.0f,10.0f,500.0f);
+    playerRigidBody->init(x,y,64,1.0f,10.0f,500.0f);
     playerRigidBody->startMovingToLeft();
     resourceManager->bindColliderToRigidBody(playerCollider,playerRigidBody);
 
     Collider* floorCollider = resourceManager->getCollider();
     floorCollider->init(0,11,20,1,64);
-    Collider* leftWallCollider = resourceManager->getCollider();
+    /*Collider* leftWallCollider = resourceManager->getCollider();
     leftWallCollider->init(0,0,1,12,64);
     Collider* rightWallCollider = resourceManager->getCollider();
-    rightWallCollider->init(20,11,1,12,64);
+    rightWallCollider->init(20,11,1,12,64);*/
 
     test = resourceManager->getSprite();
     test->setTexture(*resourceManager->getTexture("PLAYER"));
