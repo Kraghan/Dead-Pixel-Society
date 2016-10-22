@@ -18,6 +18,7 @@
 #include "GraphicEngine/Layer.hpp"
 #include "GraphicEngine/Sprite.hpp"
 #include "GraphicEngine/DebugPanel.hpp"
+#include "GraphicEngine/ConvexShape.hpp"
 #include "GraphicEngine/DrawableManager.hpp"
 
 #include "GameEngine/Clock.hpp"
@@ -50,6 +51,7 @@ public:
             std::string const& name,
             unsigned width, unsigned height,
             unsigned spriteCount, unsigned textCount,
+            unsigned shapeCount,
             unsigned layerCount, unsigned layerSize);
 
     /*!
@@ -59,9 +61,15 @@ public:
     Sprite  * getSprite();
 
     /*!
+     * \brief   Return a free convex shape
+     * @return  A pointer on a engine shape
+     */
+    ConvexShape * getConvexShape();
+
+    /*!
      * \brief   Render all graphic object referenced in the game
      */
-    void render();
+    void render(double factor);
 
     /*!
     * \brief   Return a pointer on the window used by the engine
@@ -104,6 +112,7 @@ private:
      *          the repartition of sprites
      */
     DrawableManager<Sprite> m_spriteManager;
+    DrawableManager<ConvexShape> m_shapeManager;
 
     /*!
      * \brief   The debug panel of the graphic engine

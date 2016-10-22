@@ -17,11 +17,12 @@
 #include "Tool/BlockParser.hpp"
 #include "Memory/Container.hpp"
 #include "GraphicEngine/Sprite.hpp"
+#include "GraphicEngine/ConvexShape.hpp"
+
 #include "Dungeon/DungeonTheme.hpp"
 
 // Forward declaration
 class GraphicEngine;
-
 class PhysicEngine;
 
 class ResourceManager
@@ -42,6 +43,11 @@ public:
      * \return  A pointer on a free sprite
      */
     Sprite * getSprite();
+
+    /*!
+     * \brief   Return a free convex shape
+     */
+    ConvexShape * getConvexShape();
 
     /*!
      * \brief   Load a texture in the texture container
@@ -137,8 +143,9 @@ public:
      * \brief   Return a collider associated to the
      *          rigidBody. Return nullptr if the rigid
      *          body isn't associated to any collider
+     * \param   rigidBody A pointer on the rigidbody to get the collider from
      */
-    Collider* getColliderBindedToRigidBody(RigidBody* rigidBody);
+    Collider * getColliderBindedToRigidBody(RigidBody* rigidBody);
 
     // TODO BETTER
     PhysicEngine* getPhysicEngine();

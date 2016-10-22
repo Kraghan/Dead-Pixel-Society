@@ -104,6 +104,11 @@ Sprite * ResourceManager::getSprite()
     return m_graphicEngine->getSprite();
 }
 
+ConvexShape * ResourceManager::getConvexShape()
+{
+    return m_graphicEngine->getConvexShape();
+}
+
 DungeonTheme * ResourceManager::getDungeonTheme(std::string const& alias)
 {
     return m_dungeonThemeContainer.getResource(alias);

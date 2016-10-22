@@ -14,6 +14,7 @@
 #include <cstring>
 #include <SFML/Graphics.hpp>
 #include "GraphicEngine/Sprite.hpp"
+#include "GraphicEngine/ConvexShape.hpp"
 
 class Layer
 {
@@ -28,6 +29,7 @@ public:
     {
         NONE,
         TEXT,
+        SHAPE,
         SPRITE,
     };
 
@@ -53,6 +55,14 @@ public:
      *          to append to the layer
      */
     void append(Sprite const * sprite);
+
+    /*!
+     * \brief   Append the vertices of a sprite
+     *          to the layer
+     * \param   sprite A const pointer on the sprite
+     *          to append to the layer
+     */
+    void append(ConvexShape const * shape);
 
     /*!
      * \brief   Initialize the layer

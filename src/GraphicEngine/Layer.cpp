@@ -69,6 +69,11 @@ void Layer::append(Sprite const * sprite)
         m_skipped++;
         return;
     }
+    else if(m_type == LAYER_TYPE::SHAPE)
+    {
+        m_skipped++;
+        return;
+    }
 
     uint32_t inc = 6;
     if(m_wireframe) inc = 10;
@@ -150,4 +155,89 @@ void Layer::append(Sprite const * sprite)
         // and we're done
         m_size += inc;
     }
+}
+
+void Layer::append(ConvexShape const * shape)
+{
+    // If none, this the first append
+    if(m_type == LAYER_TYPE::NONE)
+    {
+        m_type = LAYER_TYPE::SHAPE;
+
+        if(!m_wireframe)
+        {
+            // On the first time, we have
+            // set the render states
+            m_state->texture = shape->getTexture();
+            m_layerPrimitive = sf::Lines;
+        }
+        else
+        {
+            m_layerPrimitive = sf::Lines;
+        }
+    }
+    else if(m_type == LAYER_TYPE::TEXT)
+    {
+        // Layer type and drawable type mismatched
+        // Skipping
+        m_skipped++;
+        return;
+    }
+    else if(m_type == LAYER_TYPE::SPRITE)
+    {
+        m_skipped++;
+        return;
+    }
+
+    uint32_t inc = (uint32_t)shape->getPointCount() * 2;
+
+    // Checking layer overflow
+    if(m_size + inc >= m_capacity)
+    {
+        // There is an overflow
+        // Skipping
+        m_skipped++;
+        return;
+    }
+
+    // We can add the vertices
+    // Getting the target vertices
+    const sf::Vertex * _vertices = shape->getVertices();
+
+    const sf::Vertex * _last = nullptr;
+    for(uint32_t i = 0; i < (uint32_t)shape->getPointCount(); i += 2)
+    {
+        if(i == 0) _last = &_vertices[i + 0];
+        else _last = &_vertices[i - 1];
+
+        memcpy((void *)&m_vertices[m_size + i + 0], (void *)_last, sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + i + 1], (void *)&_vertices[i + 1], sizeof(sf::Vertex));
+    }
+
+    // Buffering transformation
+    const sf::Transform * _transform = &shape->getTransform();
+
+    if(m_wireframe)
+    {
+        // Iterating vertices
+        for(unsigned i = 0; i < inc; ++i)
+        {
+            // Applying transformation to the vertices
+            m_vertices[m_size + i].position  = *_transform * m_vertices[m_size + i].position;
+
+            m_vertices[m_size + i].texCoords = sf::Vector2f(0.0f, 0.0f);
+            m_vertices[m_size + i].color     = shape->getWireColor();
+        }
+    }
+    else
+    {
+        // Iterating vertices
+        for(unsigned i = 0; i < inc; ++i)
+        {
+            // Applying transformation to the vertices
+            m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
+        }
+    }
+
+    m_size += inc;
 }

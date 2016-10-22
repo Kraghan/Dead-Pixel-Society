@@ -12,6 +12,7 @@
 #define __RENDER_BASE_HPP
 
 class Sprite; ///< Forward declaration
+class ConvexShape;
 
 #include <SFML/Graphics.hpp>
 #include "GraphicEngine/DrawableManager.hpp"
@@ -91,6 +92,7 @@ protected:
      */
     friend class GraphicEngine;
     friend class DrawableManager<Sprite>;
+    friend class DrawableManager<ConvexShape>;
 
     /*!
      * \brief   Return if the component is available

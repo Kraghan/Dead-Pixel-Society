@@ -36,6 +36,7 @@ void GraphicEngine::init(ResourceManager * resourceManager,
     std::string const& name,
     unsigned width, unsigned height,
     unsigned spriteCount, unsigned textCount,
+    unsigned shapeCount,
     unsigned layerCount, unsigned layerSize)
 {
     // Getting the manager
@@ -46,6 +47,7 @@ void GraphicEngine::init(ResourceManager * resourceManager,
 
     // Initializing managers
     m_spriteManager.init(spriteCount);
+    m_shapeManager.init(shapeCount);
 
     // Layer information
     m_layerCount = layerCount;
@@ -85,7 +87,12 @@ Sprite * GraphicEngine::getSprite()
     return m_spriteManager.getFreeDrawable();
 }
 
-void GraphicEngine::render()
+ConvexShape * GraphicEngine::getConvexShape()
+{
+    return m_shapeManager.getFreeDrawable();
+}
+
+void GraphicEngine::render(double factor)
 {
     // Checking if its the time to render
     m_currentRender = Clock::getCurrentTime();
@@ -149,6 +156,27 @@ void GraphicEngine::constructLayers()
                 // The sprite is conform
                 // We can append it to his target layer
                 m_layers[_sprites[index].getLayer()].append(&_sprites[index]);
+            }
+        }
+    }
+
+    // Getting text list
+    const ConvexShape * _shapes = m_shapeManager.getDrawableList();
+    unsigned _shapeCount        = m_shapeManager.getDrawableCount();
+
+    // Iterating the list
+    for(unsigned index = 0; index < _shapeCount; ++index)
+    {
+        // The sprite is in use
+        // So we can add him to a layer
+        if(_shapes[index].isReady())
+        {
+            // Checking layer index
+            if(_shapes[index].getLayer() < (int)m_layerCount)
+            {
+                // The sprite is conform
+                // We can append it to his target layer
+                m_layers[_shapes[index].getLayer()].append(&_shapes[index]);
             }
         }
     }
@@ -245,5 +273,4 @@ void GraphicEngine::setFramerate(double framerate)
     // Re-computing delta (time step)
     m_delta = (1 / m_framerate) * 1000;
 }
-
 

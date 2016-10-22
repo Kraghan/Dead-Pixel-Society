@@ -31,7 +31,7 @@ void GameEngine::init()
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
-                         "DPS", 1280, 768, 1500, 100, 15, 2000);
+                         "DPS", 1280, 768, 1500, 100, 100, 15, 2000);
 
     m_physicEngine.init(&m_resourceManager,50,20,20,9.80);
 
@@ -40,7 +40,7 @@ void GameEngine::init()
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(false);
+    m_graphicEngine.wireframe(true);
     m_graphicEngine.setFramerate(120);
 }
 
@@ -83,7 +83,7 @@ void GameEngine::gameLoop()
         }
 
         // Rendering
-        m_graphicEngine.render();
+        m_graphicEngine.render(lag / MS_PER_UPDATE);
     }
 }
 
