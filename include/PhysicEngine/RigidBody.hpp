@@ -25,8 +25,6 @@ public:
 
     void applyGravity(double dt, float gravity);
 
-    void accelerate();
-
     void stopMovementX();
 
     void stopMovementY();

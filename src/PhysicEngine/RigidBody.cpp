@@ -2,6 +2,7 @@
 // Created by madjo on 18/10/2016.
 //
 
+#include <iostream>
 #include "PhysicEngine/RigidBody.hpp"
 
 RigidBody::RigidBody()
@@ -11,8 +12,7 @@ RigidBody::RigidBody()
 }
 
 void RigidBody::init(unsigned int x, unsigned int y, unsigned int size, float
-mass,
-                     float acceleration, float velocityMax)
+mass, float acceleration, float velocityMax)
 {
     PhysicObjectBase::init(x,y,0,0,size);
     m_mass = mass;
@@ -44,24 +44,6 @@ void RigidBody::applyGravity(double dt, float gravity)
 
     sf::Vector2f pos = getPosition();
     move(pos.x,pos.y+m_velocity.y*(float)dt);
-}
-
-void RigidBody::accelerate()
-{
-    if(m_toRight)
-        m_velocity.x += m_acceleration;
-    if(m_toLeft)
-        m_velocity.x -= m_acceleration;
-
-    if(m_velocity.x < -m_velocityMax)
-    {
-        m_velocity.x = -m_velocityMax;
-    }
-
-    if(m_velocity.x > m_velocityMax)
-    {
-        m_velocity.x = m_velocityMax;
-    }
 }
 
 void RigidBody::stopMovementX() {

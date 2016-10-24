@@ -20,7 +20,7 @@ void DungeonState::init(StateMachine  * stateMachine,
 
     playerRigidBody = resourceManager->getRigidBody();
     playerRigidBody->init(x,y,64,1.0f,10.0f,500.0f);
-    playerRigidBody->startMovingToLeft();
+    playerRigidBody->startMovingToRight();
     resourceManager->bindColliderToRigidBody(playerCollider,playerRigidBody);
 
     Collider* floorCollider = resourceManager->getCollider();
