@@ -90,6 +90,7 @@ void GameEngine::gameLoop()
 void GameEngine::update()
 {
     // Updating the game
+    m_physicEngine.update(MS_PER_UPDATE * TimeManager::TimeScale);
     m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
 }
 

@@ -13,6 +13,7 @@ template <typename T>
 class Singleton
 {
 public:
+
     /*!
      * \brief   Default constructor
      */

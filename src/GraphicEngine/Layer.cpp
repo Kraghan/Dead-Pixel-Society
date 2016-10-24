@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GraphicEngine/Layer.hpp"
 
 /*explicit */ Layer::Layer()
@@ -43,6 +44,7 @@ void Layer::prepare()
     m_skipped = 0;
 }
 
+// Very bad ... think about drawable ...
 void Layer::append(Sprite const * sprite)
 {
     // If none, this the first append
@@ -157,6 +159,7 @@ void Layer::append(Sprite const * sprite)
     }
 }
 
+// Very bad ... think about drawable ...
 void Layer::append(ConvexShape const * shape)
 {
     // If none, this the first append
@@ -173,7 +176,7 @@ void Layer::append(ConvexShape const * shape)
         }
         else
         {
-            m_layerPrimitive = sf::Triangles;
+            m_layerPrimitive = sf::Lines;
         }
     }
     else if(m_type == LAYER_TYPE::TEXT)
@@ -189,7 +192,9 @@ void Layer::append(ConvexShape const * shape)
         return;
     }
 
+    // Setting inc value
     uint32_t inc = (uint32_t)shape->getPointCount() * 3;
+    if(m_wireframe) inc *= 2;
 
     // Checking layer overflow
     if(m_size + inc >= m_capacity)
@@ -207,40 +212,68 @@ void Layer::append(ConvexShape const * shape)
     // Buffering middle points
     const sf::Vertex * _middle = &_vertices[0];
 
-    // Generating triangles
-    for(uint32_t i = 0; i < (uint32_t)shape->getPointCount(); ++i)
-    {
-        memcpy((void *)&m_vertices[m_size + i + 0], (void *)&_vertices[i + 1], sizeof(sf::Vertex));
-        memcpy((void *)&m_vertices[m_size + i + 1], (void *)&_vertices[i + 2], sizeof(sf::Vertex));
-
-        // Inserting middle points
-        memcpy((void *)&m_vertices[m_size + i + 2], (void *)_middle, sizeof(sf::Vertex));
-    }
+    // Redefining pointer
+    _vertices = &_vertices[1];
 
     // Buffering transformation
     const sf::Transform * _transform = &shape->getTransform();
 
+    // Buffering points count
+    uint32_t pCount = (uint32_t)shape->getPointCount();
+
     if(m_wireframe)
     {
-        // Iterating vertices
-        for(unsigned i = 0; i < inc; ++i)
-        {
-            // Applying transformation to the vertices
-            m_vertices[m_size + i].position  = *_transform * m_vertices[m_size + i].position;
+        // Buffering first point
+        const sf::Vertex * _buffer = _vertices;
 
-            m_vertices[m_size + i].texCoords = sf::Vector2f(0.0f, 0.0f);
-            m_vertices[m_size + i].color     = shape->getWireColor();
+        // Making lines
+        for(uint32_t i = 0; i < pCount; ++i)
+        {
+            makeTriangleLine(m_size + i * 6, _buffer, _middle, &_vertices[i + 1]);
+            _buffer = &_vertices[i + 1];
+        }
+
+        // Direct transform
+        for(uint32_t i = 0; i < inc; ++i)
+        {
+            m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
+            m_vertices[m_size + i].texCoords = sf::Vector2f(0, 0);
+            m_vertices[m_size + i].color = shape->getWireColor();
+
+            // TODO smooth motion
         }
     }
     else
     {
-        // Iterating vertices
-        for(unsigned i = 0; i < inc; ++i)
+        // Generating triangles from triangle fan
+        for(uint32_t i = 0; i < (uint32_t)shape->getPointCount(); ++i)
         {
-            // Applying transformation to the vertices
-            m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
+            memcpy((void *)&m_vertices[m_size + i + 0], (void *)&_vertices[i + 1], sizeof(sf::Vertex));
+            memcpy((void *)&m_vertices[m_size + i + 1], (void *)&_vertices[i + 2], sizeof(sf::Vertex));
+
+            // Inserting middle points
+            memcpy((void *)&m_vertices[m_size + i + 2], (void *)_middle, sizeof(sf::Vertex));
+            std::cout << i << std::endl;
         }
     }
 
     m_size += inc;
+}
+
+void Layer::makeTriangleLine(uint32_t index,
+    const sf::Vertex * p1,
+    const sf::Vertex * p2,
+    const sf::Vertex * p3)
+{
+    // Line 1
+    memcpy((void *)&m_vertices[index + 0], (void *)p1, sizeof(sf::Vertex));
+    memcpy((void *)&m_vertices[index + 1], (void *)p3, sizeof(sf::Vertex));
+
+    // Line 2
+    memcpy((void *)&m_vertices[index + 2], (void *)p3, sizeof(sf::Vertex));
+    memcpy((void *)&m_vertices[index + 3], (void *)p2, sizeof(sf::Vertex));
+
+    // Line 3
+    memcpy((void *)&m_vertices[index + 4], (void *)p2, sizeof(sf::Vertex));
+    memcpy((void *)&m_vertices[index + 5], (void *)p1, sizeof(sf::Vertex));
 }
