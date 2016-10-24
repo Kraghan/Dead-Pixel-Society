@@ -157,18 +157,6 @@ void Layer::append(Sprite const * sprite)
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 void Layer::append(ConvexShape const * shape)
 {
     // If none, this the first append
@@ -181,11 +169,11 @@ void Layer::append(ConvexShape const * shape)
             // On the first time, we have
             // set the render states
             m_state->texture = shape->getTexture();
-            m_layerPrimitive = sf::Lines;
+            m_layerPrimitive = sf::Triangles;
         }
         else
         {
-            m_layerPrimitive = sf::Lines;
+            m_layerPrimitive = sf::Triangles;
         }
     }
     else if(m_type == LAYER_TYPE::TEXT)
@@ -201,7 +189,7 @@ void Layer::append(ConvexShape const * shape)
         return;
     }
 
-    uint32_t inc = (uint32_t)shape->getPointCount() * 2;
+    uint32_t inc = (uint32_t)shape->getPointCount() * 3;
 
     // Checking layer overflow
     if(m_size + inc >= m_capacity)
@@ -216,14 +204,17 @@ void Layer::append(ConvexShape const * shape)
     // Getting the target vertices
     const sf::Vertex * _vertices = shape->getVertices();
 
-    const sf::Vertex * _last = nullptr;
-    for(uint32_t i = 0; i < (uint32_t)shape->getPointCount(); i += 2)
-    {
-        if(i == 0) _last = &_vertices[i + 0];
-        else _last = &_vertices[i - 1];
+    // Buffering middle points
+    const sf::Vertex * _middle = &_vertices[0];
 
-        memcpy((void *)&m_vertices[m_size + i + 0], (void *)_last, sizeof(sf::Vertex));
-        memcpy((void *)&m_vertices[m_size + i + 1], (void *)&_vertices[i + 1], sizeof(sf::Vertex));
+    // Generating triangles
+    for(uint32_t i = 0; i < (uint32_t)shape->getPointCount(); ++i)
+    {
+        memcpy((void *)&m_vertices[m_size + i + 0], (void *)&_vertices[i + 1], sizeof(sf::Vertex));
+        memcpy((void *)&m_vertices[m_size + i + 1], (void *)&_vertices[i + 2], sizeof(sf::Vertex));
+
+        // Inserting middle points
+        memcpy((void *)&m_vertices[m_size + i + 2], (void *)_middle, sizeof(sf::Vertex));
     }
 
     // Buffering transformation
