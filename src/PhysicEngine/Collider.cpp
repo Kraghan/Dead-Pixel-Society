@@ -9,12 +9,11 @@ Collider::Collider()
     // None
 }
 
-void Collider::moveRigidBody(RigidBody* rigidBody,double dt)
+void Collider::moveRigidBody(RigidBody* rigidBody)
 {
     sf::Vector2f velocity = rigidBody->getVelocity();
     sf::Vector2f position = PhysicObjectBase::getPosition();
 
-    // Why ?
-    PhysicObjectBase::move(position.x+(float)(velocity.x*dt),
-                           position.y+(float)(velocity.y*dt));
+    PhysicObjectBase::move(position.x+velocity.x,
+                           position.y+velocity.y);
 }

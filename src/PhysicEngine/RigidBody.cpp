@@ -40,10 +40,10 @@ float RigidBody::getAcceleration()
 
 void RigidBody::applyGravity(double dt, float gravity)
 {
-    m_velocity.y += gravity*m_mass;
+    m_velocity.y += gravity*dt*m_mass;
 
     sf::Vector2f pos = getPosition();
-    move(pos.x,pos.y+m_velocity.y*(float)dt);
+    move(pos.x,pos.y+m_velocity.y);
 }
 
 void RigidBody::stopMovementX() {
@@ -79,18 +79,18 @@ bool RigidBody::isMovingRight() {
 }
 
 void RigidBody::goOnLeft(double dt) {
-    m_velocity.x -= m_acceleration;
+    m_velocity.x -= m_acceleration*dt;
     if(m_velocity.x < -m_velocityMax)
         m_velocity.x = -m_velocityMax;
 
-    move(getPosition().x+(m_velocity.y*(float)dt),getPosition().y);
+    move(getPosition().x+(m_velocity.y),getPosition().y);
 }
 
 void RigidBody::goOnRight(double dt) {
-    m_velocity.x += m_acceleration;
+    m_velocity.x += m_acceleration*dt;
     if(m_velocity.x > m_velocityMax)
         m_velocity.x = m_velocityMax;
 
-    move(getPosition().x+m_velocity.y*(float)dt,getPosition().y);
+    move(getPosition().x+m_velocity.y,getPosition().y);
 }
 

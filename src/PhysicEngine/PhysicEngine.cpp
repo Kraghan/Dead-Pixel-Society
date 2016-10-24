@@ -106,19 +106,21 @@ void PhysicEngine::update(double dt)
         }
 
         if(colliderAssociated != nullptr && hasMoved) {
-            colliderAssociated->moveRigidBody(&m_rigidBody[i], dt);
+            colliderAssociated->moveRigidBody(&m_rigidBody[i]);
         }
 
         if(isCollidingDown(colliderAssociated,&intersection,m_rigidBody[i]
-                .getVelocity()))
-        {
-            m_rigidBody[i].move(m_rigidBody[i].getPosition().x,m_rigidBody[i]
-                                                                       .getPosition().y-intersection);
-            colliderAssociated->move(colliderAssociated->getPosition().x,
-                                     colliderAssociated->getPosition()
-                                             .y-intersection);
+                .getVelocity())) {
+            m_rigidBody[i].move(m_rigidBody[i].getPosition().x, m_rigidBody[i]
+                                                                        .getPosition().y -
+                                                                intersection);
+            if (colliderAssociated != nullptr)
+            {
+                colliderAssociated->move(colliderAssociated->getPosition().x,
+                                         colliderAssociated->getPosition()
+                                                 .y - intersection);
+            }
         }
-
     }
 }
 

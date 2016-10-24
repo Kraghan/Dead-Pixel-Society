@@ -16,7 +16,7 @@ class Collider : public PhysicObjectBase{
 public:
     Collider();
 
-    void moveRigidBody(RigidBody* rigidBody, double dt);
+    void moveRigidBody(RigidBody* rigidBody);
 };
 
 
