@@ -138,18 +138,6 @@ void Layer::append(Sprite const * sprite, double offset)
                 {
                     m_vertices[m_size + i].position.x += _rigid->getVelocity().x * offset;
                     m_vertices[m_size + i].position.y += _rigid->getVelocity().y * offset;
-
-                    /*
-                    std::cout << "offset : " << offset << std::endl;
-
-                    std::cout << _rigid->getVelocity().x << std::endl;
-                    std::cout << _rigid->getVelocity().y << std::endl;
-
-                    std::cout << _rigid->getVelocity().x * offset << std::endl;
-                    std::cout << _rigid->getVelocity().y * offset << std::endl;
-
-                    std::cout << std::endl;
-                    */
                 }
             }
         }

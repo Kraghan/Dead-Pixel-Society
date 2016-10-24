@@ -1,3 +1,4 @@
+#include <GameEngine/TimeManager.hpp>
 #include "GameState/DungeonState.hpp"
 
 /* explicit */ DungeonState::DungeonState()
@@ -43,22 +44,6 @@ void DungeonState::init(StateMachine  * stateMachine,
 
     // Initializing the factory
     m_dungeonFactory.init(m_resourceManager);
-
-
-    // TMP
-    ConvexShape * test = nullptr;
-    test = m_resourceManager->getConvexShape();
-
-    test->setLayer(8);
-    test->setPointCount(5);
-    test->setWireColor(sf::Color::Red);
-
-    test->setPoint(0, sf::Vector2f(0, 0));
-    test->setPoint(1, sf::Vector2f(150, 10));
-    test->setPoint(2, sf::Vector2f(120, 90));
-    test->setPoint(3, sf::Vector2f(30, 100));
-    test->setPoint(4, sf::Vector2f(0, 50));
-    test->setPosition(500, 200);
 }
 
 /* virtual */ DungeonState::~DungeonState()
