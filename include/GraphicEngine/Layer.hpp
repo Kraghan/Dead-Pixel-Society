@@ -54,7 +54,7 @@ public:
      * \param   sprite A const pointer on the sprite
      *          to append to the layer
      */
-    void append(Sprite const * sprite);
+    void append(Sprite const * sprite, double offset);
 
     /*!
      * \brief   Append the vertices of a sprite
@@ -62,7 +62,7 @@ public:
      * \param   sprite A const pointer on the sprite
      *          to append to the layer
      */
-    void append(ConvexShape const * shape);
+    void append(ConvexShape const * shape, double offset);
 
     /*!
      * \brief   Initialize the layer
@@ -159,9 +159,9 @@ private:
      * \brief   Make a triangle with lines
      */
     void makeTriangleLine(uint32_t index,
-                          const sf::Vertex * p1,
-                          const sf::Vertex * p2,
-                          const sf::Vertex * p3);
+          const sf::Vertex * p1,
+          const sf::Vertex * p2,
+          const sf::Vertex * p3);
 };
 
 #endif // __LAYER_HPP

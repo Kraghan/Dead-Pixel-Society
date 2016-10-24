@@ -6,6 +6,8 @@ RenderBase::RenderBase()
     m_ready = false;
     m_visible = true;
     m_available = true;
+    m_smoothMotion = false;
+    m_rigidBodyRef = nullptr;
 
     m_wireColor = sf::Color::Blue;
 }

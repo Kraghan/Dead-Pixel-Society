@@ -45,8 +45,9 @@ void Layer::prepare()
 }
 
 // Very bad ... think about drawable ...
-void Layer::append(Sprite const * sprite)
+void Layer::append(Sprite const * sprite, double offset)
 {
+    // std::cout << offset << std::endl;
     // If none, this the first append
     if(m_type == LAYER_TYPE::NONE)
     {
@@ -93,6 +94,10 @@ void Layer::append(Sprite const * sprite)
     // Getting the target vertices
     const sf::Vertex * _vertices = sprite->getVertices();
 
+    // Buffering rigidbody
+    bool smooth = sprite->getSmoothMotion();
+    RigidBody * _rigid = sprite->getRigidBody();
+
     if(m_wireframe)
     {
         // First line
@@ -126,6 +131,27 @@ void Layer::append(Sprite const * sprite)
 
             m_vertices[m_size + i].texCoords = sf::Vector2f(0.0f, 0.0f);
             m_vertices[m_size + i].color     = sprite->getWireColor();
+
+            if(smooth)
+            {
+                if(_rigid != nullptr)
+                {
+                    m_vertices[m_size + i].position.x += _rigid->getVelocity().x * offset;
+                    m_vertices[m_size + i].position.y += _rigid->getVelocity().y * offset;
+
+                    /*
+                    std::cout << "offset : " << offset << std::endl;
+
+                    std::cout << _rigid->getVelocity().x << std::endl;
+                    std::cout << _rigid->getVelocity().y << std::endl;
+
+                    std::cout << _rigid->getVelocity().x * offset << std::endl;
+                    std::cout << _rigid->getVelocity().y * offset << std::endl;
+
+                    std::cout << std::endl;
+                    */
+                }
+            }
         }
 
         m_size += inc;
@@ -151,6 +177,15 @@ void Layer::append(Sprite const * sprite)
         {
             // Applying transformation to the vertices
             m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
+
+            if(smooth)
+            {
+                if(_rigid != nullptr)
+                {
+                    m_vertices[m_size + i].position.x += _rigid->getVelocity().x * offset;
+                    m_vertices[m_size + i].position.y += _rigid->getVelocity().y * offset;
+                }
+            }
         }
 
         // Then incrementing the size of the layer
@@ -160,7 +195,7 @@ void Layer::append(Sprite const * sprite)
 }
 
 // Very bad ... think about drawable ...
-void Layer::append(ConvexShape const * shape)
+void Layer::append(ConvexShape const * shape, double offset)
 {
     // If none, this the first append
     if(m_type == LAYER_TYPE::NONE)
@@ -233,6 +268,10 @@ void Layer::append(ConvexShape const * shape)
             _buffer = &_vertices[i + 1];
         }
 
+        // Buffering smooth motion state
+        bool smooth = shape->getSmoothMotion();
+        RigidBody * _rigid = shape->getRigidBody();
+
         // Direct transform
         for(uint32_t i = 0; i < inc; ++i)
         {
@@ -240,7 +279,15 @@ void Layer::append(ConvexShape const * shape)
             m_vertices[m_size + i].texCoords = sf::Vector2f(0, 0);
             m_vertices[m_size + i].color = shape->getWireColor();
 
-            // TODO smooth motion
+            // Smooth motion
+            if(smooth)
+            {
+                if(_rigid != nullptr)
+                {
+                    m_vertices[m_size + i].position.x += _rigid->getVelocity().x * offset;
+                    m_vertices[m_size + i].position.y += _rigid->getVelocity().y * offset;
+                }
+            }
         }
     }
     else
@@ -253,7 +300,6 @@ void Layer::append(ConvexShape const * shape)
 
             // Inserting middle points
             memcpy((void *)&m_vertices[m_size + i + 2], (void *)_middle, sizeof(sf::Vertex));
-            std::cout << i << std::endl;
         }
     }
 

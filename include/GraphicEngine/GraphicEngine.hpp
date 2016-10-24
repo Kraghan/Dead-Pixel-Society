@@ -166,7 +166,7 @@ private:
     /*!
      * \brief   Construct all layer for the future frame
      */
-    void constructLayers();
+    void constructLayers(double factor);
 
     /*!
      * \brief   Prepare all layers for the next frame by

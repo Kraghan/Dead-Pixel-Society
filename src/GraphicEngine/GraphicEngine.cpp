@@ -120,7 +120,7 @@ void GraphicEngine::render(double factor)
 
     // Construct all layers
     // Assemble all drawable into those layers
-    constructLayers();
+    constructLayers(factor);
 
     // Draw call
     // See draw()
@@ -134,7 +134,7 @@ void GraphicEngine::render(double factor)
     m_debugPanel.reset();
 }
 
-void GraphicEngine::constructLayers()
+void GraphicEngine::constructLayers(double factor)
 {
     // Getting sprites list
     const Sprite * _sprites = m_spriteManager.getDrawableList();
@@ -155,7 +155,7 @@ void GraphicEngine::constructLayers()
             {
                 // The sprite is conform
                 // We can append it to his target layer
-                m_layers[_sprites[index].getLayer()].append(&_sprites[index]);
+                m_layers[_sprites[index].getLayer()].append(&_sprites[index], factor);
             }
         }
     }
@@ -176,7 +176,7 @@ void GraphicEngine::constructLayers()
             {
                 // The sprite is conform
                 // We can append it to his target layer
-                m_layers[_shapes[index].getLayer()].append(&_shapes[index]);
+                m_layers[_shapes[index].getLayer()].append(&_shapes[index], factor);
             }
         }
     }

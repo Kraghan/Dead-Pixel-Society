@@ -15,6 +15,7 @@ class Sprite; ///< Forward declaration
 class ConvexShape;
 
 #include <SFML/Graphics.hpp>
+#include "PhysicEngine/RigidBody.hpp"
 #include "GraphicEngine/DrawableManager.hpp"
 
 class RenderBase
@@ -84,6 +85,30 @@ public:
         return m_wireColor;
     }
 
+    /*!
+     * \brief   Set the state of the smooth motion
+     * \param   state The state of the smooth motion
+     */
+    inline void setSmoothMotion(bool state) {
+        m_smoothMotion = state;
+    }
+
+    /*!
+     * \brief   Return the current state of the smooth motion of the object
+     * \return  The state the smooth motion
+     */
+    inline bool getSmoothMotion()const {
+        return m_smoothMotion;
+    }
+
+    inline void setRigidBody(RigidBody * ref) {
+        m_rigidBodyRef = ref;
+    }
+
+    inline RigidBody * getRigidBody() const {
+        return m_rigidBodyRef;
+    }
+
 protected:
 
     /*!
@@ -122,8 +147,11 @@ private:
     bool m_ready;
     bool m_visible;
     bool m_available;
+    bool m_smoothMotion;
 
     sf::Color m_wireColor;
+
+    RigidBody * m_rigidBodyRef;
 };
 
 #endif // __RENDER_BASE_HPP

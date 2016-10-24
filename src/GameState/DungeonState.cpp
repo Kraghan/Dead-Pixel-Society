@@ -35,6 +35,9 @@ void DungeonState::init(StateMachine  * stateMachine,
     test->setLayer(10);
     test->setPosition(playerRigidBody->getPosition());
 
+    test->setSmoothMotion(true);
+    test->setRigidBody(playerRigidBody);
+
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
 
