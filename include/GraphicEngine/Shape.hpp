@@ -13,6 +13,7 @@ class Shape : public sf::Drawable, public sf::Transformable, public RenderBase
 {
 public:
 
+    explicit Shape();
     virtual ~Shape();
     void setTexture(const sf::Texture* texture, bool resetRect = false);
     void setTextureRect(const sf::IntRect& rect);
@@ -29,8 +30,7 @@ public:
     sf::FloatRect getLocalBounds() const;
     sf::FloatRect getGlobalBounds() const;
 
-    sf::Vertex * getVertices()
-    {
+    const sf::Vertex * getVertices() const {
         return &m_vertices[0];
     }
 

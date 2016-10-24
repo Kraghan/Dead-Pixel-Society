@@ -34,8 +34,8 @@ void Shape::setTexture(const sf::Texture* texture, bool resetRect)
     if (texture)
     {
         // Recompute the texture area if requested, or if there was no texture & rect before
-        if (resetRect || (!m_texture && (m_textureRect == IntRect())))
-            setTextureRect(IntRect(0, 0, texture->getSize().x, texture->getSize().y));
+        if (resetRect || (!m_texture && (m_textureRect == sf::IntRect())))
+            setTextureRect(sf::IntRect(0, 0, texture->getSize().x, texture->getSize().y));
     }
 
     // Assign the new texture
@@ -107,8 +107,8 @@ m_fillColor       (255, 255, 255),
 m_outlineColor    (255, 255, 255),
 m_texture         (NULL),
 m_outlineThickness(0),
-m_vertices        (sf::TriangleFan),
-m_outlineVertices (sf::TriangleStrip),
+m_vertices        (sf::TrianglesFan),
+m_outlineVertices (sf::TrianglesStrip),
 m_insideBounds    (),
 m_bounds          ()
 {

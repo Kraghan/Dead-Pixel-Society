@@ -157,6 +157,18 @@ void Layer::append(Sprite const * sprite)
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 void Layer::append(ConvexShape const * shape)
 {
     // If none, this the first append
