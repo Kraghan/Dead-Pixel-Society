@@ -8,7 +8,6 @@ GameContext::GameContext()
 {
     m_menu = false;
     m_controller = false;
-    GameContext::instance = this;
 }
 
 void GameContext::setMenuContext()

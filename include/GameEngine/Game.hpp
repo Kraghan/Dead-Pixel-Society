@@ -46,11 +46,6 @@ public:
 private:
 
     StateMachine m_stateMachine;
-
-    PauseState m_pauseState;
-    DungeonState m_dungeonState;
-    WorldMapState m_worldMapState;
-
     ResourceManager * m_resourceManager;
 };
 

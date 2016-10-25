@@ -6,14 +6,12 @@
 , m_resourceManager(nullptr)
 , m_dungeon(nullptr)
 {
-    DungeonState::instance = nullptr;
+    // None
 }
 
 void DungeonState::init(StateMachine  * stateMachine,
     ResourceManager * resourceManager)
 {
-    DungeonState::instance = this;
-
     unsigned int x = 6,y = 0;
 
     Collider* playerCollider = resourceManager->getCollider();
@@ -44,19 +42,19 @@ void DungeonState::init(StateMachine  * stateMachine,
 
     // Initializing the factory
     m_dungeonFactory.init(m_resourceManager);
+
+    TimeManager::TimeScale = 1.0f;
 }
 
 /* virtual */ DungeonState::~DungeonState()
 {
-    DungeonState::instance = nullptr;
+    // None
 }
 
 /* virtual */ void DungeonState::update(double dt)
 {
     // TODO
     test->setPosition(playerRigidBody->getPosition());
-
-
 }
 
 bool DungeonState::onEnter()

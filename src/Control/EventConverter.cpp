@@ -14,7 +14,8 @@ EventProcessed EventConverter::processEvent(const sf::Event event,const ControlM
 {
     bool isPressed = false;
     Actions action = Actions::NONE;
-    GameContext* context = GameContext::instance;
+    GameContext* context = GameContext::Instance();
+
     sf::Vector2i position = sf::Vector2i(-1,-1);
     EventType type = EventType::VOID;
     // The player use a controller

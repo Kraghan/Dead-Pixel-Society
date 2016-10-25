@@ -63,7 +63,7 @@ ControlMap::ControlMap(int up,int down,int left,int right,int attack,int jump,in
 
 Actions ControlMap::getAction(int keyPressed) const
 {
-    GameContext* context = GameContext::instance;
+    GameContext* context = GameContext::Instance();
     if(context->isContextMenu())
     {
         if(context->isContextController())

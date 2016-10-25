@@ -12,19 +12,21 @@
 template <typename T>
 class Singleton
 {
+protected:
+    static T * m_instance;
+    Singleton() {};
+
 public:
 
-    /*!
-     * \brief   Default constructor
-     */
-    explicit Singleton()
+    static T * Instance()
     {
-        // None
-    }
+        if(m_instance == nullptr)
+            m_instance = new T();
 
-    static T * instance;
+        return m_instance;
+    }
 };
 
-template <typename T> T * Singleton<T>::instance = nullptr;
+template <typename T> T * Singleton<T>::m_instance = nullptr;
 
 #endif // __SINGLETON_HPP

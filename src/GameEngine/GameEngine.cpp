@@ -41,7 +41,7 @@ void GameEngine::init()
     // Activating wire-frame
     // Setting the framerate
     m_graphicEngine.wireframe(true);
-    m_graphicEngine.setFramerate(120);
+    m_graphicEngine.setFramerate(60);
 }
 
 void GameEngine::start()
@@ -59,6 +59,12 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
+    Sprite * sprite = m_graphicEngine.getSprite();
+    sprite->setLayer(5);
+    sprite->setSmoothMotion(true);
+    sprite->setTexture(*m_resourceManager.getTexture("PLAYER"));
+    sprite->setPosition(50, 640);
+
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
@@ -80,6 +86,10 @@ void GameEngine::gameLoop()
 
             // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
+
+            sprite->move(300 * (float)(MS_PER_UPDATE / 1000), 0);
+
+            if(sprite->getPosition().x > 1100) sprite->setPosition(50, 640);
         }
 
         // Rendering
@@ -90,8 +100,8 @@ void GameEngine::gameLoop()
 void GameEngine::update()
 {
     // Updating the game
-    m_physicEngine.update(MS_PER_UPDATE * TimeManager::TimeScale);
-    m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
+    //m_physicEngine.update(MS_PER_UPDATE * TimeManager::TimeScale);
+    //m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()

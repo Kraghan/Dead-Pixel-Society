@@ -4,21 +4,19 @@
 : m_stateMachine(nullptr)
 , m_resourceManager(nullptr)
 {
-    WorldMapState::instance = nullptr;
+    // None
 }
 
 void WorldMapState::init(StateMachine  * stateMachine,
     ResourceManager * resourceManager)
 {
-    WorldMapState::instance = this;
-
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
 }
 
 /* virtual */ WorldMapState::~WorldMapState()
 {
-    WorldMapState::instance = nullptr;
+    // None
 }
 
 /* virtual */ void WorldMapState::update(double dt)
@@ -30,7 +28,7 @@ bool WorldMapState::onEnter()
 {
     // Pushing directly the next state
     // (Until we have the complete world map)
-    m_stateMachine->pushState(DungeonState::instance);
+    m_stateMachine->pushState(DungeonState::Instance());
 
     return true;
 }

@@ -2,26 +2,25 @@
 
 /* explicit */ Profiler::Profiler()
 {
-    Profiler::instance = nullptr;
+    // None
 }
 
 /* virtual */ Profiler::~Profiler()
 {
-    Profiler::instance = nullptr;
+    // None
 }
 
 void Profiler::init(ResourceManager * resources)
 {
-    Profiler::instance = this;
     m_resourceManager = resources;
 }
 
 void Profiler::startProfile(std::string const& ID)
 {
-
+    // TODO
 }
 
 void Profiler::stopProfile(std::string const& ID)
 {
-    
+    // TODO
 }

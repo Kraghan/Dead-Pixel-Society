@@ -4,21 +4,19 @@
 : m_stateMachine(nullptr)
 , m_resourceManager(nullptr)
 {
-    PauseState::instance = nullptr;
+    // None
 }
 
 void PauseState::init(StateMachine  * stateMachine,
     ResourceManager * resourceManager)
 {
-    PauseState::instance = this;
-
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
 }
 
 /* virtual */ PauseState::~PauseState()
 {
-    PauseState::instance = nullptr;
+    // None
 }
 
 /* virtual */ void PauseState::update(double dt)
