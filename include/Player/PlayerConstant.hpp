@@ -19,6 +19,10 @@ public:
     static constexpr const float DEFAULT_X = 64.0f;
     static constexpr const float DEFAULT_Y = 640.0f;
     static constexpr const char * PLAYER_SPRITE = "PLAYER";
+
+    static constexpr const float PLAYER_MASS    = 80.0f;
+    static constexpr const float MAX_VELOCITY_X = 10.0f;
+    static constexpr const float MAX_VELOCITY_Y = 100.0f;
 };
 
 #endif // __PLAYER_CONSTANT_HPP
