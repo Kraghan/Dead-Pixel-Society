@@ -55,6 +55,8 @@ void DungeonState::init(StateMachine  * stateMachine,
 {
     // TODO
     test->setPosition(playerRigidBody->getPosition());
+
+
 }
 
 bool DungeonState::onEnter()

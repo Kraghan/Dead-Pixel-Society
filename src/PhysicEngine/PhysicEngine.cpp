@@ -95,13 +95,13 @@ void PhysicEngine::update(double dt)
 
         if(isMovingLeft && (colliderAssociated == nullptr || !collidingLeft))
         {
-            m_rigidBody[i].goOnLeft(dt);
+            m_rigidBody[i].goOnLeft(dt,collidingDown);
             hasMoved = true;
         }
 
         if(isMovingRight && (colliderAssociated == nullptr || !collidingRight))
         {
-            m_rigidBody[i].goOnRight(dt);
+            m_rigidBody[i].goOnRight(dt,collidingDown);
             hasMoved = true;
         }
 

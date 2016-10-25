@@ -12,7 +12,6 @@ class GameContext : public Singleton <GameContext> {
 
 private:
     bool m_menu,m_controller;
-    GameContext();
 
 public:
     void setMenuContext();
@@ -21,6 +20,8 @@ public:
     void setKeyboardContext();
     bool isContextMenu();
     bool isContextController();
+
+    GameContext();
 };
 
 

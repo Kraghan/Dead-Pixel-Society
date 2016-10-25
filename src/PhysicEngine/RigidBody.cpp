@@ -78,19 +78,33 @@ bool RigidBody::isMovingRight() {
     return m_toRight;
 }
 
-void RigidBody::goOnLeft(double dt) {
-    m_velocity.x -= m_acceleration*dt;
-    if(m_velocity.x < -m_velocityMax)
-        m_velocity.x = -m_velocityMax;
-
-    move(getPosition().x+(m_velocity.y),getPosition().y);
+void RigidBody::goOnLeft(double dt,bool collidingDown) {
+    if(collidingDown)
+    {
+        m_velocity.x -= m_acceleration * dt;
+        if (m_velocity.x < -m_velocityMax)
+            m_velocity.x = -m_velocityMax;
+    } else
+    {
+        m_velocity.x += 2*m_acceleration*dt;
+        if(m_velocity.x > 0)
+            m_velocity.x = 0;
+    }
+    move(getPosition().x+(m_velocity.x),getPosition().y);
 }
 
-void RigidBody::goOnRight(double dt) {
-    m_velocity.x += m_acceleration*dt;
-    if(m_velocity.x > m_velocityMax)
-        m_velocity.x = m_velocityMax;
-
-    move(getPosition().x+m_velocity.y,getPosition().y);
+void RigidBody::goOnRight(double dt,bool collidingDown) {
+    if(collidingDown)
+    {
+        m_velocity.x += m_acceleration*dt;
+        if(m_velocity.x > m_velocityMax)
+            m_velocity.x = m_velocityMax;
+    } else
+    {
+        m_velocity.x -= 2*m_acceleration*dt;
+        if(m_velocity.x < 0)
+            m_velocity.x = 0;
+    }
+    move(getPosition().x+m_velocity.x,getPosition().y);
 }
 

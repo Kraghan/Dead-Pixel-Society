@@ -41,9 +41,9 @@ public:
 
     bool isMovingRight();
 
-    void goOnLeft(double dt);
+    void goOnLeft(double dt,bool collidingDown);
 
-    void goOnRight(double dt);
+    void goOnRight(double dt,bool collidingDown);
 private:
     float m_mass, m_acceleration,m_velocityMax;
     sf::Vector2f m_velocity;
