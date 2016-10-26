@@ -117,6 +117,6 @@ void GameEngine::processInput()
             m_isRunning = false;
         }
 
-        // EventProcessed e = m_eventConverter.processEvent(event, &m_controlMap);
+        m_eventConverter.processEvent(event, &m_controlMap);
     }
 }

@@ -6,20 +6,17 @@
 #define PROJECT_EVENTPROCESSED_HPP
 
 
+#include <GameEngine/Singleton.hpp>
 #include "Interface/Event.hpp"
 #include "EnumActions.hpp"
 
-class EventProcessed {
-private:
-    Actions* m_action;
-    Event* m_event;
+class EventProcessed : public Singleton<EventProcessed> {
 
 public:
+    static Actions action;
+    static Event event;
     EventProcessed();
-    EventProcessed(Actions* actions, Event* event);
-    Actions* getAction();
-    Event* getEvent();
+    void init();
 };
-
 
 #endif //PROJECT_EVENTPROCESSED_HPP

@@ -1,5 +1,5 @@
 //
-// Created by madjo on 13/10/2016.
+// Created by Kraghan on 13/10/2016.
 //
 
 #ifndef PROJECT_GAMECONTEXT_HPP

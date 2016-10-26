@@ -17,6 +17,7 @@ public:
     Collider();
 
     void moveRigidBody(RigidBody* rigidBody);
+    static void release(Collider* &collider);
 };
 
 

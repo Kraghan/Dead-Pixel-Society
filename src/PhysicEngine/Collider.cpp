@@ -17,3 +17,8 @@ void Collider::moveRigidBody(RigidBody* rigidBody)
     PhysicObjectBase::move(position.x+velocity.x,
                            position.y+velocity.y);
 }
+
+void Collider::release(Collider* &collider) {
+    collider->setFree();
+    collider = nullptr;
+}

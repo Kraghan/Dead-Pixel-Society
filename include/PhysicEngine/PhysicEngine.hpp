@@ -1,5 +1,5 @@
 //
-// Created by madjo on 18/10/2016.
+// Created by Kraghan on 18/10/2016.
 //
 
 #ifndef PROJECT_PHYSICENGINE_HPP
@@ -17,6 +17,8 @@ public:
     PhysicEngine();
 
     virtual ~PhysicEngine();
+
+    void reset();
 
     void init(ResourceManager* manager, unsigned int count_colliders,
               unsigned int count_rigidBodies, unsigned int

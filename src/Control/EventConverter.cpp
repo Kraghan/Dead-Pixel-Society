@@ -10,7 +10,8 @@ EventConverter::EventConverter()
     // None
 }
 
-EventProcessed EventConverter::processEvent(const sf::Event event,const ControlMap* controlMap)
+void EventConverter::processEvent(const sf::Event event,const ControlMap*
+controlMap)
 {
     bool isPressed = false;
     Actions action = Actions::NONE;
@@ -105,6 +106,6 @@ EventProcessed EventConverter::processEvent(const sf::Event event,const ControlM
             position = sf::Vector2i(event.mouseMove.x,event.mouseMove.y);
         }
     }
-    Event e = Event(position,type,isPressed);
-    return EventProcessed(&action,&e);
+    EventProcessed::action = action;
+    EventProcessed::event = Event(position,type,isPressed);
 }

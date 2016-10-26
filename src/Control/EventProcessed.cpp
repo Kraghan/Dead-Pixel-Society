@@ -3,25 +3,16 @@
 //
 
 #include "Control/EventProcessed.hpp"
+Actions EventProcessed::action = Actions::NONE;
+Event EventProcessed::event = Event();
 
 EventProcessed::EventProcessed()
 {
-    m_action = nullptr;
-    m_event = nullptr;
+
 }
 
-EventProcessed::EventProcessed(Actions* actions, Event* event)
+void EventProcessed::init()
 {
-    m_action = actions;
-    m_event = event;
-}
-
-Actions* EventProcessed::getAction()
-{
-    return m_action;
-}
-
-Event* EventProcessed::getEvent()
-{
-    return m_event;
+    EventProcessed::action = Actions::NONE;
+    EventProcessed::event = Event();
 }

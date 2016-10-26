@@ -22,6 +22,7 @@ public:
     bool isFree();
     void setUsed();
     void setFree();
+    static void release(ColliderRigidBodyBinding* &colliderRigidBodyBinding);
 private:
     Collider* m_collider;
     RigidBody* m_rigidBody;

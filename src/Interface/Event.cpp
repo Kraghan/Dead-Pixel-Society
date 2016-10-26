@@ -4,6 +4,13 @@
 
 #include "Interface/Event.hpp"
 
+Event::Event()
+{
+    m_position = sf::Vector2i(-1,-1);
+    m_pressed = false;
+    m_type = EventType::VOID;
+}
+
 Event::Event(sf::Vector2i position, EventType type, bool isPressed)
 {
     m_position = position;

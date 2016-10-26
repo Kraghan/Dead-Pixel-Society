@@ -16,7 +16,7 @@
 class EventConverter {
 public:
     EventConverter();
-    EventProcessed processEvent(const sf::Event event,const ControlMap* controlMap);
+    void processEvent(const sf::Event event,const ControlMap* controlMap);
 };
 
 

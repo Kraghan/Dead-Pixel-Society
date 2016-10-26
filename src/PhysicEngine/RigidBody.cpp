@@ -1,9 +1,14 @@
 //
-// Created by madjo on 18/10/2016.
+// Created by Kraghan on 18/10/2016.
 //
 
-#include <iostream>
 #include "PhysicEngine/RigidBody.hpp"
+
+void RigidBody::release(RigidBody* &rigidBody)
+{
+    rigidBody->setFree();
+    rigidBody = nullptr;
+}
 
 RigidBody::RigidBody()
 : PhysicObjectBase()
@@ -108,3 +113,7 @@ void RigidBody::goOnRight(double dt,bool collidingDown) {
     move(getPosition().x+m_velocity.x,getPosition().y);
 }
 
+void RigidBody::addForce(sf::Vector2f force)
+{
+    m_velocity += force;
+}

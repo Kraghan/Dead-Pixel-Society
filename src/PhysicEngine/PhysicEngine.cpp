@@ -1,5 +1,5 @@
 //
-// Created by madjo on 18/10/2016.
+// Created by Kraghan on 18/10/2016.
 //
 
 #include "PhysicEngine/PhysicEngine.hpp"
@@ -12,6 +12,25 @@ PhysicEngine::PhysicEngine()
 PhysicEngine::~PhysicEngine()
 {
 
+}
+
+void PhysicEngine::reset()
+{
+    for(unsigned int i = 0; i < m_rigidBodiesWithColliders.size(); ++i)
+    {
+        m_rigidBodiesWithColliders[i].setFree();
+    }
+
+    for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
+    {
+        m_rigidBody[i].setFree();
+
+    }
+
+    for(unsigned int i = 0; i < m_colliders.size(); ++i)
+    {
+        m_colliders[i].setFree();
+    }
 }
 
 void PhysicEngine::init(ResourceManager* manager, unsigned int count_colliders,

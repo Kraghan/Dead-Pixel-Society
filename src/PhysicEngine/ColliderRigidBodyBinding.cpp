@@ -57,3 +57,9 @@ void ColliderRigidBodyBinding::setFree()
 {
    m_isFree = true;
 }
+
+void ColliderRigidBodyBinding::release(
+        ColliderRigidBodyBinding* &colliderRigidBodyBinding) {
+    colliderRigidBodyBinding->setFree();
+    colliderRigidBodyBinding = nullptr;
+}

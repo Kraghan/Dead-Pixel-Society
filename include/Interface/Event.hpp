@@ -14,6 +14,7 @@ private:
     sf::Vector2i m_position;
     bool m_pressed;
 public:
+    Event();
     Event(sf::Vector2i position, EventType type, bool isPressed);
     EventType getEventType();
     sf::Vector2i getPosition();

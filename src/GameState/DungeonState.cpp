@@ -1,4 +1,5 @@
 #include <GameEngine/TimeManager.hpp>
+#include <Control/EventProcessed.hpp>
 #include "GameState/DungeonState.hpp"
 
 /* explicit */ DungeonState::DungeonState()
@@ -55,6 +56,23 @@ void DungeonState::init(StateMachine  * stateMachine,
 {
     // TODO
     test->setPosition(playerRigidBody->getPosition());
+
+    switch (EventProcessed::action)
+    {
+        case Actions::LEFT :
+            playerRigidBody->startMovingToLeft();
+            break;
+        case Actions::RIGHT :
+            playerRigidBody->startMovingToRight();
+            break;
+        case Actions::JUMP :
+            playerRigidBody->addForce(sf::Vector2f(0.0f,-500.0f));
+            break;
+        default:
+            break;
+    }
+
+    EventProcessed::Instance()->init();
 }
 
 bool DungeonState::onEnter()

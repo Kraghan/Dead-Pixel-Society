@@ -1,5 +1,5 @@
 //
-// Created by madjo on 18/10/2016.
+// Created by Kraghan on 18/10/2016.
 //
 
 #ifndef PROJECT_RIGIDBODY_HPP
@@ -44,6 +44,10 @@ public:
     void goOnLeft(double dt,bool collidingDown);
 
     void goOnRight(double dt,bool collidingDown);
+
+    void addForce(sf::Vector2f force);
+
+    static void release(RigidBody* &rigidBody);
 private:
     float m_mass, m_acceleration,m_velocityMax;
     sf::Vector2f m_velocity;
