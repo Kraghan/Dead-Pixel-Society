@@ -72,33 +72,29 @@ if(${COMPILATION_MODE} STREQUAL "RELEASE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_RELEASE}" CACHE STRING "compile flags" FORCE)
 
     if(PLATEFORME STREQUAL "WINDOWS")
-        set(EXENAME ${EXENAME_RELEASE})
         list(APPEND SFML_RELEASE_LIB
                 "${SFML_PATH}/lib/libsfml-graphics.a"
                 "${SFML_PATH}/lib/libsfml-window.a"
                 "${SFML_PATH}/lib/libsfml-system.a"
                 "${SFML_PATH}/lib/libsfml-audio.a")
 
-    elseif(PLATEFORME STREQUAL "LINUX")
-        set(EXENAME ${EXENAME_RELEASE})
+    elseif(PLATEFORME STREQUAL "UNIX")
         list(APPEND SFML_RELEASE_LIB
                 "${SFML_PATH}/lib/libsfml-graphics.so"
                 "${SFML_PATH}/lib/libsfml-window.so"
                 "${SFML_PATH}/lib/libsfml-system.so"
                 "${SFML_PATH}/lib/libsfml-audio.so")
-
     endif()
 
-    set(SFML_LIB ${SFML_RELEASE_LIB})
+    set(EXENAME ${EXENAME_RELEASE})
+    set(SFML_LIB "${SFML_RELEASE_LIB}")
     message(STATUS "Executable name : ${EXENAME}")
 
 else()
     message(STATUS "Compilation mode : DEBUG MODE")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}" CACHE STRING "compile flags" FORCE)
-    set(SFML_LIB ${SFML_DEBUG_LIB})
 
     if(PLATEFORME STREQUAL "WINDOWS")
-        set(EXENAME ${EXENAME_DEBUG})
         list(APPEND SFML_DEBUG_LIB
                 "${SFML_PATH}/lib/libsfml-graphics-d.a"
                 "${SFML_PATH}/lib/libsfml-window-d.a"
@@ -106,7 +102,6 @@ else()
                 "${SFML_PATH}/lib/libsfml-audio-d.a")
 
     elseif(PLATEFORME STREQUAL "UNIX")
-        set(EXENAME ${EXENAME_DEBUG})
         list(APPEND SFML_DEBUG_LIB
                 "${SFML_PATH}/lib/libsfml-graphics.so"
                 "${SFML_PATH}/lib/libsfml-window.so"
@@ -114,6 +109,7 @@ else()
                 "${SFML_PATH}/lib/libsfml-audio.so")
     endif()
 
+    set(EXENAME ${EXENAME_DEBUG})
     set(SFML_LIB "${SFML_DEBUG_LIB}")
     message(STATUS "Executable name : ${EXENAME}")
 endif()

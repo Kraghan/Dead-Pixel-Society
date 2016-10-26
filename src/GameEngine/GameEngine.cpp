@@ -40,7 +40,7 @@ void GameEngine::init()
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(true);
+    m_graphicEngine.wireframe(false);
     m_graphicEngine.setFramerate(60);
 }
 
