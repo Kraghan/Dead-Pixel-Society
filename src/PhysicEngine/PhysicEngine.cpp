@@ -82,28 +82,24 @@ void PhysicEngine::update(double dt)
         {
             m_rigidBody[i].stopMovementY();
             collidingDown = true;
-            //std::cout << "Collide down "<<intersection <<std::endl;
         }
 
         if(isCollidingUp(colliderAssociated,&intersection,speed))
         {
             m_rigidBody[i].stopMovementY();
             collidingUp = true;
-            //std::cout << "Collide up" <<std::endl;
         }
 
         if(isCollidingLeft(colliderAssociated,&intersection,speed))
         {
             m_rigidBody[i].stopMovementX();
             collidingLeft = true;
-            //std::cout << "Collide left" <<std::endl;
         }
 
         if(isCollidingRight(colliderAssociated,&intersection,speed))
         {
             m_rigidBody[i].stopMovementX();
             collidingRight = true;
-            //std::cout << "Collide right" <<std::endl;
         }
 
         if(colliderAssociated == nullptr || !collidingDown)
@@ -175,8 +171,8 @@ intersection, sf::Vector2f velocity)
     // Init
     sf::Vector2f pos = collider->getPosition();
     sf::Vector2f dimension = collider->getDimension();
-    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x-1,pos.y);
-    sf::Vector2f pointTopRight = sf::Vector2f(pos.x-1+dimension.x,pos.y);
+    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x,pos.y-1);
+    sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x,pos.y-1);
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
@@ -200,9 +196,9 @@ intersection, sf::Vector2f velocity)
     // Init
     sf::Vector2f pos = collider->getPosition();
     sf::Vector2f dimension = collider->getDimension();
-    sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x,pos.y+1);
-    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x,pos
-                                                                           .y+dimension.y+1);
+    sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x+1,pos.y);
+    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x+1,pos
+                                                                            .y+dimension.y);
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
@@ -226,8 +222,8 @@ intersection, sf::Vector2f velocity)
     // Init
     sf::Vector2f pos = collider->getPosition();
     sf::Vector2f dimension = collider->getDimension();
-    sf::Vector2f pointBottomLeft = sf::Vector2f(pos.x,pos.y+dimension.y-1);
-    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x,pos.y-1);
+    sf::Vector2f pointBottomLeft = sf::Vector2f(pos.x-1,pos.y+dimension.y);
+    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x-1,pos.y);
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {

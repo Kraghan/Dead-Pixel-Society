@@ -51,45 +51,55 @@ void RigidBody::applyGravity(double dt, float gravity)
     move(pos.x,pos.y+m_velocity.y);
 }
 
-void RigidBody::stopMovementX() {
+void RigidBody::stopMovementX()
+{
     m_velocity.x = 0.0f;
 }
 
-void RigidBody::stopMovementY() {
+void RigidBody::stopMovementY()
+{
     m_velocity.y = 0.0f;
 }
 
-void RigidBody::startMovingToLeft() {
+void RigidBody::startMovingToLeft()
+{
     m_toLeft = true;
 }
 
-void RigidBody::startMovingToRight() {
+void RigidBody::startMovingToRight()
+{
     m_toRight = true;
 }
 
-void RigidBody::stopMovingToLeft() {
+void RigidBody::stopMovingToLeft()
+{
     m_toLeft = false;
 }
 
-void RigidBody::stopMovingToRight() {
+void RigidBody::stopMovingToRight()
+{
     m_toRight = false;
 }
 
-bool RigidBody::isMovingLeft() {
+bool RigidBody::isMovingLeft()
+{
     return m_toLeft;
 }
 
-bool RigidBody::isMovingRight() {
+bool RigidBody::isMovingRight()
+{
     return m_toRight;
 }
 
-void RigidBody::goOnLeft(double dt,bool collidingDown) {
+void RigidBody::goOnLeft(double dt,bool collidingDown)
+{
     if(collidingDown)
     {
         m_velocity.x -= m_acceleration * dt;
         if (m_velocity.x < -m_velocityMax)
             m_velocity.x = -m_velocityMax;
-    } else
+    }
+    else
     {
         m_velocity.x += 2*m_acceleration*dt;
         if(m_velocity.x > 0)
@@ -98,13 +108,15 @@ void RigidBody::goOnLeft(double dt,bool collidingDown) {
     move(getPosition().x+(m_velocity.x),getPosition().y);
 }
 
-void RigidBody::goOnRight(double dt,bool collidingDown) {
+void RigidBody::goOnRight(double dt,bool collidingDown)
+{
     if(collidingDown)
     {
         m_velocity.x += m_acceleration*dt;
         if(m_velocity.x > m_velocityMax)
             m_velocity.x = m_velocityMax;
-    } else
+    }
+    else
     {
         m_velocity.x -= 2*m_acceleration*dt;
         if(m_velocity.x < 0)

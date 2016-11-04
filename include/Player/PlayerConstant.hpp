@@ -16,13 +16,16 @@ class PlayerConstant
 public:
 
     static const int32_t PLAYER_LAYER = 5;
-    static constexpr const float DEFAULT_X = 64.0f;
-    static constexpr const float DEFAULT_Y = 640.0f;
+    // Position of the case
+    static constexpr const int DEFAULT_X = 5;
+    static constexpr const int DEFAULT_Y = 0;
     static constexpr const char * PLAYER_SPRITE = "PLAYER";
+    static constexpr const int PLAYER_SPRITE_SIZE = 64;
 
     static constexpr const float PLAYER_MASS    = 80.0f;
-    static constexpr const float MAX_VELOCITY_X = 10.0f;
+    static constexpr const float MAX_VELOCITY_X = 500.0f;
     static constexpr const float MAX_VELOCITY_Y = 100.0f;
+    static constexpr const float PLAYER_ACCELARATION = 500.0f;
 };
 
 #endif // __PLAYER_CONSTANT_HPP

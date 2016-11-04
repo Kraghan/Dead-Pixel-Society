@@ -16,6 +16,9 @@ void Game::init(ResourceManager * resourceManager)
     // Getting resources
     m_resourceManager = resourceManager;
 
+    // Initializing player
+    Player::Instance()->init(resourceManager);
+
     // Initializing states
     PauseState::Instance()->init(&m_stateMachine, m_resourceManager);
     DungeonState::Instance()->init(&m_stateMachine, m_resourceManager);

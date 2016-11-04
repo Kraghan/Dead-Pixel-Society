@@ -13,30 +13,14 @@
 void DungeonState::init(StateMachine  * stateMachine,
     ResourceManager * resourceManager)
 {
-    unsigned int x = 6,y = 0;
-
-    Collider* playerCollider = resourceManager->getCollider();
-    playerCollider->init(x,y,1,1,64);
-
-    playerRigidBody = resourceManager->getRigidBody();
-    playerRigidBody->init(x,y,64,1.0f,10.0f,500.0f);
-    playerRigidBody->startMovingToRight();
-    resourceManager->bindColliderToRigidBody(playerCollider,playerRigidBody);
 
     Collider* floorCollider = resourceManager->getCollider();
     floorCollider->init(0,11,20,1,64);
-    /*Collider* leftWallCollider = resourceManager->getCollider();
-    leftWallCollider->init(0,0,1,12,64);
-    Collider* rightWallCollider = resourceManager->getCollider();
-    rightWallCollider->init(20,11,1,12,64);*/
 
-    test = resourceManager->getSprite();
-    test->setTexture(*resourceManager->getTexture("PLAYER"));
-    test->setLayer(10);
-    test->setPosition(playerRigidBody->getPosition());
-
-    test->setSmoothMotion(true);
-    test->setRigidBody(playerRigidBody);
+    Collider* leftCollider = resourceManager->getCollider();
+    leftCollider->init(0,0,1,20,64);
+    Collider* rightCollider = resourceManager->getCollider();
+    rightCollider->init(19,0,1,11,64);
 
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
@@ -54,21 +38,36 @@ void DungeonState::init(StateMachine  * stateMachine,
 
 /* virtual */ void DungeonState::update(double dt)
 {
-    // TODO
-    test->setPosition(playerRigidBody->getPosition());
-
+    Player* m_player = Player::Instance();
+    m_player->getSprite()->setPosition(m_player->getRigidbody()->getPosition());
     switch (EventProcessed::action)
     {
         case Actions::LEFT :
-            playerRigidBody->startMovingToLeft();
+            if(m_player->getState() != m_player->LEFT)
+            {
+                m_player->setState(m_player->LEFT);
+                m_player->getRigidbody()->stopMovingToRight();
+                m_player->getRigidbody()->startMovingToLeft();
+            }
             break;
         case Actions::RIGHT :
-            playerRigidBody->startMovingToRight();
+            if(m_player->getState() != m_player->RIGHT)
+            {
+                m_player->setState(m_player->RIGHT);
+                m_player->getRigidbody()->stopMovingToLeft();
+                m_player->getRigidbody()->startMovingToRight();
+            }
             break;
         case Actions::JUMP :
-            playerRigidBody->addForce(sf::Vector2f(0.0f,-500.0f));
+            if(m_player->getState() != m_player->JUMP)
+            {
+                m_player->setState(m_player->JUMP);
+                m_player->getRigidbody()->addForce(sf::Vector2f(0.0f, -500.0f));
+            }
             break;
         default:
+            m_player->setState(m_player->IDLE);
+            m_player->getRigidbody()->stopMovementX();
             break;
     }
 

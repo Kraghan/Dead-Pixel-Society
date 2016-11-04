@@ -9,11 +9,12 @@
 #ifndef __PLAYER_HPP
 #define __PLAYER_HPP
 
+#include <GameEngine/Singleton.hpp>
 #include "GameEngine/Updatable.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "Player/PlayerConstant.hpp"
 
-class Player : public Updatable
+class Player : public Updatable, public Singleton < Player >
 {
 public:
 
@@ -28,12 +29,12 @@ public:
     /*!
      * \brief   Default constructor
      */
-    explicit Player();
+    explicit Player(void);
 
     /*!
      * \brief   Destructor
      */
-    virtual ~Player();
+    virtual ~Player(void);
 
     /*!
      * \brief   Implements update method
@@ -46,14 +47,19 @@ public:
      */
     void init(ResourceManager * resourceManager);
 
+    /*!
+     * \brief   m_playerSprite's getter
+     */
+    Sprite* getSprite(void);
+
     void setCollider(Collider * collider);
     void setRigidbody(RigidBody * rigidBody);
 
-    Collider * getCollider() const;
-    RigidBody * getRigidbody() const;
+    Collider * getCollider(void) const;
+    RigidBody * getRigidbody(void) const;
 
     void setState(Player::PLAYER_STATE state);
-    Player::PLAYER_STATE getState() const;
+    Player::PLAYER_STATE getState(void) const;
 
 private:
 

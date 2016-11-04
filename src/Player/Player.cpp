@@ -4,8 +4,8 @@
 /* explicit */ Player::Player()
 : m_playerSprite(nullptr)
 , m_resourceManager(nullptr)
-, m_rigidbody(nullptr)
 , m_collider(nullptr)
+, m_rigidbody(nullptr)
 , m_state(PLAYER_STATE::IDLE)
 {
     // None
@@ -23,8 +23,28 @@ void Player::init(ResourceManager * resourceManager)
 {
     m_resourceManager = resourceManager;
 
+    // Init player physics
+    m_collider = resourceManager->getCollider();
+    m_collider->init(PlayerConstant::DEFAULT_X,
+                     PlayerConstant::DEFAULT_Y,1,1,
+                     PlayerConstant::PLAYER_SPRITE_SIZE);
+
+    m_rigidbody = resourceManager->getRigidBody();
+
+    m_rigidbody->init(PlayerConstant::DEFAULT_X,
+                     PlayerConstant::DEFAULT_Y,
+                     PlayerConstant::PLAYER_SPRITE_SIZE,
+                     PlayerConstant::PLAYER_MASS,
+                     PlayerConstant::PLAYER_ACCELARATION,
+                     PlayerConstant::MAX_VELOCITY_X);
+
+    resourceManager->bindColliderToRigidBody(Player::Instance()->getCollider(),
+                                             Player::Instance()->getRigidbody());
+
     // Getting the player sprite
     m_playerSprite = m_resourceManager->getSprite();
+    m_playerSprite->setSmoothMotion(true);
+    m_playerSprite->setRigidBody(m_rigidbody);
 
     // Getting his texture
     m_playerSprite->setTexture(
@@ -32,8 +52,8 @@ void Player::init(ResourceManager * resourceManager)
 
     // Setting the sprite attribute
     m_playerSprite->setPosition(
-            PlayerConstant::DEFAULT_X,
-            PlayerConstant::DEFAULT_Y);
+            PlayerConstant::DEFAULT_X*PlayerConstant::PLAYER_SPRITE_SIZE,
+            PlayerConstant::DEFAULT_Y*PlayerConstant::PLAYER_SPRITE_SIZE);
 
     m_playerSprite->setLayer(PlayerConstant::PLAYER_LAYER);
     m_playerSprite->setWireColor(sf::Color::White);
@@ -73,4 +93,9 @@ void Player::setState(Player::PLAYER_STATE state)
 Player::PLAYER_STATE Player::getState() const
 {
     return m_state;
+}
+
+Sprite* Player::getSprite()
+{
+    return m_playerSprite;
 }
