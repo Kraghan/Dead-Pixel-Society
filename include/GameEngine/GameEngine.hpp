@@ -69,7 +69,7 @@ private :
      *           8.33 = 120 ups
      *           4.16 = 240 ups
      */
-    const double MS_PER_UPDATE = 8.33;
+    const double MS_PER_UPDATE = 1000.0 / 120.0;
 
     /*!
      * \brief   The amazing graphic engine

@@ -58,12 +58,19 @@ public:
      */
     virtual void update(double dt);
 
+    /*!
+     * \brief   Set the dungeon theme
+     * \param   theme A pointer on the theme
+     */
+    void setDungeonTheme(DungeonTheme * theme);
+
 private:
 
     StateMachine * m_stateMachine;
     ResourceManager * m_resourceManager;
 
     Dungeon * m_dungeon;
+    DungeonTheme * m_theme;
     DungeonFactory m_dungeonFactory;
 };
 

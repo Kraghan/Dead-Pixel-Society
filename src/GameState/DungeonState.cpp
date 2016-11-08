@@ -6,6 +6,7 @@
 : m_stateMachine(nullptr)
 , m_resourceManager(nullptr)
 , m_dungeon(nullptr)
+, m_theme(nullptr)
 {
     // None
 }
@@ -77,11 +78,18 @@ void DungeonState::init(StateMachine  * stateMachine,
 bool DungeonState::onEnter()
 {
     // New dungeon for each onEnter()
-    m_dungeon = m_dungeonFactory.generateDungeon();
+    if(m_theme == nullptr) m_dungeon = m_dungeonFactory.generateDungeon();
+    else m_dungeon = m_dungeonFactory.generateDungeon(m_theme);
+
     return true;
 }
 
 bool DungeonState::onExit()
 {
     return true;
+}
+
+void DungeonState::setDungeonTheme(DungeonTheme * theme)
+{
+    m_theme = theme;
 }
