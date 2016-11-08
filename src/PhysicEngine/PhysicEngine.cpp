@@ -240,77 +240,6 @@ intersection, sf::Vector2f velocity)
     return false;
 }
 
-/*
- // No processing if rigidBody not used or not ready
-        if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
-            continue;
-
-        // Search associated collider
-        Collider* collider = getColliderAssociated(&m_rigidBody[i]);
-        if(collider != nullptr)
-        {
-            // Calculate new collider positions
-            collider->moveRigidBody(&m_rigidBody[i],dt);
-
-            // Testing collisions
-            sf::FloatRect collision;
-            Collider* collideWith = isColliding(collider,&collision);
-            sf::Vector2f oldPos = collider->getPosition();
-            while(collideWith != nullptr)
-            {
-                sf::Vector2f newPos = collider->getPosition();
-                // Velocity x positive
-                if(m_rigidBody[i].getVelocity().x > 0)
-                {
-                    //newPos.x -= collision.width;
-                    m_rigidBody[i].stopMovementX();
-                    m_rigidBody[i].stopMovingToLeft();
-                }
-                // Velocity x negative
-                else if(m_rigidBody[i].getVelocity().x < 0)
-                {
-                    //newPos.x += collision.width;
-                    m_rigidBody[i].stopMovementX();
-                    m_rigidBody[i].stopMovingToRight();
-                }
-
-                // Velocity y positive
-                if(m_rigidBody[i].getVelocity().y > 0)
-                {
-                    newPos.y -= collision.height;
-                    m_rigidBody[i].stopMovementY();
-                }
-                    // Velocity y negative
-                else if(m_rigidBody[i].getVelocity().y < 0)
-                {
-                    newPos.y += collision.height;
-                    m_rigidBody[i].stopMovementY();
-                }
-
-                collider->PhysicObjectBase::move(newPos.x, newPos.y);
-
-                collideWith = isColliding(collider,&collision);
-            }
-
-            // Set new position to the rigidBody
-            sf::Vector2f newColliderPos = collider->getPosition();
-            float diffX = oldPos.x-newColliderPos.x;
-            float diffY = oldPos.y-newColliderPos.y;
-
-            m_rigidBody[i].move(m_rigidBody[i].getPosition().x-diffX,
-                                 m_rigidBody[i].getPosition().y-diffY);
-
-            std::cout<< m_rigidBody[i].getVelocity().x << " " << m_rigidBody[i]
-                    .getVelocity().y<< std::endl;
-        }
-
-        // Calculate new velocities
-        m_rigidBody[i].accelerate(m_gravity);
-
-        // Calculate new positions
-        m_rigidBody[i].moveAuto(dt);
- */
-
 Collider* PhysicEngine::getCollider()
 {
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
@@ -340,8 +269,7 @@ RigidBody* PhysicEngine::getRigidBody()
 }
 
 ColliderRigidBodyBinding* PhysicEngine::bindRigidBodyAndCollider(RigidBody*
-body, Collider*
-collider)
+    body, Collider* collider)
 {
     for(unsigned int i = 0; i < m_rigidBodiesWithColliders.size(); ++i)
     {

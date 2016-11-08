@@ -7,13 +7,12 @@
 
 
 #include <GameEngine/Singleton.hpp>
-#include "Interface/Event.hpp"
 #include "EnumActions.hpp"
+#include "Event.hpp"
 
 class EventProcessed : public Singleton<EventProcessed> {
 
 public:
-    static Actions action;
     static Event event;
     EventProcessed();
     void init();

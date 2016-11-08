@@ -14,6 +14,11 @@
 #include "GameEngine/Singleton.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "Dungeon/DungeonFactory.hpp"
+#include <GameEngine/TimeManager.hpp>
+#include <Control/EventProcessed.hpp>
+#include <Control/KeyEvent.hpp>
+#include <Control/MouseHoverEvent.hpp>
+#include <Control/MouseButtonEvent.hpp>
 
 /// Include previous and next states
 #include "GameState/WorldMapState.hpp"

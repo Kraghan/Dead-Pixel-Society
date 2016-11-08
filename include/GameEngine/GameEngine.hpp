@@ -19,7 +19,6 @@
 
 #include "GraphicEngine/GraphicEngine.hpp"
 
-#include "Interface/Event.hpp"
 #include "Control/ControlMap.hpp"
 
 /*!

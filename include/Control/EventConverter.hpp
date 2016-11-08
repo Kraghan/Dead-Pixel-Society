@@ -6,7 +6,6 @@
 #define PROJECT_EVENTCONVERTER_HPP
 
 
-#include <Interface/Event.hpp>
 #include <SFML/Window/Event.hpp>
 #include "EnumActions.hpp"
 #include "GameContext.hpp"

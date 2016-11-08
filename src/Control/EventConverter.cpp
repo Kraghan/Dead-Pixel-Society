@@ -2,6 +2,9 @@
 // Created by Kraghan on 17/10/2016.
 //
 
+#include <Control/KeyEvent.hpp>
+#include <Control/MouseButtonEvent.hpp>
+#include <Control/MouseHoverEvent.hpp>
 #include "Control/EventConverter.hpp"
 
 
@@ -13,25 +16,24 @@ EventConverter::EventConverter()
 void EventConverter::processEvent(const sf::Event event,const ControlMap*
 controlMap)
 {
-    bool isPressed = false;
-    Actions action = Actions::NONE;
     GameContext* context = GameContext::Instance();
-
-    sf::Vector2i position = sf::Vector2i(-1,-1);
-    EventType type = EventType::VOID;
+    Event* e = nullptr;
+    Actions action;
     // The player use a controller
     if(context->isContextController())
     {
         // A controller button is pressed
         if (event.type == sf::Event::JoystickButtonPressed)
         {
-            isPressed = true;
-            action = controlMap->getAction((int) event.joystickButton.button);
+            action = controlMap->getAction((int) event.joystickButton
+                    .button);
+            e = new KeyEvent(action,true);
         }
             // A controller button is released
         else if (event.type == sf::Event::JoystickButtonReleased)
         {
             action = controlMap->getAction((int) event.joystickButton.button);
+            e = new KeyEvent(action,false);
         }
     }
         // The player use a keyboard and a mouse
@@ -40,44 +42,40 @@ controlMap)
         // A key is pressed
         if (event.type == sf::Event::KeyPressed)
         {
-            isPressed = true;
+            std::cout<< "Pressed" <<std::endl;
             action = controlMap->getAction((int) event.key.code);
+            e = new KeyEvent(action,true);
         }
             // A key is released
         else if (event.type == sf::Event::KeyReleased)
         {
+            std::cout<< "Released" <<std::endl;
             action = controlMap->getAction((int) event.key.code);
+            e = new KeyEvent(action,false);
         }
             // A mouse button is pressed
         else if (event.type == sf::Event::MouseButtonPressed)
         {
-
             if(event.mouseButton.button == sf::Mouse::Left)
             {
-                position = sf::Vector2i(event.mouseButton.x,event.mouseButton.y);
                 action = controlMap->getAction(-1);
-                if(action == Actions::VALIDATE)
-                {
-                    type = EventType::MOUSE_LEFT_CLICK;
-                }
+                e = new MouseButtonEvent(action,true,sf::Vector2i(event
+                                                                       .mouseButton.x,
+                                                              event.mouseButton.y));
             }
             else if(event.mouseButton.button == sf::Mouse::Right)
             {
-                position = sf::Vector2i(event.mouseButton.x,event.mouseButton.y);
                 action = controlMap->getAction(-2);
-                if(action == Actions::VALIDATE)
-                {
-                    type = EventType::MOUSE_LEFT_CLICK;
-                }
+                e = new MouseButtonEvent(action,true,sf::Vector2i(event
+                                                                       .mouseButton.x,
+                                                              event.mouseButton.y));
             }
             else if(event.mouseButton.button == sf::Mouse::Middle)
             {
-                position = sf::Vector2i(event.mouseButton.x,event.mouseButton.y);
                 action = controlMap->getAction(-3);
-                if(action == Actions::VALIDATE)
-                {
-                    type = EventType::MOUSE_LEFT_CLICK;
-                }
+                e = new MouseButtonEvent(action,true,sf::Vector2i(event
+                                                                       .mouseButton.x,
+                                                              event.mouseButton.y));
             }
 
         }
@@ -87,25 +85,36 @@ controlMap)
             if(event.mouseButton.button == sf::Mouse::Left)
             {
                 action = controlMap->getAction(-1);
-
+                e = new MouseButtonEvent(action,false,sf::Vector2i(event
+                                                                     .mouseButton.x,
+                                                              event.mouseButton.y));
             }
             else if(event.mouseButton.button == sf::Mouse::Right)
             {
                 action = controlMap->getAction(-2);
-
+                e = new MouseButtonEvent(action,false,sf::Vector2i(event
+                                                                     .mouseButton.x,
+                                                              event.mouseButton.y));
             }
             else if(event.mouseButton.button == sf::Mouse::Middle)
             {
                 action = controlMap->getAction(-3);
+                e = new MouseButtonEvent(action,false,sf::Vector2i(event
+                                                                     .mouseButton.x,
+                                                              event.mouseButton.y));
 
             }
         }
             // Used for hover detection for buttons
         else if (event.type == sf::Event::MouseMoved) {
-            type = EventType::MOUSE_HOVER;
-            position = sf::Vector2i(event.mouseMove.x,event.mouseMove.y);
+            action = controlMap->getAction(-1);
+            e = new MouseHoverEvent(action,true,sf::Vector2i(event
+                                                                     .mouseButton.x,
+                                                          event.mouseButton.y));
         }
     }
-    EventProcessed::action = action;
-    EventProcessed::event = Event(position,type,isPressed);
+    if(e == nullptr)
+        e = new Event();
+
+    EventProcessed::event = *e;
 }

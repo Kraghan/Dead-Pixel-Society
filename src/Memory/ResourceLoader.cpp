@@ -26,10 +26,12 @@ void ResourceLoader::init()
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "BG_FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "DebugPanel", "DEBUG_PANEL"));
+    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "BackgroundForet",
+                                   "BACKGROUND_FOREST"));
 
     // Loading theme
     m_resources.push_back(Resource(Resource::TYPE::THEME,
-                                   DungeonTheme("FOREST", "FOREST", "BG_FOREST"), "FOREST"));
+                                   DungeonTheme("FOREST", "FOREST", "BACKGROUND_FOREST"), "FOREST"));
 }
 
 void ResourceLoader::load(ResourceManager * manager)

@@ -1,5 +1,3 @@
-#include <GameEngine/TimeManager.hpp>
-#include <Control/EventProcessed.hpp>
 #include "GameState/DungeonState.hpp"
 
 /* explicit */ DungeonState::DungeonState()
@@ -29,7 +27,7 @@ void DungeonState::init(StateMachine  * stateMachine,
     // Initializing the factory
     m_dungeonFactory.init(m_resourceManager);
 
-    TimeManager::TimeScale = 1.0f;
+    setDungeonTheme(m_resourceManager->getDungeonTheme("FOREST"));
 }
 
 /* virtual */ DungeonState::~DungeonState()
@@ -40,38 +38,61 @@ void DungeonState::init(StateMachine  * stateMachine,
 /* virtual */ void DungeonState::update(double dt)
 {
     Player* m_player = Player::Instance();
-    m_player->getSprite()->setPosition(m_player->getRigidbody()->getPosition());
-    switch (EventProcessed::action)
+    // Key actions
+    if(EventProcessed::event.getEventType() == EventType::KEY)
     {
-        case Actions::LEFT :
-            if(m_player->getState() != m_player->LEFT)
+        KeyEvent* event = (KeyEvent*) &EventProcessed::event;
+        switch (event->getAction())
+        {
+            case Actions::LEFT:
             {
-                m_player->setState(m_player->LEFT);
-                m_player->getRigidbody()->stopMovingToRight();
-                m_player->getRigidbody()->startMovingToLeft();
+                if (event->isPressed())
+                {
+                    if(m_player->getState() != m_player->LEFT)
+                    {
+                        std::cout << "start LEFT" << std::endl;
+                        m_player->setState(Player::LEFT);
+                        m_player->getRigidbody()->startMovingToLeft();
+                    }
+                }
+                else
+                {
+                    std::cout << "stop LEFT" << std::endl;
+                    m_player->setState(Player::IDLE);
+                    m_player->getRigidbody()->stopMovingToLeft();
+                }
             }
-            break;
-        case Actions::RIGHT :
-            if(m_player->getState() != m_player->RIGHT)
+                break;
+            case Actions::RIGHT:
             {
-                m_player->setState(m_player->RIGHT);
-                m_player->getRigidbody()->stopMovingToLeft();
-                m_player->getRigidbody()->startMovingToRight();
+                if (event->isPressed())
+                {
+                    if(m_player->getState() != m_player->LEFT)
+                    {
+                        std::cout << "start LEFT" << std::endl;
+                        m_player->setState(Player::LEFT);
+                        m_player->getRigidbody()->startMovingToLeft();
+                    }
+                }
+                else
+                {
+                    std::cout << "stop LEFT" << std::endl;
+                    m_player->setState(Player::IDLE);
+                    m_player->getRigidbody()->stopMovingToLeft();
+                }
             }
-            break;
-        case Actions::JUMP :
-            if(m_player->getState() != m_player->JUMP)
+                break;
+            default:
             {
-                m_player->setState(m_player->JUMP);
-                m_player->getRigidbody()->addForce(sf::Vector2f(0.0f, -500.0f));
-            }
-            break;
-        default:
-            m_player->setState(m_player->IDLE);
-            m_player->getRigidbody()->stopMovementX();
-            break;
-    }
 
+            }
+                break;
+        }
+    }
+    // Mouse button actions
+
+    // Mouse hover actions
+    m_player->getSprite()->setPosition(m_player->getRigidbody()->getPosition());
     EventProcessed::Instance()->init();
 }
 

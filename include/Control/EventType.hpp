@@ -1,14 +1,14 @@
 //
-// Created by Kraghan on 14/10/2016.
+// Created by madjo on 05/11/2016.
 //
 
 #ifndef PROJECT_EVENTTYPE_HPP
 #define PROJECT_EVENTTYPE_HPP
-
 enum EventType
 {
-    VOID,
-    MOUSE_LEFT_CLICK,
-    MOUSE_HOVER
+    MOUSE_BUTTON = 0,
+    MOUSE_HOVER,
+    KEY,
+    EVENT_TYPE_NULL
 };
 #endif //PROJECT_EVENTTYPE_HPP
