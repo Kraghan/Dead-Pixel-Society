@@ -20,3 +20,8 @@ sf::Vector2i MouseEvent::getPosition()
 {
     return m_position;
 }
+
+void MouseEvent::setPosition(sf::Vector2i position)
+{
+    m_position = position;
+}

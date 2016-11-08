@@ -37,6 +37,12 @@ public:
      * \brief   Postion of the event getter
      */
     sf::Vector2i getPosition();
+
+protected:
+    /**
+     * \brief   Position setter
+     */
+    void setPosition(sf::Vector2i position);
 };
 
 

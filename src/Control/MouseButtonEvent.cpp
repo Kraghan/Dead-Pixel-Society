@@ -26,7 +26,11 @@ void MouseButtonEvent::setEvent(Event event)
 {
     if(event.getEventType() == EventType::MOUSE_BUTTON)
     {
-        //MouseButtonEvent* e = (MouseButtonEvent*) &event;
+        MouseButtonEvent* e = (MouseButtonEvent*) &event;
 
+        setAction(e->getAction());
+        setActive(e->isActive());
+        setEventType(EventType::MOUSE_BUTTON);
+        setPosition(e->getPosition());
     }
 }

@@ -32,3 +32,18 @@ bool Event::isActive()
 {
     return m_active;
 }
+
+void Event::setActive(bool active)
+{
+    m_active = active;
+}
+
+void Event::setEventType(EventType type)
+{
+    m_type = type;
+}
+
+void Event::setAction(Actions action)
+{
+    m_actions = action;
+}

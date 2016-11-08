@@ -54,13 +54,28 @@ public :
     /**
      * \brief   Set the type of the event
      */
-//    virtual void setEvent(Event event) = 0;
+    //virtual void setEvent(Event event) = 0;
 
 protected:
     /**
      * \brief   Define if the event is entered/pressed or exited/released
      */
     bool isActive();
+
+    /**
+     * \brief   Action setter
+     */
+    void setAction(Actions action);
+
+    /**
+     * \brief   EventType setter
+     */
+    void setEventType(EventType type);
+
+    /**
+     * \brief   Active setter
+     */
+    void setActive(bool active);
 };
 
 
