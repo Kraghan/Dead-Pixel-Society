@@ -89,6 +89,11 @@ public:
      */
     void setFramerate(double framerate);
 
+    /*!
+     * \brief   The background of the window
+     */
+    static Sprite * background;
+
 private:
 
     /*!

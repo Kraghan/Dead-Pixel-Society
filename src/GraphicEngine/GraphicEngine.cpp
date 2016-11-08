@@ -1,5 +1,10 @@
 #include "GraphicEngine/GraphicEngine.hpp"
 
+/*!
+ * static
+ */
+Sprite * GraphicEngine::background = nullptr;
+
 /* explicit */ GraphicEngine::GraphicEngine()
 : m_window(nullptr)
 , m_layerCount(0)
@@ -200,6 +205,12 @@ void GraphicEngine::draw()
 {
     // Clearing buffer
     m_window->clear();
+
+    // Drawing background
+    if(GraphicEngine::background != nullptr)
+    {
+        m_window->draw(*GraphicEngine::background);
+    }
 
     for(unsigned index = 0; index < m_layerCount; ++index)
     {
