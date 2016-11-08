@@ -1,4 +1,5 @@
 #include "Dungeon/DungeonFactory.hpp"
+#include "GraphicEngine/GraphicEngine.hpp"
 
 /* explicit */ DungeonFactory::DungeonFactory()
 : m_currentDungeon(nullptr)
@@ -36,6 +37,10 @@ Dungeon * DungeonFactory::generateDungeon()
     // Getting a theme
     DungeonTheme * theme = randomTheme();
 
+    // Hiding background
+    Sprite * _sprite = GraphicEngine::background;
+    if(_sprite  != nullptr) _sprite->setVisible(false);
+
     // Generate the dungeon from the theme
     return generateDungeon(theme);
 }
@@ -47,6 +52,17 @@ Dungeon * DungeonFactory::generateDungeon(DungeonTheme * theme)
 
     // Begin the creation pipeline
     generateStructure(theme);
+
+    // Setting the background
+    Sprite * _sprite = GraphicEngine::background;
+    if(_sprite == nullptr)
+    {
+        _sprite = m_resourceManager->getSprite();
+    }
+
+    _sprite->setVisible(true);
+    _sprite->setPosition(0.0f, 0.0f);
+    _sprite->setTexture(*m_resourceManager->getTexture(theme->getBackgroundKey()));
 
     return m_currentDungeon;
 }
