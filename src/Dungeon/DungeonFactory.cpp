@@ -58,11 +58,12 @@ Dungeon * DungeonFactory::generateDungeon(DungeonTheme * theme)
     if(_sprite == nullptr)
     {
         _sprite = m_resourceManager->getSprite();
+        GraphicEngine::background = _sprite;
     }
 
     _sprite->setVisible(true);
     _sprite->setPosition(0.0f, 0.0f);
-    _sprite->setTexture(*m_resourceManager->getTexture(theme->getBackgroundKey()));
+    _sprite->setTexture(*(m_resourceManager->getTexture(theme->getBackgroundKey())));
 
     return m_currentDungeon;
 }
