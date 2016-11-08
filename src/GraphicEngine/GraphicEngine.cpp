@@ -9,19 +9,19 @@ Sprite * GraphicEngine::background = nullptr;
 : m_window(nullptr)
 , m_layerCount(0)
 , m_layerSize(0)
-, m_framerate(60)
-, m_delta(0)
-, m_current(0)
-, m_previous(0)
-, m_elapsed(0)
+, m_framerate(60.0)
+, m_delta(0.0)
+, m_current(0.0)
+, m_previous(0.0)
+, m_elapsed(0.0)
 , m_drawCounter(0)
-, m_fpsPrevious(0)
-, m_fpsCurrent(0)
-, m_fpsElapsed(0)
-, m_currentRender(0)
-, m_previousRender(0)
-, m_elapsedRender(0)
-, m_renderLag(0)
+, m_fpsPrevious(0.0)
+, m_fpsCurrent(0.0)
+, m_fpsElapsed(0.0)
+, m_currentRender(0.0)
+, m_previousRender(0.0)
+, m_elapsedRender(0.0)
+, m_renderLag(0.0)
 , m_wireframe(false)
 , m_resourceManager(nullptr)
 {
@@ -254,7 +254,7 @@ void GraphicEngine::handleTime()
 
     if(m_fpsElapsed >= 200)
     {
-        double _fps = (m_drawCounter / (m_fpsElapsed / 200)) * 5;
+        double _fps = (m_drawCounter / (m_fpsElapsed / 200.0)) * 5.0;
 
         m_debugPanel.m_fps = _fps;
         m_fpsPrevious = m_fpsCurrent;

@@ -26,14 +26,12 @@ void GameEngine::init()
     m_resourceLoader.load(&m_resourceManager);
 
     // Initializing other engine
-    // m_physicEngine.init();
+    m_physicEngine.init(&m_resourceManager,50 ,20 ,20 , 9.81);
     // m_soundEngine.init();
 
     // Initializing the graphic engine
     m_graphicEngine.init(&m_resourceManager,
                          "DPS", 1280, 768, 1500, 100, 100, 15, 2000);
-
-    m_physicEngine.init(&m_resourceManager,50,20,20,9.80);
 
     // Getting the window
     m_window = m_graphicEngine.getWindow();
@@ -41,7 +39,7 @@ void GameEngine::init()
     // Activating wire-frame
     // Setting the framerate
     m_graphicEngine.wireframe(false);
-    m_graphicEngine.setFramerate(60);
+    m_graphicEngine.setFramerate(60.0);
 }
 
 void GameEngine::start()
@@ -59,12 +57,6 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
-    /*Sprite * sprite = m_graphicEngine.getSprite();
-    sprite->setLayer(5);
-    sprite->setSmoothMotion(false);
-    sprite->setTexture(*m_resourceManager.getTexture("PLAYER"));
-    sprite->setPosition(50, 640);*/
-
     double lag = 0.0;
     double previous = Clock::getCurrentTime();
 
@@ -86,9 +78,6 @@ void GameEngine::gameLoop()
 
             // Retrieve elapsed time
             lag -= MS_PER_UPDATE;
-
-            // sprite->move(300 * (float)(MS_PER_UPDATE / 1000), 0);
-            // if(sprite->getPosition().x > 1100) sprite->setPosition(50, 640);
         }
 
         // Rendering

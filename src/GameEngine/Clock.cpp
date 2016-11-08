@@ -2,5 +2,5 @@
 
 double Clock::getCurrentTime()
 {
-    return (((double)clock()) / CLOCKS_PER_SEC * 1000);
+    return (((double)clock()) / CLOCKS_PER_SEC * 1000.0);
 }
