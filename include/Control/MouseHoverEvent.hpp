@@ -29,6 +29,11 @@ public:
      * \brief   Return true if the event is the cursor entered
      */
     bool isEntered();
+
+    /**
+     * \brief   Set the type of the event
+     */
+    void setEvent(Event event);
 };
 
 

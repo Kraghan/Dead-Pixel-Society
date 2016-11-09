@@ -15,7 +15,8 @@
 {
     // Releasing the sprite
     Sprite::release(m_playerSprite);
-
+    Collider::release(m_collider);
+    RigidBody::release(m_rigidbody);
     // TODO : Release collider and rigidbody
 }
 
@@ -62,7 +63,37 @@ void Player::init(ResourceManager * resourceManager)
 
 void Player::update(double dt)
 {
-    // TODO
+    m_rigidbody->isMovingLeft();
+    switch (m_state)
+    {
+        case LEFT:
+        {
+            m_rigidbody->stopMovingToRight();
+            m_rigidbody->startMovingToLeft();
+        }
+            break;
+        case RIGHT:
+        {
+            m_rigidbody->stopMovingToLeft();
+            m_rigidbody->startMovingToRight();
+        }
+            break;
+        case IDLE:
+        {
+            m_rigidbody->stopMovingToLeft();
+            m_rigidbody->stopMovingToRight();
+            m_rigidbody->stopMovementX();
+            //m_rigidbody->slowDown(dt);
+        }
+            break;
+        default:
+        {
+
+        }
+            break;
+    }
+    m_rigidbody->isMovingLeft();
+    m_playerSprite->setPosition(m_rigidbody->getPosition());
 }
 
 void Player::setCollider(Collider * collider)
@@ -99,3 +130,4 @@ Sprite* Player::getSprite()
 {
     return m_playerSprite;
 }
+

@@ -21,7 +21,6 @@ public:
     enum PLAYER_STATE
     {
         IDLE,
-        JUMP,
         RIGHT,
         LEFT
     };
@@ -61,6 +60,10 @@ public:
     void setState(Player::PLAYER_STATE state);
     Player::PLAYER_STATE getState(void) const;
 
+    /**
+     * \brief   Return true while player is in jumping phase
+     */
+
 private:
 
     Sprite * m_playerSprite;
@@ -72,6 +75,7 @@ private:
 
     // States
     PLAYER_STATE m_state;
+    double m_jumpingTimeStart;
 };
 
 #endif // __PLAYER_HPP

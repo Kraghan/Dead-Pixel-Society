@@ -38,7 +38,7 @@ void GameEngine::init()
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(false);
+    m_graphicEngine.wireframe(true);
     m_graphicEngine.setFramerate(60.0);
 }
 
@@ -90,6 +90,7 @@ void GameEngine::update()
     // Updating the game
     m_physicEngine.update(MS_PER_UPDATE * TimeManager::TimeScale);
     m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
+    Player::Instance()->update(MS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()

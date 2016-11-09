@@ -22,10 +22,10 @@ public:
     static constexpr const char * PLAYER_SPRITE = "PLAYER";
     static constexpr const int PLAYER_SPRITE_SIZE = 64;
 
-    static constexpr const float PLAYER_MASS    = 80.0f;
-    static constexpr const float MAX_VELOCITY_X = 500.0f;
+    static constexpr const float PLAYER_MASS    = 1.0f;
+    static constexpr const float MAX_VELOCITY_X = 5.0f;
     static constexpr const float MAX_VELOCITY_Y = 100.0f;
-    static constexpr const float PLAYER_ACCELARATION = 500.0f;
+    static constexpr const float PLAYER_ACCELARATION = 3.25f;
 };
 
 #endif // __PLAYER_CONSTANT_HPP

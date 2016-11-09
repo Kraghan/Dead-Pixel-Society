@@ -27,6 +27,11 @@ public:
      * \brief   Return true if the event is a key pressed
      */
     bool isPressed();
+
+    /**
+     * \brief   Set the type of the event
+     */
+    void setEvent(Event event);
 };
 
 #endif //PROJECT_KEYEVENT_HPP

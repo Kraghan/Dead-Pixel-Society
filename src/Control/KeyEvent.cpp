@@ -20,3 +20,15 @@ bool KeyEvent::isPressed()
 {
     return isActive();
 }
+
+void KeyEvent::setEvent(Event event)
+{
+    if(event.getEventType() == EventType::KEY)
+    {
+        KeyEvent* e = (KeyEvent*) &event;
+
+        setAction(e->getAction());
+        setActive(e->isActive());
+        setEventType(EventType::KEY);
+    }
+}

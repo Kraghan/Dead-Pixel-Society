@@ -70,8 +70,6 @@ void PhysicEngine::update(double dt)
         // init
         Collider* colliderAssociated = getColliderAssociated(&m_rigidBody[i]);
         sf::Vector2f speed = m_rigidBody[i].getVelocity();
-        bool isMovingLeft = m_rigidBody[i].isMovingLeft();
-        bool isMovingRight = m_rigidBody[i].isMovingRight();
         bool collidingDown, collidingLeft,collidingRight,collidingUp, hasMoved;
         collidingDown = collidingRight = collidingLeft = collidingUp =
         hasMoved = false;
@@ -82,12 +80,14 @@ void PhysicEngine::update(double dt)
         {
             m_rigidBody[i].stopMovementY();
             collidingDown = true;
+            m_rigidBody[i].setFalling(false);
         }
 
         if(isCollidingUp(colliderAssociated,&intersection,speed))
         {
             m_rigidBody[i].stopMovementY();
             collidingUp = true;
+            m_rigidBody[i].setFalling(true);
         }
 
         if(isCollidingLeft(colliderAssociated,&intersection,speed))
@@ -108,13 +108,14 @@ void PhysicEngine::update(double dt)
             hasMoved = true;
         }
 
-        if(isMovingLeft && (colliderAssociated == nullptr || !collidingLeft))
+        if(m_rigidBody[i].isMovingLeft() && (colliderAssociated == nullptr || !collidingLeft))
         {
             m_rigidBody[i].goOnLeft(dt,collidingDown);
             hasMoved = true;
         }
 
-        if(isMovingRight && (colliderAssociated == nullptr || !collidingRight))
+        if(m_rigidBody[i].isMovingRight() && (colliderAssociated == nullptr ||
+                !collidingRight))
         {
             m_rigidBody[i].goOnRight(dt,collidingDown);
             hasMoved = true;
@@ -125,15 +126,37 @@ void PhysicEngine::update(double dt)
         }
 
         if(isCollidingDown(colliderAssociated,&intersection,m_rigidBody[i]
-                .getVelocity())) {
-            m_rigidBody[i].move(m_rigidBody[i].getPosition().x, m_rigidBody[i]
-                                                                        .getPosition().y -
-                                                                intersection);
+                .getVelocity()) && hasMoved) {
+            m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
+                                m_rigidBody[i].getPosition().y-intersection);
             if (colliderAssociated != nullptr)
             {
                 colliderAssociated->move(colliderAssociated->getPosition().x,
                                          colliderAssociated->getPosition()
                                                  .y - intersection);
+            }
+        }
+
+        if(isCollidingLeft(colliderAssociated,&intersection,m_rigidBody[i]
+                .getVelocity()) && hasMoved) {
+            m_rigidBody[i].move(m_rigidBody[i].getPosition().x+intersection,
+                                m_rigidBody[i].getPosition().y);
+            if (colliderAssociated != nullptr)
+            {
+                colliderAssociated->move(colliderAssociated->getPosition()
+                                                 .x+intersection,
+                                         colliderAssociated->getPosition().y);
+            }
+        }
+        if(isCollidingRight(colliderAssociated,&intersection,m_rigidBody[i]
+                .getVelocity()) && hasMoved) {
+            m_rigidBody[i].move(m_rigidBody[i].getPosition().x-intersection,
+                                m_rigidBody[i].getPosition().y);
+            if (colliderAssociated != nullptr)
+            {
+                colliderAssociated->move(colliderAssociated->getPosition()
+                                                 .x-intersection,
+                                         colliderAssociated->getPosition().y);
             }
         }
     }
@@ -146,8 +169,8 @@ intersection, sf::Vector2f velocity)
     sf::Vector2f pos = collider->getPosition();
     sf::Vector2f dimension = collider->getDimension();
     sf::Vector2f pointBottomLeft = sf::Vector2f(pos.x,pos.y+dimension.y+1);
-    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x,pos
-                                                                           .y+dimension.y+1);
+    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x,
+                                                 pos.y+dimension.y+1);
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
@@ -183,6 +206,8 @@ intersection, sf::Vector2f velocity)
         if(m_colliders[i].getHitBox().contains(pointTopLeft)
            || m_colliders[i].getHitBox().contains(pointTopRight))
         {
+            // TODO
+            //*intersection = pointTopLeft.y - m_colliders[i].getPosition().y;
             return true;
         }
     }
@@ -197,8 +222,8 @@ intersection, sf::Vector2f velocity)
     sf::Vector2f pos = collider->getPosition();
     sf::Vector2f dimension = collider->getDimension();
     sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x+1,pos.y);
-    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x+1,pos
-                                                                            .y+dimension.y);
+    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x+1,
+                                                 pos.y+dimension.y);
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
@@ -209,6 +234,7 @@ intersection, sf::Vector2f velocity)
         if(m_colliders[i].getHitBox().contains(pointTopRight)
            || m_colliders[i].getHitBox().contains(pointBottomRight))
         {
+            *intersection = pointTopRight.x - m_colliders[i].getPosition().x;
             return true;
         }
     }
@@ -234,6 +260,8 @@ intersection, sf::Vector2f velocity)
         if(m_colliders[i].getHitBox().contains(pointBottomLeft)
            || m_colliders[i].getHitBox().contains(pointTopLeft))
         {
+            *intersection = m_colliders[i].getPosition().x+dimension.x -
+                    pointTopLeft.x;
             return true;
         }
     }

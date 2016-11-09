@@ -37,7 +37,6 @@ void DungeonState::init(StateMachine  * stateMachine,
 
 /* virtual */ void DungeonState::update(double dt)
 {
-    Player* m_player = Player::Instance();
     // Key actions
     if(EventProcessed::event.getEventType() == EventType::KEY)
     {
@@ -48,18 +47,11 @@ void DungeonState::init(StateMachine  * stateMachine,
             {
                 if (event->isPressed())
                 {
-                    if(m_player->getState() != m_player->LEFT)
-                    {
-                        std::cout << "start LEFT" << std::endl;
-                        m_player->setState(Player::LEFT);
-                        m_player->getRigidbody()->startMovingToLeft();
-                    }
+                    Player::Instance()->setState(Player::LEFT);
                 }
                 else
                 {
-                    std::cout << "stop LEFT" << std::endl;
-                    m_player->setState(Player::IDLE);
-                    m_player->getRigidbody()->stopMovingToLeft();
+                    Player::Instance()->setState(Player::IDLE);
                 }
             }
                 break;
@@ -67,18 +59,19 @@ void DungeonState::init(StateMachine  * stateMachine,
             {
                 if (event->isPressed())
                 {
-                    if(m_player->getState() != m_player->LEFT)
-                    {
-                        std::cout << "start LEFT" << std::endl;
-                        m_player->setState(Player::LEFT);
-                        m_player->getRigidbody()->startMovingToLeft();
-                    }
+                    Player::Instance()->setState(Player::RIGHT);
                 }
                 else
                 {
-                    std::cout << "stop LEFT" << std::endl;
-                    m_player->setState(Player::IDLE);
-                    m_player->getRigidbody()->stopMovingToLeft();
+                    Player::Instance()->setState(Player::IDLE);
+                }
+            }
+                break;
+            case Actions::JUMP:
+            {
+                if (event->isPressed())
+                {
+
                 }
             }
                 break;
@@ -90,9 +83,6 @@ void DungeonState::init(StateMachine  * stateMachine,
         }
     }
     // Mouse button actions
-
-    // Mouse hover actions
-    m_player->getSprite()->setPosition(m_player->getRigidbody()->getPosition());
     EventProcessed::Instance()->init();
 }
 

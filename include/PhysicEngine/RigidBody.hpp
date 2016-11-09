@@ -19,6 +19,10 @@ public:
 
     float getMass();
 
+    bool isFalling();
+
+    void setFalling(bool falling);
+
     sf::Vector2f getVelocity();
 
     float getAcceleration();
@@ -48,10 +52,12 @@ public:
     void addForce(sf::Vector2f force);
 
     static void release(RigidBody* &rigidBody);
+
+    void slowDown(double dt);
 private:
     float m_mass, m_acceleration,m_velocityMax;
     sf::Vector2f m_velocity;
-    bool m_toLeft, m_toRight;
+    bool m_toLeft, m_toRight, m_isFalling;
 };
 
 

@@ -2,6 +2,7 @@
 // Created by Kraghan on 18/10/2016.
 //
 
+#include <iostream>
 #include "PhysicEngine/RigidBody.hpp"
 
 void RigidBody::release(RigidBody* &rigidBody)
@@ -13,7 +14,9 @@ void RigidBody::release(RigidBody* &rigidBody)
 RigidBody::RigidBody()
 : PhysicObjectBase()
 {
-
+    m_isFalling = false;
+    m_toLeft = false;
+    m_toRight = false;
 }
 
 void RigidBody::init(unsigned int x, unsigned int y, unsigned int size, float
@@ -26,11 +29,22 @@ mass, float acceleration, float velocityMax)
     m_velocityMax = velocityMax;
     m_toLeft = false;
     m_toRight = false;
+    m_isFalling = false;
 }
 
 float RigidBody::getMass()
 {
     return m_mass;
+}
+
+bool RigidBody::isFalling()
+{
+    return m_isFalling;
+}
+
+void RigidBody::setFalling(bool falling)
+{
+    m_isFalling = falling;
 }
 
 sf::Vector2f RigidBody::getVelocity()
@@ -45,7 +59,7 @@ float RigidBody::getAcceleration()
 
 void RigidBody::applyGravity(double dt, float gravity)
 {
-    m_velocity.y += gravity*dt*m_mass;
+    m_velocity.y += gravity*dt;
 
     sf::Vector2f pos = getPosition();
     move(pos.x,pos.y+m_velocity.y);
@@ -128,4 +142,26 @@ void RigidBody::goOnRight(double dt,bool collidingDown)
 void RigidBody::addForce(sf::Vector2f force)
 {
     m_velocity += force;
+}
+
+void RigidBody::slowDown(double dt)
+{
+    std::cout << m_velocity.x << std::endl;
+
+    /*if(m_velocity.x > 0.0f)
+    {
+        m_velocity.x -= m_velocityMax*dt/2;
+    }
+    else if(m_velocity.x < 0.0f)
+    {
+        m_velocity.x += m_velocityMax*dt/2;
+    }*/
+
+    /*float tmp = m_velocity.x;
+
+    if(tmp < 0.0f)
+        tmp *= -1;
+
+    if(tmp < 0.5f)
+        m_velocity.x = 0.0f;*/
 }

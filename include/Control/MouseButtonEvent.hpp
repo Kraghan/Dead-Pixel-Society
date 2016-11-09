@@ -32,7 +32,7 @@ public :
     /**
      * \brief   Set the type of the event
      */
-    virtual void setEvent(Event event);
+    void setEvent(Event event);
 };
 
 

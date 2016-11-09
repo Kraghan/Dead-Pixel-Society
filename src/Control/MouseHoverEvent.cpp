@@ -21,3 +21,16 @@ bool MouseHoverEvent::isEntered()
 {
     return isActive();
 }
+
+void MouseHoverEvent::setEvent(Event event)
+{
+    if(event.getEventType() == EventType::MOUSE_HOVER)
+    {
+        MouseHoverEvent* e = (MouseHoverEvent*) &event;
+        setAction(e->getAction());
+        setActive(e->isActive());
+        setEventType(EventType::MOUSE_HOVER);
+        setPosition(e->getPosition());
+    }
+
+}

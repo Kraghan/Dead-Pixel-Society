@@ -51,11 +51,6 @@ public :
      */
     Actions getAction();
 
-    /**
-     * \brief   Set the type of the event
-     */
-    //virtual void setEvent(Event event) = 0;
-
 protected:
     /**
      * \brief   Define if the event is entered/pressed or exited/released
