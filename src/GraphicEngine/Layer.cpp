@@ -1,7 +1,7 @@
 #include <iostream>
 #include "GraphicEngine/Layer.hpp"
 
-/*explicit */ Layer::Layer()
+/* explicit */ Layer::Layer()
 : m_size(0)
 , m_capacity(0)
 , m_vertices(nullptr)

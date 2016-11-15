@@ -13,6 +13,7 @@
 
 #include <string>
 #include <iostream>
+#include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
 #include "GraphicEngine/Layer.hpp"
@@ -146,6 +147,8 @@ private:
     double m_previousRender;
     double m_elapsedRender;
     double m_renderLag;
+
+    sf::Clock m_clock;
 
     /*!
      * \brief   When true, display the game in wireframe !

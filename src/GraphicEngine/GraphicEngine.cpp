@@ -66,13 +66,13 @@ void GraphicEngine::init(ResourceManager * resourceManager,
     m_debugPanel.m_layerCount = m_layerCount;
 
     // Setting fps counter
-    m_fpsPrevious = Clock::getCurrentTime();
+    m_fpsPrevious = m_clock.getElapsedTime().asSeconds();
 
     // Computing delta
-    m_delta = (1 / m_framerate) * 1000;
+    m_delta = 1 / m_framerate;
 
     // Setting time
-    m_previousRender = Clock::getCurrentTime();
+    m_previousRender = m_clock.getElapsedTime().asSeconds();
 }
 
 void GraphicEngine::initLayer()
@@ -100,7 +100,7 @@ ConvexShape * GraphicEngine::getConvexShape()
 void GraphicEngine::render(double factor)
 {
     // Checking if its the time to render
-    m_currentRender = Clock::getCurrentTime();
+    m_currentRender = m_clock.getElapsedTime().asSeconds();
     m_elapsedRender = m_currentRender - m_previousRender;
 
     m_previousRender = m_currentRender;
@@ -117,7 +117,7 @@ void GraphicEngine::render(double factor)
     m_renderLag -= m_delta;
 
     // Getting time
-    m_previous = Clock::getCurrentTime();
+    m_previous = m_clock.getElapsedTime().asSeconds();
 
     // Checking the window states
     // If closed, Skipping
@@ -242,19 +242,19 @@ void GraphicEngine::draw()
 void GraphicEngine::handleTime()
 {
     // Updating debug panel
-    m_current = Clock::getCurrentTime();
+    m_current = m_clock.getElapsedTime().asSeconds();
     m_elapsed = m_current - m_previous;
     m_previous = m_current;
 
     m_debugPanel.m_renderTime = m_elapsed;
 
     // Checking time
-    m_fpsCurrent = Clock::getCurrentTime();
+    m_fpsCurrent = m_clock.getElapsedTime().asSeconds();
     m_fpsElapsed = m_fpsCurrent - m_fpsPrevious;
 
-    if(m_fpsElapsed >= 200)
+    if(m_fpsElapsed >= 1.0)
     {
-        double _fps = (m_drawCounter / (m_fpsElapsed / 200.0)) * 5.0;
+        double _fps = (m_drawCounter / (m_fpsElapsed / 0.2)) * 5.0;
 
         m_debugPanel.m_fps = _fps;
         m_fpsPrevious = m_fpsCurrent;
@@ -282,6 +282,6 @@ void GraphicEngine::setFramerate(double framerate)
     m_framerate = framerate;
 
     // Re-computing delta (time step)
-    m_delta = (1 / m_framerate) * 1000;
+    m_delta = 1 / m_framerate;
 }
 

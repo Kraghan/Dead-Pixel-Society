@@ -80,7 +80,7 @@ void DebugPanel::setTextContent()
     m_information[7].setString(std::string("Append skipped : ")  + fix::to_string(m_appendSkipped));
 
     m_information[2].setString(std::string("Render : ") +
-        fix::to_string(m_renderTime) + " (ms)");
+        fix::to_string(m_renderTime) + " (s)");
 
     m_information[4].setString(std::string("Sprite in use : ") +
         fix::to_string(m_spriteInUse) + " (" +
