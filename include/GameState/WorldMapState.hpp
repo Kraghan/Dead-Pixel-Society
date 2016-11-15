@@ -60,6 +60,7 @@ private:
 
     StateMachine * m_stateMachine;
     ResourceManager * m_resourceManager;
+    // Worldmap m_map;
 };
 
 #endif // __WORLD_MAP_STATE_HPP

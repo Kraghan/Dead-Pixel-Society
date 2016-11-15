@@ -38,7 +38,7 @@ void GameEngine::init()
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(true);
+    m_graphicEngine.wireframe(false);
     m_graphicEngine.setFramerate(60.0);
 }
 
@@ -57,12 +57,13 @@ void GameEngine::start()
 
 void GameEngine::gameLoop()
 {
+    sf::Clock clock;
     double lag = 0.0;
-    double previous = Clock::getCurrentTime();
+    double previous = clock.getElapsedTime().asSeconds();
 
     while(m_isRunning)
     {
-        double current = Clock::getCurrentTime();
+        double current = clock.getElapsedTime().asSeconds();
         double elapsed = current - previous;
         previous = current;
 
@@ -71,26 +72,25 @@ void GameEngine::gameLoop()
         // Processing inputs
         processInput();
 
-        while(lag >= MS_PER_UPDATE)
+        while(lag >= SECONDS_PER_UPDATE)
         {
             // Updating
             update();
 
             // Retrieve elapsed time
-            lag -= MS_PER_UPDATE;
+            lag -= SECONDS_PER_UPDATE;
         }
 
         // Rendering
-        m_graphicEngine.render(lag / MS_PER_UPDATE);
+        m_graphicEngine.render(lag / SECONDS_PER_UPDATE);
     }
 }
 
 void GameEngine::update()
 {
     // Updating the game
-    m_physicEngine.update(MS_PER_UPDATE * TimeManager::TimeScale);
-    m_game.update(MS_PER_UPDATE * TimeManager::TimeScale);
-    Player::Instance()->update(MS_PER_UPDATE * TimeManager::TimeScale);
+    m_physicEngine.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
+    m_game.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()

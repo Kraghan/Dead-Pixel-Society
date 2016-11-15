@@ -10,6 +10,7 @@
 #define __CLOCK_HPP
 
 #include <ctime>
+#include <SFML/System.hpp>
 
 class Clock
 {
