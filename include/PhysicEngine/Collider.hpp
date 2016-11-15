@@ -18,6 +18,9 @@ public:
 
     void moveRigidBody(RigidBody* rigidBody);
     static void release(Collider* &collider);
+    bool isTrigger();
+protected:
+    bool m_isTrigger;
 };
 
 

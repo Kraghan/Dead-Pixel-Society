@@ -11,6 +11,7 @@
 #include "Collider.hpp"
 #include "RigidBody.hpp"
 #include "ColliderRigidBodyBinding.hpp"
+#include "PhysicTrigger.hpp"
 
 class PhysicEngine : public Updatable{
 public:
@@ -27,6 +28,8 @@ public:
     virtual void update(double dt);
 
     Collider* getCollider();
+
+   //PhysicTrigger* getPhysicTrigger();
 
     RigidBody* getRigidBody();
 

@@ -91,6 +91,7 @@ void GameEngine::update()
     // Updating the game
     m_physicEngine.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
     m_game.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
+    Player::Instance()->update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()

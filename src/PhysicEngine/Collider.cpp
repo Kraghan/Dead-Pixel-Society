@@ -5,8 +5,9 @@
 #include "PhysicEngine/Collider.hpp"
 
 Collider::Collider()
-:PhysicObjectBase(){
-    // None
+:PhysicObjectBase()
+{
+    m_isTrigger = false;
 }
 
 void Collider::moveRigidBody(RigidBody* rigidBody)
@@ -21,4 +22,9 @@ void Collider::moveRigidBody(RigidBody* rigidBody)
 void Collider::release(Collider* &collider) {
     collider->setFree();
     collider = nullptr;
+}
+
+bool Collider::isTrigger()
+{
+    return m_isTrigger;
 }
