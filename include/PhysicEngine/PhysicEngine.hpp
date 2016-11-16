@@ -51,6 +51,12 @@ public:
     std::vector<Collision> collideWith(Collider* collider);
 
     void debugMode(bool activate);
+
+    unsigned int getColliderCount();
+
+    unsigned int getRigidBodyCount();
+
+    unsigned int getBindingCount();
 private:
 
     ResourceManager* m_ressourceManager;

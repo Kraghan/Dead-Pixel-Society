@@ -65,6 +65,9 @@ void GraphicEngine::init(ResourceManager * resourceManager,
     m_debugPanel.init(m_resourceManager, spriteCount, textCount);
     m_debugPanel.m_layerCount = m_layerCount;
 
+    // Initializing the physic debug interface
+    m_drawPhysics.init(m_resourceManager);
+
     // Setting fps counter
     m_fpsPrevious = m_clock.getElapsedTime().asSeconds();
 
@@ -231,6 +234,9 @@ void GraphicEngine::draw()
 
     // Displaying debug panel
     m_debugPanel.draw(m_window);
+
+    // Displaying physic debug interface
+    m_drawPhysics.draw(m_window);
 
     // Swapping buffers
     m_window->display();

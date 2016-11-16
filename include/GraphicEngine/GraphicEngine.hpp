@@ -23,6 +23,7 @@
 #include "GraphicEngine/DrawableManager.hpp"
 
 #include "GameEngine/Clock.hpp"
+#include "DrawPhysics.hpp"
 
 class GraphicEngine
 {
@@ -129,6 +130,11 @@ private:
      * \brief   The debug panel of the graphic engine
      */
     DebugPanel m_debugPanel;
+
+    /*!
+     * \brief   The debug interface of the physic engine
+     */
+    DrawPhysics m_drawPhysics;
 
     /*!
      * \brief   The framerate of the game

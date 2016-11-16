@@ -145,6 +145,22 @@ Collider *ResourceManager::getColliderBindedToRigidBody(RigidBody *rigidBody)
     return m_physicEngine->getColliderAssociated(rigidBody);
 }
 
-PhysicEngine *ResourceManager::getPhysicEngine() {
+PhysicEngine *ResourceManager::getPhysicEngine()
+{
     return m_physicEngine;
+}
+
+unsigned int ResourceManager::getTotalCollider()
+{
+    return m_physicEngine->getColliderCount();
+}
+
+unsigned int ResourceManager::getTotalRigidBody()
+{
+    return m_physicEngine->getRigidBodyCount();
+}
+
+unsigned int ResourceManager::getTotalBinding()
+{
+    return m_physicEngine->getBindingCount();
 }
