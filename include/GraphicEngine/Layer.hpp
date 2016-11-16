@@ -162,6 +162,11 @@ private:
           const sf::Vertex * p1,
           const sf::Vertex * p2,
           const sf::Vertex * p3);
+
+    void makeTriangle(uint32_t index,
+          const sf::Vertex * p1,
+          const sf::Vertex * p2,
+          const sf::Vertex * p3);
 };
 
 #endif // __LAYER_HPP

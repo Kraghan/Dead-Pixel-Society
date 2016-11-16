@@ -38,7 +38,7 @@ void GameEngine::init()
 
     // Activating wire-frame
     // Setting the framerate
-    m_graphicEngine.wireframe(true);
+    m_graphicEngine.wireframe(false);
     m_graphicEngine.setFramerate(60.0);
 }
 
@@ -60,6 +60,27 @@ void GameEngine::gameLoop()
     sf::Clock clock;
     double lag = 0.0;
     double previous = clock.getElapsedTime().asSeconds();
+
+    ConvexShape * shape = m_resourceManager.getConvexShape();
+    shape->setPointCount(4);
+    shape->setFillColor(sf::Color::Blue);
+    shape->setPosition(100, 100);
+    shape->setLayer(9);
+    shape->setPoint(0, sf::Vector2f(0, 0));
+    shape->setPoint(1, sf::Vector2f(100, 0));
+    shape->setPoint(2, sf::Vector2f(100, 100));
+    shape->setPoint(3, sf::Vector2f(0, 100));
+
+    ConvexShape * shape2 = m_resourceManager.getConvexShape();
+    shape2->setPointCount(5);
+    shape2->setFillColor(sf::Color::Black);
+    shape2->setPosition(500, 400);
+    shape2->setLayer(9);
+    shape2->setPoint(0, sf::Vector2f(0, 0));
+    shape2->setPoint(1, sf::Vector2f(100, 0));
+    shape2->setPoint(2, sf::Vector2f(100, 100));
+    shape2->setPoint(3, sf::Vector2f(0, 100));
+    shape2->setPoint(4, sf::Vector2f(-50, 50));
 
     while(m_isRunning)
     {

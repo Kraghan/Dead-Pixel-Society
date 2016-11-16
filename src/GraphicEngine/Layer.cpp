@@ -241,6 +241,10 @@ void Layer::append(ConvexShape const * shape, double offset)
     // Buffering transformation
     const sf::Transform * _transform = &shape->getTransform();
 
+    // Buffering smooth motion state
+    bool smooth = shape->getSmoothMotion();
+    RigidBody * _rigid = shape->getRigidBody();
+
     // Buffering points count
     uint32_t pCount = (uint32_t)shape->getPointCount();
 
@@ -255,10 +259,6 @@ void Layer::append(ConvexShape const * shape, double offset)
             makeTriangleLine(m_size + i * 6, _buffer, _middle, &_vertices[i + 1]);
             _buffer = &_vertices[i + 1];
         }
-
-        // Buffering smooth motion state
-        bool smooth = shape->getSmoothMotion();
-        RigidBody * _rigid = shape->getRigidBody();
 
         // Direct transform
         for(uint32_t i = 0; i < inc; ++i)
@@ -280,14 +280,29 @@ void Layer::append(ConvexShape const * shape, double offset)
     }
     else
     {
+        // Buffering first point
+        const sf::Vertex * _buffer = _vertices;
+
         // Generating triangles from triangle fan
         for(uint32_t i = 0; i < (uint32_t)shape->getPointCount(); ++i)
         {
-            memcpy((void *)&m_vertices[m_size + i + 0], (void *)&_vertices[i + 1], sizeof(sf::Vertex));
-            memcpy((void *)&m_vertices[m_size + i + 1], (void *)&_vertices[i + 2], sizeof(sf::Vertex));
+            makeTriangle(m_size + i * 3, _buffer, &_vertices[i + 1], _middle);
+            _buffer = &_vertices[i + 1];
+        }
 
-            // Inserting middle points
-            memcpy((void *)&m_vertices[m_size + i + 2], (void *)_middle, sizeof(sf::Vertex));
+        for(uint32_t i = 0; i < inc; ++i)
+        {
+            m_vertices[m_size + i].position = *_transform * m_vertices[m_size + i].position;
+
+            // Smooth motion
+            if(smooth)
+            {
+                if(_rigid != nullptr)
+                {
+                    m_vertices[m_size + i].position.x += _rigid->getVelocity().x * offset;
+                    m_vertices[m_size + i].position.y += _rigid->getVelocity().y * offset;
+                }
+            }
         }
     }
 
@@ -310,4 +325,19 @@ void Layer::makeTriangleLine(uint32_t index,
     // Line 3
     memcpy((void *)&m_vertices[index + 4], (void *)p2, sizeof(sf::Vertex));
     memcpy((void *)&m_vertices[index + 5], (void *)p1, sizeof(sf::Vertex));
+}
+
+void Layer::makeTriangle(uint32_t index,
+ const sf::Vertex * p1,
+ const sf::Vertex * p2,
+ const sf::Vertex * p3)
+{
+    // Vertex 1
+    memcpy((void *)&m_vertices[index + 0], (void *)p1, sizeof(sf::Vertex));
+
+    // Vertex 2
+    memcpy((void *)&m_vertices[index + 1], (void *)p2, sizeof(sf::Vertex));
+
+    // Vertex 3
+    memcpy((void *)&m_vertices[index + 2], (void *)p3, sizeof(sf::Vertex));
 }
