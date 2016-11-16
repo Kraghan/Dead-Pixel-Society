@@ -37,6 +37,8 @@ void PhysicEngine::init(ResourceManager* manager, unsigned int count_colliders,
                         unsigned int count_rigidBodies, unsigned int
                         count_rigidBodiesWithColliders, float gravity)
 {
+    m_debugMode = true;
+    m_drawn = false;
     m_ressourceManager = manager;
     m_colliders.reserve(count_colliders);
     for(unsigned int i = 0; i < m_colliders.capacity(); ++i)
@@ -93,18 +95,31 @@ void PhysicEngine::update(double dt)
                     hasCollideDown = true;
                 }
 
-                /*(collisions[j].getCollisionSide() == Collision::LEFT)
+                if(collisions[j].getCollisionSide() == Collision::LEFT)
                 {
+                    std::cout<< collisions[j].getDeep() <<std::endl;
                     colliderAssociated->move(colliderAssociated->getPosition().x,
-                                             colliderAssociated->getPosition().y+collisions[j].getDeep());
+                                             colliderAssociated->getPosition().y);
                     // Move rigid body
                     m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                        m_rigidBody[i].getPosition().y+collisions[j].getDeep());
-                    // Stop falling
-                    m_rigidBody[i].setFalling(false);
-                    m_rigidBody[i].stopMovementY();
-                    hasCollideLeft = true;
-                }*/
+                                        m_rigidBody[i].getPosition().y);
+                    // Stop moving
+                    //m_rigidBody[i].stopMovementX();
+                    //hasCollideLeft = true;
+                }
+
+                if(collisions[j].getCollisionSide() == Collision::RIGHT)
+                {
+                    std::cout<< collisions[j].getDeep() <<std::endl;
+                    colliderAssociated->move(colliderAssociated->getPosition().x,
+                                             colliderAssociated->getPosition().y);
+                    // Move rigid body
+                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
+                                        m_rigidBody[i].getPosition().y);
+                    // Stop moving
+                    //m_rigidBody[i].stopMovementX();
+                    //hasCollideRight = true;
+                }
             }
 
             if(!hasCollideDown)
@@ -232,6 +247,8 @@ void PhysicEngine::update(double dt)
         }
         */
     }
+    if(m_debugMode)
+        debugDraw();
 }
 
 bool PhysicEngine::isCollidingDown(Collider* collider, float*
@@ -406,10 +423,10 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
 
     sf::Vector2f pos = collider->getPosition();
     sf::Vector2f dimension = collider->getDimension();
-    sf::Vector2f pointBottomLeft = sf::Vector2f(pos.x-1.0f,pos.y+dimension.y);
-    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x-1.0f,pos.y);
-    sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x+1.0f,pos.y);
-    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x+1.0f,pos.y+dimension.y);
+    sf::Vector2f pointBottomLeft = sf::Vector2f(pos.x,pos.y+dimension.y);
+    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x,pos.y);
+    sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x,pos.y);
+    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x,pos.y+dimension.y);
 
     float intersection;
     for(unsigned i = 0; i < m_colliders.size(); ++i)
@@ -458,5 +475,42 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
     }
 
     return collisions;
+
+}
+
+void PhysicEngine::debugMode(bool activate)
+{
+    m_debugMode = activate;
+}
+
+void PhysicEngine::debugDraw()
+{
+    if(!m_drawn)
+    {
+        for(unsigned int i = 0; i < m_colliders.size(); ++i)
+        {
+            if(m_colliders[i].isFree() || !m_colliders[i].isReady())
+                continue;
+
+            ConvexShape* c = m_ressourceManager->getConvexShape();
+            c->setLayer(9);
+            c->setFillColor(sf::Color::Cyan);
+            c->setPointCount(4);
+            c->setPoint(0,m_colliders[i].getPosition());
+
+            c->setPoint(1,sf::Vector2f(m_colliders[i].getPosition().x
+                                       +m_colliders[i].getDimension().x,
+                                       m_colliders[i].getPosition().y));
+
+            c->setPoint(2,m_colliders[i].getPosition()+m_colliders[i]
+                    .getDimension());
+
+            c->setPoint(3,sf::Vector2f(m_colliders[i].getPosition().x,
+                                       m_colliders[i].getPosition().y
+                                       +m_colliders[i].getDimension().y));
+        }
+
+        m_drawn = true;
+    }
 
 }

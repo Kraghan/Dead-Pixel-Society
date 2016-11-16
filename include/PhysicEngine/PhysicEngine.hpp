@@ -49,6 +49,8 @@ public:
     Collider* getColliderAssociated(RigidBody* rigidBody);
 
     std::vector<Collision> collideWith(Collider* collider);
+
+    void debugMode(bool activate);
 private:
 
     ResourceManager* m_ressourceManager;
@@ -60,5 +62,11 @@ private:
     std::vector<RigidBody> m_rigidBody;
 
     std::vector<ColliderRigidBodyBinding> m_rigidBodiesWithColliders;
+
+    bool m_debugMode;
+
+    bool m_drawn;
+
+    void debugDraw();
 };
 #endif //PROJECT_PHYSICENGINE_HPP

@@ -146,22 +146,27 @@ void RigidBody::addForce(sf::Vector2f force)
 
 void RigidBody::slowDown(double dt)
 {
-    std::cout << m_velocity.x << std::endl;
+    std::cout << "Before : " << m_velocity.x << std::endl;
 
-    /*if(m_velocity.x > 0.0f)
+    if(m_velocity.x > 0.0f)
     {
-        m_velocity.x -= m_velocityMax*dt/2;
+        m_velocity.x -= m_velocityMax/2*dt;
     }
     else if(m_velocity.x < 0.0f)
     {
-        m_velocity.x += m_velocityMax*dt/2;
-    }*/
+        m_velocity.x += m_velocityMax/2*dt;
+    }
+    std::cout << "After : " << m_velocity.x << std::endl;
 
-    /*float tmp = m_velocity.x;
+    float tmp = m_velocity.x;
 
     if(tmp < 0.0f)
         tmp *= -1;
 
     if(tmp < 0.5f)
-        m_velocity.x = 0.0f;*/
+    {
+        stopMovingToLeft();
+        stopMovingToRight();
+        stopMovementX();
+    }
 }
