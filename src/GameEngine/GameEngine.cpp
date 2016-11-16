@@ -107,7 +107,17 @@ void GameEngine::processInput()
         {
             m_isRunning = false;
         }
+        if(event.type == sf::Event::KeyReleased)
+        {
+            if (event.key.code == 85)
+            {
+                m_graphicEngine.toggleWireframe();
+                continue;
+            }
+            //if (event.key.code == 86)
 
+
+        }
         m_eventConverter.processEvent(event, &m_controlMap);
     }
 }

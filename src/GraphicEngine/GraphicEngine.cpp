@@ -285,3 +285,13 @@ void GraphicEngine::setFramerate(double framerate)
     m_delta = 1 / m_framerate;
 }
 
+void GraphicEngine::toggleWireframe()
+{
+    m_wireframe = !m_wireframe;
+
+    for(uint32_t i = 0; i < m_layerCount; ++i)
+    {
+        m_layers[i].setWireframe(m_wireframe);
+    }
+}
+

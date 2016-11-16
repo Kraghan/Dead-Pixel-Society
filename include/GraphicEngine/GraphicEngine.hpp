@@ -85,6 +85,11 @@ public:
     void wireframe(bool state);
 
     /*!
+     * \brief   Invert the wireframe mode
+     */
+    void toggleWireframe();
+
+    /*!
      * \brief   Set the framerate of the engine
      * \param   framerate The target framerate
      */

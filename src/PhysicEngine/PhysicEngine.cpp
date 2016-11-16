@@ -97,7 +97,7 @@ void PhysicEngine::update(double dt)
 
                 if(collisions[j].getCollisionSide() == Collision::LEFT)
                 {
-                    std::cout<< collisions[j].getDeep() <<std::endl;
+                    //std::cout<< collisions[j].getDeep() <<std::endl;
                     colliderAssociated->move(colliderAssociated->getPosition().x,
                                              colliderAssociated->getPosition().y);
                     // Move rigid body
@@ -110,7 +110,7 @@ void PhysicEngine::update(double dt)
 
                 if(collisions[j].getCollisionSide() == Collision::RIGHT)
                 {
-                    std::cout<< collisions[j].getDeep() <<std::endl;
+                    //std::cout<< collisions[j].getDeep() <<std::endl;
                     colliderAssociated->move(colliderAssociated->getPosition().x,
                                              colliderAssociated->getPosition().y);
                     // Move rigid body
