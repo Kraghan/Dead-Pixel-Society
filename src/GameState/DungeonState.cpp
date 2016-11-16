@@ -16,10 +16,10 @@ void DungeonState::init(StateMachine  * stateMachine,
     Collider* floorCollider = resourceManager->getCollider();
     floorCollider->init(0,11,20,1,64);
 
-    // Collider* leftCollider = resourceManager->getCollider();
-    // leftCollider->init(0,0,1,20,64);
-    // Collider* rightCollider = resourceManager->getCollider();
-    // rightCollider->init(19,0,1,11,64);
+    Collider* leftCollider = resourceManager->getCollider();
+    leftCollider->init(0,0,1,20,64);
+    Collider* rightCollider = resourceManager->getCollider();
+    rightCollider->init(19,0,1,11,64);
 
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;

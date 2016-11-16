@@ -3,11 +3,13 @@
 //
 
 #include "PhysicEngine/Collider.hpp"
+#include "Control/TriggerAction.hpp"
 
 Collider::Collider()
 :PhysicObjectBase()
 {
-    m_isTrigger = false;
+    // None
+    m_triggerAction = nullptr;
 }
 
 void Collider::moveRigidBody(RigidBody* rigidBody)
@@ -24,7 +26,12 @@ void Collider::release(Collider* &collider) {
     collider = nullptr;
 }
 
-bool Collider::isTrigger()
+void Collider::setTrigger(TriggerAction *action)
 {
-    return m_isTrigger;
+    m_triggerAction = action;
+}
+
+TriggerAction *Collider::getTriggerAction()
+{
+    return m_triggerAction;
 }

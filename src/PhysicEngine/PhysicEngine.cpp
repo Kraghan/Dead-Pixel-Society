@@ -68,7 +68,67 @@ void PhysicEngine::update(double dt)
 
         // init
         Collider* colliderAssociated = getColliderAssociated(&m_rigidBody[i]);
-        sf::Vector2f speed = m_rigidBody[i].getVelocity();
+
+        // Detect collision to set rigid body movement
+        if(colliderAssociated != nullptr)
+        {
+            colliderAssociated->moveRigidBody(&m_rigidBody[i]);
+            std::vector<Collision> collisions = collideWith(colliderAssociated);
+
+            bool hasCollideDown = false, hasCollideLeft = false,
+                    hasCollideRight = false;
+            for(unsigned int j = 0; j < collisions.size(); ++j)
+            {
+                if(collisions[j].getCollisionSide() == Collision::DOWN)
+                {
+                    // Move collider
+                    colliderAssociated->move(colliderAssociated->getPosition().x,
+                                             colliderAssociated->getPosition().y+collisions[j].getDeep());
+                    // Move rigid body
+                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
+                                        m_rigidBody[i].getPosition().y+collisions[j].getDeep());
+                    // Stop falling
+                    m_rigidBody[i].setFalling(false);
+                    m_rigidBody[i].stopMovementY();
+                    hasCollideDown = true;
+                }
+
+                /*(collisions[j].getCollisionSide() == Collision::LEFT)
+                {
+                    colliderAssociated->move(colliderAssociated->getPosition().x,
+                                             colliderAssociated->getPosition().y+collisions[j].getDeep());
+                    // Move rigid body
+                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
+                                        m_rigidBody[i].getPosition().y+collisions[j].getDeep());
+                    // Stop falling
+                    m_rigidBody[i].setFalling(false);
+                    m_rigidBody[i].stopMovementY();
+                    hasCollideLeft = true;
+                }*/
+            }
+
+            if(!hasCollideDown)
+            {
+                m_rigidBody[i].setFalling(true);
+                m_rigidBody[i].applyGravity(dt,m_gravity);
+            }
+
+            if(!hasCollideLeft && m_rigidBody[i].isMovingLeft())
+            {
+                m_rigidBody[i].goOnLeft(dt,hasCollideDown);
+            }
+
+            if(!hasCollideRight && m_rigidBody[i].isMovingRight())
+            {
+                m_rigidBody[i].goOnRight(dt,hasCollideDown);
+            }
+        }
+        else
+        {
+            m_rigidBody[i].applyGravity(dt,m_gravity);
+        }
+
+        /*sf::Vector2f speed = m_rigidBody[i].getVelocity();
         bool collidingDown, collidingLeft,collidingRight,collidingUp, hasMoved;
         collidingDown = collidingRight = collidingLeft = collidingUp =
         hasMoved = false;
@@ -107,7 +167,8 @@ void PhysicEngine::update(double dt)
             hasMoved = true;
         }
 
-        if(m_rigidBody[i].isMovingLeft() && (colliderAssociated == nullptr || !collidingLeft))
+        if(m_rigidBody[i].isMovingLeft() && (colliderAssociated == nullptr ||
+                !collidingLeft))
         {
             m_rigidBody[i].goOnLeft(dt,collidingDown);
             hasMoved = true;
@@ -124,40 +185,52 @@ void PhysicEngine::update(double dt)
             colliderAssociated->moveRigidBody(&m_rigidBody[i]);
         }
 
-        if(isCollidingDown(colliderAssociated,&intersection,m_rigidBody[i]
-                .getVelocity()) && hasMoved) {
+
+        if (isCollidingDown(colliderAssociated, &intersection,
+                            m_rigidBody[i]
+                                    .getVelocity()) && hasMoved)
+        {
             m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                m_rigidBody[i].getPosition().y-intersection);
+                                m_rigidBody[i].getPosition().y -
+                                intersection);
             if (colliderAssociated != nullptr)
             {
-                colliderAssociated->move(colliderAssociated->getPosition().x,
-                                         colliderAssociated->getPosition()
-                                                 .y - intersection);
+                colliderAssociated->move(
+                        colliderAssociated->getPosition().x,
+                        colliderAssociated->getPosition()
+                                .y - intersection);
             }
         }
 
-        if(isCollidingLeft(colliderAssociated,&intersection,m_rigidBody[i]
-                .getVelocity()) && hasMoved) {
-            m_rigidBody[i].move(m_rigidBody[i].getPosition().x+intersection,
-                                m_rigidBody[i].getPosition().y);
+        if (isCollidingLeft(colliderAssociated, &intersection,
+                            m_rigidBody[i]
+                                    .getVelocity()) && hasMoved)
+        {
+            m_rigidBody[i].move(
+                    m_rigidBody[i].getPosition().x + intersection,
+                    m_rigidBody[i].getPosition().y);
             if (colliderAssociated != nullptr)
             {
                 colliderAssociated->move(colliderAssociated->getPosition()
-                                                 .x+intersection,
+                                                 .x + intersection,
                                          colliderAssociated->getPosition().y);
             }
         }
-        if(isCollidingRight(colliderAssociated,&intersection,m_rigidBody[i]
-                .getVelocity()) && hasMoved) {
-            m_rigidBody[i].move(m_rigidBody[i].getPosition().x-intersection,
-                                m_rigidBody[i].getPosition().y);
+        if (isCollidingRight(colliderAssociated, &intersection,
+                             m_rigidBody[i]
+                                     .getVelocity()) && hasMoved)
+        {
+            m_rigidBody[i].move(
+                    m_rigidBody[i].getPosition().x - intersection,
+                    m_rigidBody[i].getPosition().y);
             if (colliderAssociated != nullptr)
             {
                 colliderAssociated->move(colliderAssociated->getPosition()
-                                                 .x-intersection,
+                                                 .x - intersection,
                                          colliderAssociated->getPosition().y);
             }
         }
+        */
     }
 }
 
@@ -327,18 +400,63 @@ Collider* PhysicEngine::getColliderAssociated(RigidBody* rigidBody)
     return nullptr;
 }
 
-/*PhysicTrigger *PhysicEngine::getPhysicTrigger()
+std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
 {
-    for(unsigned int i = 0; i < m_colliders.size(); ++i)
+    std::vector<Collision> collisions;
+
+    sf::Vector2f pos = collider->getPosition();
+    sf::Vector2f dimension = collider->getDimension();
+    sf::Vector2f pointBottomLeft = sf::Vector2f(pos.x-1.0f,pos.y+dimension.y);
+    sf::Vector2f pointTopLeft = sf::Vector2f(pos.x-1.0f,pos.y);
+    sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x+1.0f,pos.y);
+    sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x+1.0f,pos.y+dimension.y);
+
+    float intersection;
+    for(unsigned i = 0; i < m_colliders.size(); ++i)
     {
-        if(m_colliders[i].isFree())
+        if(m_colliders[i].isFree() || !m_colliders[i].isReady())
+            continue;
+
+        if(m_colliders[i].getId() == collider->getId())
+            continue;
+
+        // Collide left
+        if(m_colliders[i].getHitBox().contains(pointBottomLeft)
+           || m_colliders[i].getHitBox().contains(pointTopLeft))
         {
-            m_colliders[i].setUsed();
-            m_colliders[i].setId(i);
-            return &(PhysicTrigger)m_colliders[i];
+            intersection = m_colliders[i].getPosition().x + dimension.x - pos.x;
+            collisions.push_back(Collision(Collision::LEFT,&m_colliders[i],
+                                           intersection));
+        }
+
+        // Collide right
+        if(m_colliders[i].getHitBox().contains(pointBottomRight)
+           || m_colliders[i].getHitBox().contains(pointTopRight))
+        {
+            intersection = m_colliders[i].getPosition().x - pos.x;
+            collisions.push_back(Collision(Collision::RIGHT,&m_colliders[i],
+                                           intersection));
+        }
+
+        // Collide top
+        if(m_colliders[i].getHitBox().contains(pointTopRight)
+           || m_colliders[i].getHitBox().contains(pointTopLeft))
+        {
+            intersection = m_colliders[i].getPosition().y+dimension.y - pos.y;
+            collisions.push_back(Collision(Collision::UP,&m_colliders[i],
+                                           intersection));
+        }
+
+        // Collide bottom
+        if(m_colliders[i].getHitBox().contains(pointBottomLeft)
+           || m_colliders[i].getHitBox().contains(pointBottomRight))
+        {
+            intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
+            collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],
+                                           intersection));
         }
     }
-    return nullptr;
+
+    return collisions;
 
 }
-*/

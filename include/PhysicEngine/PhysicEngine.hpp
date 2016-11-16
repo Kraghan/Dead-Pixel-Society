@@ -11,7 +11,7 @@
 #include "Collider.hpp"
 #include "RigidBody.hpp"
 #include "ColliderRigidBodyBinding.hpp"
-#include "PhysicTrigger.hpp"
+#include "Collision.hpp"
 
 class PhysicEngine : public Updatable{
 public:
@@ -28,8 +28,6 @@ public:
     virtual void update(double dt);
 
     Collider* getCollider();
-
-   //PhysicTrigger* getPhysicTrigger();
 
     RigidBody* getRigidBody();
 
@@ -49,6 +47,8 @@ public:
                                                        Collider* collider);
 
     Collider* getColliderAssociated(RigidBody* rigidBody);
+
+    std::vector<Collision> collideWith(Collider* collider);
 private:
 
     ResourceManager* m_ressourceManager;

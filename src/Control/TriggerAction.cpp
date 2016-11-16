@@ -6,5 +6,5 @@
 
 TriggerAction::TriggerAction()
 {
-
+    // none
 }
