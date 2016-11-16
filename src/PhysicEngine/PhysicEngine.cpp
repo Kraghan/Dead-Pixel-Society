@@ -37,7 +37,7 @@ void PhysicEngine::init(ResourceManager* manager, unsigned int count_colliders,
                         unsigned int count_rigidBodies, unsigned int
                         count_rigidBodiesWithColliders, float gravity)
 {
-    m_debugMode = true;
+    m_debugMode = false;
     m_drawn = false;
     m_ressourceManager = manager;
     m_colliders.reserve(count_colliders);
@@ -494,7 +494,8 @@ void PhysicEngine::debugDraw()
 
             ConvexShape* c = m_ressourceManager->getConvexShape();
             c->setLayer(9);
-            c->setFillColor(sf::Color::Cyan);
+            c->setWireColor(sf::Color::Cyan);
+            c->setFillColor(sf::Color::Blue);
             c->setPointCount(4);
             c->setPoint(0,m_colliders[i].getPosition());
 

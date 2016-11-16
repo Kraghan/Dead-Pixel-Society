@@ -61,7 +61,7 @@ void GameEngine::gameLoop()
     double lag = 0.0;
     double previous = clock.getElapsedTime().asSeconds();
 
-    ConvexShape * shape = m_resourceManager.getConvexShape();
+    /*ConvexShape * shape = m_resourceManager.getConvexShape();
     shape->setPointCount(4);
     shape->setFillColor(sf::Color::Blue);
     shape->setPosition(100, 100);
@@ -80,7 +80,7 @@ void GameEngine::gameLoop()
     shape2->setPoint(1, sf::Vector2f(100, 0));
     shape2->setPoint(2, sf::Vector2f(100, 100));
     shape2->setPoint(3, sf::Vector2f(0, 100));
-    shape2->setPoint(4, sf::Vector2f(-50, 50));
+    shape2->setPoint(4, sf::Vector2f(-50, 50));*/
 
     while(m_isRunning)
     {
