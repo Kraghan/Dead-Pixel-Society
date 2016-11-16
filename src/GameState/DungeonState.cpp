@@ -16,10 +16,10 @@ void DungeonState::init(StateMachine  * stateMachine,
     Collider* floorCollider = resourceManager->getCollider();
     floorCollider->init(0,11,20,1,64);
 
-    Collider* leftCollider = resourceManager->getCollider();
-    leftCollider->init(0,0,1,20,64);
-    Collider* rightCollider = resourceManager->getCollider();
-    rightCollider->init(19,0,1,11,64);
+    // Collider* leftCollider = resourceManager->getCollider();
+    // leftCollider->init(0,0,1,20,64);
+    // Collider* rightCollider = resourceManager->getCollider();
+    // rightCollider->init(19,0,1,11,64);
 
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
@@ -84,6 +84,39 @@ void DungeonState::init(StateMachine  * stateMachine,
     }
     // Mouse button actions
     EventProcessed::Instance()->init();
+
+    // TMP
+    // Buffering player
+    Player * player = Player::Instance();
+
+    // Buffering collider
+    Collider * collider = player->getCollider();
+
+    if(collider != nullptr)
+    {
+        if(collider->getPosition().x > 1270)
+        {
+            if(!m_dungeon->nextBlock())
+            {
+                std::cout << "The dungeon is over (end)!" << std::endl;
+                m_stateMachine->popState();
+            }
+
+            player->getRigidbody()->move(0.0f, player->getRigidbody()->getPosition().y);
+            collider->move(0.0f, collider->getPosition().y);
+        }
+        else if(collider->getPosition().x < -5)
+        {
+            if(!m_dungeon->previousBlock())
+            {
+                std::cout << "The dungeon is over (begin)!" << std::endl;
+                m_stateMachine->popState();
+            }
+
+            player->getRigidbody()->move(1269.0f, player->getRigidbody()->getPosition().y);
+            collider->move(1269.0f, collider->getPosition().y);
+        }
+    }
 }
 
 bool DungeonState::onEnter()
