@@ -518,18 +518,18 @@ void PhysicEngine::debugDraw()
 
 unsigned int PhysicEngine::getColliderCount()
 {
-    return m_colliders.size();
+    return (uint32_t)m_colliders.size();
 }
 
 unsigned int PhysicEngine::getRigidBodyCount() {
-    return m_rigidBody.size();
+    return (uint32_t)m_rigidBody.size();
 }
 
 unsigned int PhysicEngine::getBindingCount() {
-    return m_rigidBodiesWithColliders.size();
+    return (uint32_t)m_rigidBodiesWithColliders.size();
 }
 
-std::vector<Collider*>& PhysicEngine::getAllColliders()
+std::vector<Collider>& PhysicEngine::getAllColliders()
 {
     return m_colliders;
 }

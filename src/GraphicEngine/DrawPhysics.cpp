@@ -4,6 +4,7 @@
 
 #include <Tool/Patch.hpp>
 #include "GraphicEngine/DrawPhysics.hpp"
+#include "PhysicEngine/PhysicEngine.hpp"
 
 DrawPhysics::DrawPhysics()
 : m_panel(nullptr)

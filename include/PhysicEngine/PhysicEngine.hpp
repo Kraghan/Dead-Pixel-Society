@@ -58,7 +58,7 @@ public:
 
     unsigned int getBindingCount();
 
-    std::vector<Collider>& getAllColliders();
+    std::vector<Collider> & getAllColliders();
 
 
 private:
