@@ -108,19 +108,20 @@ void GameEngine::processInput()
         }
         if(event.type == sf::Event::KeyReleased)
         {
+            std::cout << event.key.code << std::endl;
             switch((int)event.key.code)
             {
                 case 51 : m_graphicEngine.toggleWireframe(); continue;
-                case 85 : m_graphicEngine.toggleWireframe(0); continue;
-                case 86 : m_graphicEngine.toggleWireframe(1); continue;
-                case 87 : m_graphicEngine.toggleWireframe(2); continue;
-                case 88 : m_graphicEngine.toggleWireframe(3); continue;
-                case 89 : m_graphicEngine.toggleWireframe(4); continue;
-                case 90 : m_graphicEngine.toggleWireframe(5); continue;
-                case 91 : m_graphicEngine.toggleWireframe(6); continue;
-                case 92 : m_graphicEngine.toggleWireframe(7); continue;
-                case 93 : m_graphicEngine.toggleWireframe(8); continue;
-                case 94 : m_graphicEngine.toggleWireframe(9); continue;
+                case 26 : m_graphicEngine.toggleWireframe(0); continue;
+                case 27 : m_graphicEngine.toggleWireframe(1); continue;
+                case 28 : m_graphicEngine.toggleWireframe(2); continue;
+                case 29 : m_graphicEngine.toggleWireframe(3); continue;
+                case 30 : m_graphicEngine.toggleWireframe(4); continue;
+                case 31 : m_graphicEngine.toggleWireframe(5); continue;
+                case 32 : m_graphicEngine.toggleWireframe(6); continue;
+                case 33 : m_graphicEngine.toggleWireframe(7); continue;
+                case 34 : m_graphicEngine.toggleWireframe(8); continue;
+                case 35 : m_graphicEngine.toggleWireframe(9); continue;
                 default: continue;
             }
         }

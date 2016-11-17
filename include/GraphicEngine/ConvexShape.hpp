@@ -23,6 +23,11 @@ public:
     void setPoint(std::size_t index, const sf::Vector2f& point);
     virtual sf::Vector2f getPoint(std::size_t index) const;
 
+    /*!
+   * \brief   Get the sprite back to the engine
+   */
+    static void release(ConvexShape *& shape);
+
 private:
 
     std::vector<sf::Vector2f> m_points;

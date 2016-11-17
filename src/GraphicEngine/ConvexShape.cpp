@@ -27,3 +27,17 @@ sf::Vector2f ConvexShape::getPoint(std::size_t index) const
 {
     return m_points[index];
 }
+
+void ConvexShape::release(ConvexShape *& shape)
+{
+    // There is no points to try to
+    // release a null pointer
+    if(shape == nullptr) return;
+
+    // The game doesn't own this
+    // sprite anymore
+    shape->setAvailable(true);
+
+    // Setting the pointer to nullptr
+    shape = nullptr;
+}
