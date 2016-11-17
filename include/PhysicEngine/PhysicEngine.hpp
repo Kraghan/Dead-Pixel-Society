@@ -50,8 +50,6 @@ public:
 
     std::vector<Collision> collideWith(Collider* collider);
 
-    void debugMode(bool activate);
-
     unsigned int getColliderCount();
 
     unsigned int getRigidBodyCount();
@@ -73,10 +71,5 @@ private:
 
     std::vector<ColliderRigidBodyBinding> m_rigidBodiesWithColliders;
 
-    bool m_debugMode;
-
-    bool m_drawn;
-
-    void debugDraw();
 };
 #endif //PROJECT_PHYSICENGINE_HPP

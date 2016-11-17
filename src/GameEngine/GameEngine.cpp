@@ -108,10 +108,8 @@ void GameEngine::processInput()
         }
         if(event.type == sf::Event::KeyReleased)
         {
-            std::cout << event.key.code << std::endl;
             switch((int)event.key.code)
             {
-                case 51 : m_graphicEngine.toggleWireframe(); continue;
                 case 26 : m_graphicEngine.toggleWireframe(0); continue;
                 case 27 : m_graphicEngine.toggleWireframe(1); continue;
                 case 28 : m_graphicEngine.toggleWireframe(2); continue;
@@ -122,7 +120,8 @@ void GameEngine::processInput()
                 case 33 : m_graphicEngine.toggleWireframe(7); continue;
                 case 34 : m_graphicEngine.toggleWireframe(8); continue;
                 case 35 : m_graphicEngine.toggleWireframe(9); continue;
-                default: continue;
+                case 53 : DrawPhysics::toggleDrawPhysics(); continue;
+                default: break;
             }
         }
         m_eventConverter.processEvent(event, &m_controlMap);

@@ -37,8 +37,6 @@ void PhysicEngine::init(ResourceManager* manager, unsigned int count_colliders,
                         unsigned int count_rigidBodies, unsigned int
                         count_rigidBodiesWithColliders, float gravity)
 {
-    m_debugMode = true;
-    m_drawn = false;
     m_ressourceManager = manager;
     m_colliders.reserve(count_colliders);
     for(unsigned int i = 0; i < m_colliders.capacity(); ++i)
@@ -247,8 +245,6 @@ void PhysicEngine::update(double dt)
         }
         */
     }
-    if(m_debugMode)
-        debugDraw();
 }
 
 bool PhysicEngine::isCollidingDown(Collider* collider, float*
@@ -475,44 +471,6 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
     }
 
     return collisions;
-
-}
-
-void PhysicEngine::debugMode(bool activate)
-{
-    m_debugMode = activate;
-}
-
-void PhysicEngine::debugDraw()
-{
-    if(!m_drawn)
-    {
-        for(unsigned int i = 0; i < m_colliders.size(); ++i)
-        {
-            if(m_colliders[i].isFree() || !m_colliders[i].isReady())
-                continue;
-
-            ConvexShape* c = m_ressourceManager->getConvexShape();
-            c->setLayer(9);
-            c->setWireColor(sf::Color::Cyan);
-            c->setFillColor(sf::Color::Blue);
-            c->setPointCount(4);
-            c->setPoint(0,m_colliders[i].getPosition());
-
-            c->setPoint(1,sf::Vector2f(m_colliders[i].getPosition().x
-                                       +m_colliders[i].getDimension().x,
-                                       m_colliders[i].getPosition().y));
-
-            c->setPoint(2,m_colliders[i].getPosition()+m_colliders[i]
-                    .getDimension());
-
-            c->setPoint(3,sf::Vector2f(m_colliders[i].getPosition().x,
-                                       m_colliders[i].getPosition().y
-                                       +m_colliders[i].getDimension().y));
-        }
-
-        m_drawn = true;
-    }
 
 }
 

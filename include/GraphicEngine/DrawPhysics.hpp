@@ -46,6 +46,9 @@ public:
      */
     double m_update;
 
+    static void toggleDrawPhysics();
+
+    static bool m_active;
 private:
 
     bool m_drawn;
@@ -53,6 +56,7 @@ private:
     ResourceManager * m_resourceManager;
     PhysicEngine* m_physicEngine;
     std::vector < sf::Text > m_information;
+    std::vector < ConvexShape* > m_shapes;
 
     uint32_t m_colliderCount;
     uint32_t m_rigidBodyCount;
