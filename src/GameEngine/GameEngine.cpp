@@ -108,8 +108,7 @@ void GameEngine::processInput()
         }
         if(event.type == sf::Event::KeyReleased)
         {
-            std::cout << event.key.code << std::endl;
-            switch((int)event.key.code)
+            if (event.key.code == 85)
             {
                 case 51 : m_graphicEngine.toggleWireframe(); continue;
                 case 85 : m_graphicEngine.toggleWireframe(0); continue;

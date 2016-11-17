@@ -8,6 +8,7 @@
 DrawPhysics::DrawPhysics()
 : m_panel(nullptr)
 , m_resourceManager(nullptr)
+, m_physicEngine(nullptr)
 {
     // None
 }
@@ -20,6 +21,7 @@ DrawPhysics::~DrawPhysics()
 void DrawPhysics::init(ResourceManager * resourceManager)
 {
     m_resourceManager = resourceManager;
+    m_physicEngine = m_resourceManager->getPhysicEngine();
     m_panel = m_resourceManager->getSprite();
 
     m_colliderCount = resourceManager->getTotalCollider();
@@ -88,6 +90,38 @@ void DrawPhysics::draw(sf::RenderWindow * window)
     {
         // Draw all the information text
         window->draw(m_information[index]);
+    }
+
+    std::vector<Collider> colliders = m_physicEngine->getAllColliders();
+
+    if(!m_drawn)
+    {
+        for(unsigned int i = 0; i < colliders.size();
+            ++i)
+        {
+            if(colliders[i].isFree() || !colliders[i].isReady())
+                continue;
+
+            ConvexShape* c = m_resourceManager->getConvexShape();
+            c->setLayer(9);
+            c->setWireColor(sf::Color::Cyan);
+            c->setFillColor(sf::Color::Blue);
+            c->setPointCount(4);
+            c->setPoint(0,colliders[i].getPosition());
+
+            c->setPoint(1,sf::Vector2f(colliders[i].getPosition().x
+                                       +colliders[i].getDimension().x,
+                                       colliders[i].getPosition().y));
+
+            c->setPoint(2,colliders[i].getPosition()+colliders[i]
+                    .getDimension());
+
+            c->setPoint(3,sf::Vector2f(colliders[i].getPosition().x,
+                                       colliders[i].getPosition().y
+                                       +colliders[i].getDimension().y));
+        }
+
+        m_drawn = true;
     }
 }
 

@@ -48,8 +48,10 @@ public:
 
 private:
 
+    bool m_drawn;
     Sprite * m_panel;
     ResourceManager * m_resourceManager;
+    PhysicEngine* m_physicEngine;
     std::vector < sf::Text > m_information;
 
     uint32_t m_colliderCount;

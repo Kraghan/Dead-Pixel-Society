@@ -57,6 +57,10 @@ public:
     unsigned int getRigidBodyCount();
 
     unsigned int getBindingCount();
+
+    std::vector<Collider>& getAllColliders();
+
+
 private:
 
     ResourceManager* m_ressourceManager;
