@@ -124,6 +124,15 @@ public:
     }
 
     /*!
+    * \brief    Return the wireframe state
+    * \return   The wireframe state
+    */
+    inline bool getWireframe()
+    {
+        return m_wireframe;
+    }
+
+    /*!
      * \brief   Return the layer primitive
      */
     inline sf::PrimitiveType getPrimitive() const

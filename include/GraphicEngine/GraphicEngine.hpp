@@ -91,6 +91,12 @@ public:
     void toggleWireframe();
 
     /*!
+     * \brief   Invert the wireframe mode for a layer
+     * \param   layer The layer id to set the wireframe mode
+     */
+    void toggleWireframe(uint32_t layer);
+
+    /*!
      * \brief   Set the framerate of the engine
      * \param   framerate The target framerate
      */

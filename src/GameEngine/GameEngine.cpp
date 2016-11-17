@@ -61,27 +61,6 @@ void GameEngine::gameLoop()
     double lag = 0.0;
     double previous = clock.getElapsedTime().asSeconds();
 
-    /*ConvexShape * shape = m_resourceManager.getConvexShape();
-    shape->setPointCount(4);
-    shape->setFillColor(sf::Color::Blue);
-    shape->setPosition(100, 100);
-    shape->setLayer(9);
-    shape->setPoint(0, sf::Vector2f(0, 0));
-    shape->setPoint(1, sf::Vector2f(100, 0));
-    shape->setPoint(2, sf::Vector2f(100, 100));
-    shape->setPoint(3, sf::Vector2f(0, 100));
-
-    ConvexShape * shape2 = m_resourceManager.getConvexShape();
-    shape2->setPointCount(5);
-    shape2->setFillColor(sf::Color::Black);
-    shape2->setPosition(500, 400);
-    shape2->setLayer(9);
-    shape2->setPoint(0, sf::Vector2f(0, 0));
-    shape2->setPoint(1, sf::Vector2f(100, 0));
-    shape2->setPoint(2, sf::Vector2f(100, 100));
-    shape2->setPoint(3, sf::Vector2f(0, 100));
-    shape2->setPoint(4, sf::Vector2f(-50, 50));*/
-
     while(m_isRunning)
     {
         double current = clock.getElapsedTime().asSeconds();
@@ -112,7 +91,6 @@ void GameEngine::update()
     // Updating the game
     m_physicEngine.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
     m_game.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
-    Player::Instance()->update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()
@@ -130,14 +108,22 @@ void GameEngine::processInput()
         }
         if(event.type == sf::Event::KeyReleased)
         {
-            if (event.key.code == 85)
+            std::cout << event.key.code << std::endl;
+            switch((int)event.key.code)
             {
-                m_graphicEngine.toggleWireframe();
-                continue;
+                case 51 : m_graphicEngine.toggleWireframe(); continue;
+                case 85 : m_graphicEngine.toggleWireframe(0); continue;
+                case 86 : m_graphicEngine.toggleWireframe(1); continue;
+                case 87 : m_graphicEngine.toggleWireframe(2); continue;
+                case 88 : m_graphicEngine.toggleWireframe(3); continue;
+                case 89 : m_graphicEngine.toggleWireframe(4); continue;
+                case 90 : m_graphicEngine.toggleWireframe(5); continue;
+                case 91 : m_graphicEngine.toggleWireframe(6); continue;
+                case 92 : m_graphicEngine.toggleWireframe(7); continue;
+                case 93 : m_graphicEngine.toggleWireframe(8); continue;
+                case 94 : m_graphicEngine.toggleWireframe(9); continue;
+                default: continue;
             }
-            //if (event.key.code == 86)
-
-
         }
         m_eventConverter.processEvent(event, &m_controlMap);
     }

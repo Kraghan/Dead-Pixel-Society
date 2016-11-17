@@ -32,4 +32,5 @@ void Game::update(double dt)
 {
     // Updating the game
     m_stateMachine.update(dt);
+    Player::Instance()->update(dt);
 }

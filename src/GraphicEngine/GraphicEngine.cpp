@@ -301,3 +301,9 @@ void GraphicEngine::toggleWireframe()
     }
 }
 
+void GraphicEngine::toggleWireframe(uint32_t layer)
+{
+    if(layer >= m_layerCount) return;
+    m_layers[layer].setWireframe(!m_layers[layer].getWireframe());
+}
+
