@@ -77,16 +77,16 @@ void PhysicEngine::update(double dt)
 
             bool hasCollideDown = false, hasCollideLeft = false,
                     hasCollideRight = false;
+
             for(unsigned int j = 0; j < collisions.size(); ++j)
             {
                 if(collisions[j].getCollisionSide() == Collision::DOWN)
                 {
                     // Move collider
                     colliderAssociated->move(colliderAssociated->getPosition().x,
-                                             colliderAssociated->getPosition().y+collisions[j].getDeep());
-                    // Move rigid body
-                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                        m_rigidBody[i].getPosition().y+collisions[j].getDeep());
+                                             colliderAssociated->getPosition().y
+                                             + collisions[j].getDeep());
+
                     // Stop falling
                     m_rigidBody[i].setFalling(false);
                     m_rigidBody[i].stopMovementY();
@@ -95,28 +95,29 @@ void PhysicEngine::update(double dt)
 
                 if(collisions[j].getCollisionSide() == Collision::LEFT)
                 {
-                    //std::cout<< collisions[j].getDeep() <<std::endl;
                     colliderAssociated->move(colliderAssociated->getPosition().x,
                                              colliderAssociated->getPosition().y);
-                    // Move rigid body
-                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                        m_rigidBody[i].getPosition().y);
                     // Stop moving
-                    //m_rigidBody[i].stopMovementX();
-                    //hasCollideLeft = true;
+                    hasCollideLeft = true;
                 }
 
                 if(collisions[j].getCollisionSide() == Collision::RIGHT)
                 {
-                    //std::cout<< collisions[j].getDeep() <<std::endl;
                     colliderAssociated->move(colliderAssociated->getPosition().x,
                                              colliderAssociated->getPosition().y);
+                    // Stop moving
+                    hasCollideRight = true;
+                }
+            }
+
+            for(unsigned int j = 0; j < collisions.size(); ++j)
+            {
+                if(collisions[j].getCollisionSide() == Collision::DOWN
+                    && !hasCollideLeft && !hasCollideRight)
+                {
                     // Move rigid body
                     m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                        m_rigidBody[i].getPosition().y);
-                    // Stop moving
-                    //m_rigidBody[i].stopMovementX();
-                    //hasCollideRight = true;
+                                        m_rigidBody[i].getPosition().y+collisions[j].getDeep());
                 }
             }
 
@@ -424,7 +425,8 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
     sf::Vector2f pointTopRight = sf::Vector2f(pos.x+dimension.x,pos.y);
     sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x,pos.y+dimension.y);
 
-    float intersection;
+    float intersection, intersectionMax = 0.0f;
+    bool hasCollideTop = false, hasCollideBottom = false;
     for(unsigned i = 0; i < m_colliders.size(); ++i)
     {
         if(m_colliders[i].isFree() || !m_colliders[i].isReady())
@@ -433,24 +435,6 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
         if(m_colliders[i].getId() == collider->getId())
             continue;
 
-        // Collide left
-        if(m_colliders[i].getHitBox().contains(pointBottomLeft)
-           || m_colliders[i].getHitBox().contains(pointTopLeft))
-        {
-            intersection = m_colliders[i].getPosition().x + dimension.x - pos.x;
-            collisions.push_back(Collision(Collision::LEFT,&m_colliders[i],
-                                           intersection));
-        }
-
-        // Collide right
-        if(m_colliders[i].getHitBox().contains(pointBottomRight)
-           || m_colliders[i].getHitBox().contains(pointTopRight))
-        {
-            intersection = m_colliders[i].getPosition().x - pos.x;
-            collisions.push_back(Collision(Collision::RIGHT,&m_colliders[i],
-                                           intersection));
-        }
-
         // Collide top
         if(m_colliders[i].getHitBox().contains(pointTopRight)
            || m_colliders[i].getHitBox().contains(pointTopLeft))
@@ -458,6 +442,12 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
             intersection = m_colliders[i].getPosition().y+dimension.y - pos.y;
             collisions.push_back(Collision(Collision::UP,&m_colliders[i],
                                            intersection));
+
+            if(fabsf(intersection) > intersectionMax)
+            {
+                intersectionMax = intersection;
+            }
+            hasCollideTop = true;
         }
 
         // Collide bottom
@@ -467,9 +457,66 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
             intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
             collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],
                                            intersection));
+            if(fabsf(intersection) > fabsf(intersectionMax))
+            {
+                intersectionMax = intersection;
+            }
+            hasCollideBottom = true;
         }
     }
 
+    std::cout<< intersectionMax <<std::endl;
+
+    if(hasCollideBottom)
+    {
+        pointBottomLeft = sf::Vector2f(pos.x,
+                                       pos.y + dimension.y + intersectionMax
+                                       - 1.0f);
+        pointTopLeft = sf::Vector2f(pos.x, pos.y + intersectionMax - 1.0f);
+        pointTopRight = sf::Vector2f(pos.x + dimension.x,
+                                     pos.y + intersectionMax - 1.0f);
+        pointBottomRight = sf::Vector2f(pos.x + dimension.x,
+                                        pos.y + dimension.y + intersectionMax
+                                        - 1.0f);
+    }
+    else if(hasCollideTop)
+    {
+        pointBottomLeft = sf::Vector2f(pos.x,
+                                       pos.y + dimension.y + intersectionMax
+                                       + 1.0f);
+        pointTopLeft = sf::Vector2f(pos.x, pos.y + intersectionMax + 1.0f);
+        pointTopRight = sf::Vector2f(pos.x + dimension.x,
+                                     pos.y + intersectionMax + 1.0f);
+        pointBottomRight = sf::Vector2f(pos.x + dimension.x,
+                                        pos.y + dimension.y + intersectionMax
+                                        + 1.0f);
+    }
+
+    for(unsigned i = 0; i < m_colliders.size(); ++i)
+    {
+        if(m_colliders[i].isFree() || !m_colliders[i].isReady())
+            continue;
+
+        if(m_colliders[i].getId() == collider->getId())
+            continue;
+
+        // Collide left
+        if (m_colliders[i].getHitBox().contains(pointBottomLeft)
+            || m_colliders[i].getHitBox().contains(pointTopLeft)) {
+            intersection = m_colliders[i].getPosition().x + dimension.x -
+                    pos.x;
+            collisions.push_back(Collision(Collision::LEFT, &m_colliders[i],
+                                           intersection));
+        }
+
+        // Collide right
+        if (m_colliders[i].getHitBox().contains(pointBottomRight)
+            || m_colliders[i].getHitBox().contains(pointTopRight)) {
+            intersection = m_colliders[i].getPosition().x - pos.x;
+            collisions.push_back(Collision(Collision::RIGHT, &m_colliders[i],
+                                           intersection));
+        }
+    }
     return collisions;
 
 }
