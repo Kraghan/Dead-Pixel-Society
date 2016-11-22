@@ -26,3 +26,8 @@ Collision::Collision(Collision::CollisionSide side, Collider *collider,
     m_collisionSide = side;
     m_deep = deep;
 }
+
+void Collision::setDeep(float deep)
+{
+    m_deep = deep;
+}

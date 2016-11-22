@@ -23,6 +23,7 @@ public:
     Collider* getCollider();
     CollisionSide getCollisionSide();
     float getDeep();
+    void setDeep(float deep);
 private:
     Collider* m_collider;
     CollisionSide m_collisionSide;
