@@ -13,14 +13,11 @@ private:
 
     ResourceManager *m_resourceManager;
 
-    Sprite *m_s[20][11];
-
-    const int m_lengh = 200;
-    const int m_height = 110;
-    int m_tab[200][110];
+    Sprite *m_background;
 
 public:
-    WorldMap(ResourceManager *m);
+    WorldMap();
+    void init(ResourceManager *m);
     ~WorldMap();
 };
 

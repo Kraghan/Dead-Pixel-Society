@@ -26,8 +26,8 @@ void ResourceLoader::init()
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "BG_FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "DebugPanel", "DEBUG_PANEL"));
-    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "BackgroundForet",
-                                   "BACKGROUND_FOREST"));
+    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "BackgroundForet", "BACKGROUND_FOREST"));
+    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "WorldMap", "WORLDMAP"));
 
     // Loading theme
     m_resources.push_back(Resource(Resource::TYPE::THEME,

@@ -12,6 +12,7 @@ void WorldMapState::init(StateMachine  * stateMachine,
 {
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;
+    m_worldMap.init(m_resourceManager);
 }
 
 /* virtual */ WorldMapState::~WorldMapState()
@@ -28,7 +29,7 @@ bool WorldMapState::onEnter()
 {
     // Pushing directly the next state
     // (Until we have the complete world map)
-    m_stateMachine->pushState(DungeonState::Instance());
+    //m_stateMachine->pushState(DungeonState::Instance());
 
     return true;
 }

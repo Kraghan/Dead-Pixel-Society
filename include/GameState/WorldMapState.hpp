@@ -17,6 +17,9 @@
 #include "StateMachine/StateMachine.hpp"
 #include "GameState/DungeonState.hpp"
 
+/// Include world map
+#include "WorldMap/WorldMap.hpp"
+
 class WorldMapState : public GameState, public Singleton < WorldMapState >
 {
 public:
@@ -60,7 +63,7 @@ private:
 
     StateMachine * m_stateMachine;
     ResourceManager * m_resourceManager;
-    // Worldmap m_map;
+    WorldMap m_worldMap;
 };
 
 #endif // __WORLD_MAP_STATE_HPP
