@@ -72,66 +72,113 @@ void PhysicEngine::update(double dt)
              hasCollideRight = false;
 
         // Detect collision to set rigid body movement
-        if(colliderAssociated != nullptr)
+        if(colliderAssociated != nullptr )
         {
-            colliderAssociated->moveRigidBody(&m_rigidBody[i]);
             std::vector<Collision> collisions = collideWith(colliderAssociated);
-            //std::cout << "Test : " << std::endl;
-
-            for(unsigned int j = 0; j < collisions.size(); ++j)
+            if(colliderAssociated->getTriggerAction() == nullptr)
             {
-                if(collisions[j].getCollisionSide() == Collision::DOWN)
-                {
-                    hasCollideDown = true;
-                }
+                colliderAssociated->moveRigidBody(&m_rigidBody[i]);
 
-                if(collisions[j].getCollisionSide() == Collision::LEFT)
+                for (unsigned int j = 0; j < collisions.size(); ++j)
                 {
-                    //std::cout << "LEFT : " << collisions[j].getDeep() << std::endl;
-                    // Move collider
-                    colliderAssociated->move(colliderAssociated->getPosition().x
-                                             + collisions[j].getDeep(),
-                                             colliderAssociated->getPosition().y);
-                    // Move RigidBody
-                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x
-                                        + collisions[j].getDeep(),
-                                        m_rigidBody[i].getPosition().y);
-                    // Stop moving
-                    hasCollideLeft = true;
-                }
+                    if (collisions[j].getCollisionSide() == Collision::DOWN)
+                    {
+                        hasCollideDown = true;
+                    }
 
-                if(collisions[j].getCollisionSide() == Collision::RIGHT)
-                {
-                    //std::cout << "RIGHT : " << collisions[j].getDeep() << std::endl;
-                    // Move collider
-                    colliderAssociated->move(colliderAssociated->getPosition().x
-                                             + collisions[j].getDeep(),
-                                             colliderAssociated->getPosition().y);
-                    // Move RigidBody
-                    m_rigidBody[i].move(m_rigidBody[i].getPosition().x
-                                        + collisions[j].getDeep(),
-                                        m_rigidBody[i].getPosition().y);
-                    // Stop moving
-                    hasCollideRight = true;
-                }
-            }
-
-            if(!hasCollideLeft && !hasCollideRight)
-            {
-                for (unsigned int j = 0; j < collisions.size(); ++j) {
-                    if (collisions[j].getCollisionSide() == Collision::DOWN) {
+                    if (collisions[j].getCollisionSide() == Collision::LEFT)
+                    {
                         // Move collider
                         colliderAssociated->move(
-                                colliderAssociated->getPosition().x,
-                                colliderAssociated->getPosition().y
-                                + collisions[j].getDeep());
-
+                                colliderAssociated->getPosition().x
+                                + collisions[j].getDeep(),
+                                colliderAssociated->getPosition().y);
                         // Move RigidBody
-                        m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                            m_rigidBody[i].getPosition().y
-                                            + collisions[j].getDeep());
+                        m_rigidBody[i].move(m_rigidBody[i].getPosition().x
+                                            + collisions[j].getDeep(),
+                                            m_rigidBody[i].getPosition().y);
+                        // Stop moving
+                        hasCollideLeft = true;
+                    }
+
+                    if (collisions[j].getCollisionSide() == Collision::RIGHT)
+                    {
+                        // Move collider
+                        colliderAssociated->move(
+                                colliderAssociated->getPosition().x
+                                + collisions[j].getDeep(),
+                                colliderAssociated->getPosition().y);
+                        // Move RigidBody
+                        m_rigidBody[i].move(m_rigidBody[i].getPosition().x
+                                            + collisions[j].getDeep(),
+                                            m_rigidBody[i].getPosition().y);
+                        // Stop moving
+                        hasCollideRight = true;
                     }
                 }
+
+                if (!hasCollideLeft && !hasCollideRight)
+                {
+                    for (unsigned int j = 0; j < collisions.size(); ++j)
+                    {
+                        if (collisions[j].getCollisionSide() == Collision::DOWN)
+                        {
+                            // Move collider
+                            colliderAssociated->move(
+                                    colliderAssociated->getPosition().x,
+                                    colliderAssociated->getPosition().y
+                                    + collisions[j].getDeep());
+
+                            // Move RigidBody
+                            m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
+                                                m_rigidBody[i].getPosition().y
+                                                + collisions[j].getDeep());
+                        }
+                    }
+                }
+            }
+            else
+            {
+                std::vector<Collider *> colliders;
+                for (unsigned int j = 0; j < collisions.size(); ++j)
+                {
+                    colliders.push_back(collisions[j].getCollider());
+                    TriggerAction* triggerAction = collisions[j].getCollider()->getTriggerAction();
+
+                    if(triggerAction != nullptr)
+                    {
+                        /*if(colliderAssociated->isInCollideWith(collisions[j]
+                                                                        .getCollider()))
+                            triggerAction->onTriggerStay(colliderAssociated);
+                        else
+                            triggerAction->onTriggerEnter(colliderAssociated);*/
+                    }
+                }
+
+                for(auto c : colliderAssociated->getCollideWith())
+                {
+                    TriggerAction* triggerAction = c->getTriggerAction();
+
+                    if(triggerAction != nullptr)
+                    {
+                        bool found = false;
+                        for(unsigned int j = 0; j < colliders.size(); ++i)
+                        {
+                            if(colliders[i]->getId() == c->getId())
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(!found)
+                        {
+                            //triggerAction->onTriggerExit();
+                        }
+                    }
+                }
+
+                colliderAssociated->clearCollideWith();
+                colliderAssociated->addCollideWith(colliders);
             }
         }
 
@@ -247,12 +294,10 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
         // Collide top
         if((m_colliders[i].getHitBox().contains(pointTopRight)
            || m_colliders[i].getHitBox().contains(pointTopLeft))
-           && m_colliders[i].getPosition().y + m_colliders[i].getDimension().y
-              >= pos.y)
+           && m_colliders[i].getPosition().y + m_colliders[i].getDimension().y >= pos.y)
         {
             intersection = m_colliders[i].getPosition().y+dimension.y - pos.y;
-            collisions.push_back(Collision(Collision::UP,&m_colliders[i],
-                                           intersection));
+            collisions.push_back(Collision(Collision::UP,&m_colliders[i],intersection));
 
             if(fabsf(intersection) > intersectionMax)
             {
@@ -266,8 +311,7 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
            && (m_colliders[i].getPosition().x < pos.x))
         {
             intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
-            collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],
-                                           intersection));
+            collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],intersection));
             if(fabsf(intersection) > fabsf(intersectionMax))
             {
                 intersectionMax = intersection;

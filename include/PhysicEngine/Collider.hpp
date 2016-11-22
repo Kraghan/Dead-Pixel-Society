@@ -8,6 +8,7 @@
 #include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <unordered_set>
 #include "PhysicObjectBase.hpp"
 #include "RigidBody.hpp"
 
@@ -22,9 +23,15 @@ public:
     static void release(Collider* &collider);
     void setTrigger(TriggerAction* action);
     TriggerAction* getTriggerAction();
+    void addCollideWith(Collider* collider);
+    void addCollideWith(std::vector<Collider*> colliders);
+    bool isInCollideWith(Collider* collider);
+    std::vector<Collider*> getCollideWith();
+    void clearCollideWith();
 
 private:
     TriggerAction* m_triggerAction;
+    std::vector<Collider*> m_collideWith;
 };
 
 

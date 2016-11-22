@@ -8,3 +8,18 @@ TriggerAction::TriggerAction()
 {
     // none
 }
+
+void TriggerAction::onTriggerStay(Collider *collider)
+{
+    // None
+}
+
+void TriggerAction::onTriggerExit(Collider *collider)
+{
+    // None
+}
+
+void TriggerAction::onTriggerEnter(Collider *collider)
+{
+    // None
+}
