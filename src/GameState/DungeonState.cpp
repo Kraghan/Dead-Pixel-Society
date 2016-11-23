@@ -51,11 +51,12 @@ void DungeonState::init(StateMachine  * stateMachine,
         {
             case Actions::LEFT:
             {
-                if (event->isPressed())
+                if (event->isPressed() && Player::Instance()->getState() !=
+                                                  Player::LEFT)
                 {
                     Player::Instance()->setState(Player::LEFT);
                 }
-                else
+                else if(!event->isPressed())
                 {
                     Player::Instance()->setState(Player::IDLE);
                 }
@@ -63,11 +64,12 @@ void DungeonState::init(StateMachine  * stateMachine,
                 break;
             case Actions::RIGHT:
             {
-                if (event->isPressed())
+                if (event->isPressed() && Player::Instance()->getState() !=
+                                          Player::RIGHT)
                 {
                     Player::Instance()->setState(Player::RIGHT);
                 }
-                else
+                else if(!event->isPressed())
                 {
                     Player::Instance()->setState(Player::IDLE);
                 }

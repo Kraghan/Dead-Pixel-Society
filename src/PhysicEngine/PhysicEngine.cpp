@@ -75,7 +75,6 @@ void PhysicEngine::update(double dt)
         if(m_rigidBody[i].isMovingRight())
             m_rigidBody[i].goOnRight(dt);
 
-
         // init
         Collider* colliderAssociated = getColliderAssociated(&m_rigidBody[i]);
         bool hasCollideDown = false, hasCollideLeft = false,
@@ -309,9 +308,9 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
         // Collide bottom
         if((m_colliders[i].getHitBox().contains(pointBottomLeft)
            && m_colliders[i].getPosition().x + m_colliders[i].getDimension().x
-              > pos.x+dimension.x )
+              > pos.x )
            || (m_colliders[i].getHitBox().contains(pointBottomRight)
-           && m_colliders[i].getPosition().x < pos.x))
+           && m_colliders[i].getPosition().x < pos.x + dimension.x))
         {
             intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
             collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],intersection));
