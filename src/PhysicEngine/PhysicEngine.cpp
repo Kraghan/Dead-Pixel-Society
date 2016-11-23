@@ -67,7 +67,7 @@ void PhysicEngine::update(double dt)
         if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
             continue;
 
-        if(m_rigidBody[i].isFalling())
+        if(m_rigidBody[i].isFalling() || m_rigidBody[i].isJumping())
             m_rigidBody[i].applyGravity(dt,m_gravity);
 
         if(m_rigidBody[i].isMovingLeft())
@@ -304,11 +304,11 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
 
         // Collide bottom
         if((m_colliders[i].getHitBox().contains(pointBottomLeft)
-            && m_colliders[i].getPosition().x + m_colliders[i].getDimension()
-                                                                    .x - velocityMax
-               > pos.x)
+            && m_colliders[i].getPosition().x
+               + m_colliders[i].getDimension().x - velocityMax > pos.x)
            || (m_colliders[i].getHitBox().contains(pointBottomRight)
-            && m_colliders[i].getPosition().x + velocityMax < pos.x + dimension.x))
+            && m_colliders[i].getPosition().x
+               + velocityMax < pos.x + dimension.x))
         {
             intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
             collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],intersection));

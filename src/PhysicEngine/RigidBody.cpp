@@ -30,6 +30,10 @@ mass, float acceleration, float velocityMax)
     m_toLeft = false;
     m_toRight = false;
     m_isFalling = false;
+    m_isJumping = false;
+    m_timeInJumpingState = 0.0;
+    m_maxTimeJumpingState = 0.25;
+    m_jumpingForce = 5.0f;
 }
 
 float RigidBody::getMass()
@@ -59,10 +63,22 @@ float RigidBody::getAcceleration()
 
 void RigidBody::applyGravity(double dt, float gravity)
 {
-    m_velocity.y += gravity*dt;
-
+    if(!m_isJumping)
+    {
+        m_velocity.y += gravity * dt;
+    }
+    else
+    {
+        m_velocity.y -= m_jumpingForce*dt;
+        if(m_velocity.y <= -m_jumpingForce)
+        {
+            m_velocity.y = -m_jumpingForce;
+            m_isJumping = false;
+            m_isFalling = true;
+        }
+    }
     sf::Vector2f pos = getPosition();
-    move(pos.x,pos.y+m_velocity.y);
+    move(pos.x, pos.y + m_velocity.y);
 }
 
 void RigidBody::stopMovementX()
@@ -139,11 +155,6 @@ void RigidBody::goOnRight(double dt)
     move(getPosition().x+m_velocity.x,getPosition().y);
 }
 
-void RigidBody::addForce(sf::Vector2f force)
-{
-    m_velocity += force;
-}
-
 void RigidBody::slowDown(double dt)
 {
     if(m_velocity.x > 0.0f)
@@ -168,6 +179,21 @@ void RigidBody::slowDown(double dt)
     }
 }
 
-float RigidBody::getVelocityMax() {
+float RigidBody::getVelocityMax()
+{
     return m_velocityMax;
+}
+
+void RigidBody::startJumping()
+{
+    if(!m_isJumping)
+    {
+        m_isJumping = true;
+        m_timeInJumpingState = 0.0;
+    }
+}
+
+bool RigidBody::isJumping()
+{
+    return m_isJumping;
 }

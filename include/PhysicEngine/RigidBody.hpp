@@ -49,7 +49,9 @@ public:
 
     void goOnRight(double dt);
 
-    void addForce(sf::Vector2f force);
+    void startJumping();
+
+    bool isJumping();
 
     static void release(RigidBody* &rigidBody);
 
@@ -57,9 +59,10 @@ public:
 
     void slowDown(double dt);
 private:
-    float m_mass, m_acceleration,m_velocityMax;
+    float m_mass, m_acceleration,m_velocityMax,m_jumpingForce;
+    double m_timeInJumpingState, m_maxTimeJumpingState;
     sf::Vector2f m_velocity;
-    bool m_toLeft, m_toRight, m_isFalling;
+    bool m_toLeft, m_toRight, m_isFalling, m_isJumping;
 };
 
 

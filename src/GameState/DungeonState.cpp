@@ -77,9 +77,9 @@ void DungeonState::init(StateMachine  * stateMachine,
                 break;
             case Actions::JUMP:
             {
-                if (event->isPressed())
+                if (event->isPressed() && !Player::Instance()->isJumping())
                 {
-
+                    Player::Instance()->jump();
                 }
             }
                 break;

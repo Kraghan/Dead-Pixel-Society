@@ -62,8 +62,12 @@ public:
     Player::PLAYER_STATE getState(void) const;
 
     /**
-     * \brief   Return true while player is in jumping phase
+     * \brief   Start to jump
      */
+     void jump();
+
+    bool isJumping();
+
 
 private:
 

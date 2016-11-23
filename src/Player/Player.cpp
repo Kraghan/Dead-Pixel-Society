@@ -154,3 +154,12 @@ Sprite* Player::getSprite()
     return m_playerSprite;
 }
 
+void Player::jump()
+{
+    m_rigidbody->startJumping();
+}
+
+bool Player::isJumping()
+{
+    return m_rigidbody->isJumping();
+}
