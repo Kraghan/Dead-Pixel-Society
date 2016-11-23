@@ -105,37 +105,37 @@ bool RigidBody::isMovingRight()
     return m_toRight;
 }
 
-void RigidBody::goOnLeft(double dt,bool collidingDown)
+void RigidBody::goOnLeft(double dt)
 {
-    if(collidingDown)
-    {
+    //if(collidingDown)
+    //{
         m_velocity.x -= m_acceleration * dt;
         if (m_velocity.x < -m_velocityMax)
             m_velocity.x = -m_velocityMax;
-    }
+    /*}
     else
     {
         m_velocity.x += 2*m_acceleration*dt;
         if(m_velocity.x > 0)
             m_velocity.x = 0;
-    }
+    }*/
     move(getPosition().x+(m_velocity.x),getPosition().y);
 }
 
-void RigidBody::goOnRight(double dt,bool collidingDown)
+void RigidBody::goOnRight(double dt)
 {
-    if(collidingDown)
-    {
+    //if(collidingDown)
+    //{
         m_velocity.x += m_acceleration*dt;
         if(m_velocity.x > m_velocityMax)
             m_velocity.x = m_velocityMax;
-    }
+    /*}
     else
     {
         m_velocity.x -= 2*m_acceleration*dt;
         if(m_velocity.x < 0)
             m_velocity.x = 0;
-    }
+    }*/
     move(getPosition().x+m_velocity.x,getPosition().y);
 }
 
@@ -146,8 +146,6 @@ void RigidBody::addForce(sf::Vector2f force)
 
 void RigidBody::slowDown(double dt)
 {
-    std::cout << "Before : " << m_velocity.x << std::endl;
-
     if(m_velocity.x > 0.0f)
     {
         m_velocity.x -= m_velocityMax/2*dt;
@@ -156,7 +154,6 @@ void RigidBody::slowDown(double dt)
     {
         m_velocity.x += m_velocityMax/2*dt;
     }
-    std::cout << "After : " << m_velocity.x << std::endl;
 
     float tmp = m_velocity.x;
 

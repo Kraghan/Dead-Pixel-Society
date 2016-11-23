@@ -45,9 +45,9 @@ public:
 
     bool isMovingRight();
 
-    void goOnLeft(double dt,bool collidingDown);
+    void goOnLeft(double dt);
 
-    void goOnRight(double dt,bool collidingDown);
+    void goOnRight(double dt);
 
     void addForce(sf::Vector2f force);
 

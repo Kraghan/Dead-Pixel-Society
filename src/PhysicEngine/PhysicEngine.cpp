@@ -66,6 +66,16 @@ void PhysicEngine::update(double dt)
         if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
             continue;
 
+        if(m_rigidBody[i].isFalling())
+            m_rigidBody[i].applyGravity(dt,m_gravity);
+
+        if(m_rigidBody[i].isMovingLeft())
+            m_rigidBody[i].goOnLeft(dt);
+
+        if(m_rigidBody[i].isMovingRight())
+            m_rigidBody[i].goOnRight(dt);
+
+
         // init
         Collider* colliderAssociated = getColliderAssociated(&m_rigidBody[i]);
         bool hasCollideDown = false, hasCollideLeft = false,
@@ -185,20 +195,11 @@ void PhysicEngine::update(double dt)
         if(!hasCollideDown)
         {
             m_rigidBody[i].setFalling(true);
-            m_rigidBody[i].applyGravity(dt,m_gravity);
         }
         else
         {
             m_rigidBody[i].setFalling(false);
             m_rigidBody[i].stopMovementY();
-        }
-        if(!hasCollideLeft && m_rigidBody[i].isMovingLeft())
-        {
-            m_rigidBody[i].goOnLeft(dt,hasCollideDown);
-        }
-        if(!hasCollideRight && m_rigidBody[i].isMovingRight())
-        {
-            m_rigidBody[i].goOnRight(dt,hasCollideDown);
         }
         if(hasCollideLeft)
         {
@@ -307,8 +308,10 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
 
         // Collide bottom
         if((m_colliders[i].getHitBox().contains(pointBottomLeft)
-           || m_colliders[i].getHitBox().contains(pointBottomRight))
-           && (m_colliders[i].getPosition().x < pos.x))
+           && m_colliders[i].getPosition().x + m_colliders[i].getDimension().x
+              > pos.x+dimension.x )
+           || (m_colliders[i].getHitBox().contains(pointBottomRight)
+           && m_colliders[i].getPosition().x < pos.x))
         {
             intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
             collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],intersection));
@@ -372,7 +375,12 @@ unsigned int PhysicEngine::getBindingCount() {
     return (uint32_t)m_rigidBodiesWithColliders.size();
 }
 
-std::vector<Collider>& PhysicEngine::getAllColliders()
+std::vector<Collider> PhysicEngine::getAllColliders()
 {
     return m_colliders;
+}
+
+std::vector<RigidBody> PhysicEngine::getAllRigidBodies()
+{
+    return m_rigidBody;
 }

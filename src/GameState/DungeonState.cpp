@@ -23,9 +23,9 @@ void DungeonState::init(StateMachine  * stateMachine,
     //floorCollider4->init(12, 11, 10, 1, 64);
 
     Collider* leftCollider = resourceManager->getCollider();
-    leftCollider->init(0,0,1,8,64);
+    leftCollider->init(0,0,1,11,64);
     Collider* rightCollider = resourceManager->getCollider();
-    rightCollider->init(19,0,1,8,64);
+    rightCollider->init(19,0,1,11,64);
 
     m_stateMachine = stateMachine;
     m_resourceManager = resourceManager;

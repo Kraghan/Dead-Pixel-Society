@@ -25,23 +25,13 @@ void DrawPhysics::init(ResourceManager * resourceManager)
     m_drawn = false;
     m_resourceManager = resourceManager;
     m_physicEngine = m_resourceManager->getPhysicEngine();
-    m_panel = m_resourceManager->getSprite();
+
 
     m_colliderCount = resourceManager->getTotalCollider();
     m_rigidBodyCount = resourceManager->getTotalRigidBody();
     m_bindCount = resourceManager->getTotalBinding();
 
-    // Setting the layer
-    m_panel->setLayer(14);
-
     std::string testString = PANEL_KEY;
-    sf::Texture * testTexture = m_resourceManager->getTexture(PANEL_KEY);
-
-    m_panel->setTexture(*testTexture);
-
-    // Setting position
-    m_panel->setPosition(PANEL_POS_X_PHYSIC,
-                         PANEL_POS_Y);
 
     // Creating all texts
     for(uint32_t index = 0; index < INFO_COUNT_PHYSIC; ++index)
@@ -96,17 +86,33 @@ void DrawPhysics::draw(sf::RenderWindow * window)
         }
 
         std::vector<Collider> colliders = m_physicEngine->getAllColliders();
+        std::vector<RigidBody> rigidBodies = m_physicEngine->getAllRigidBodies();
 
         if (!m_drawn) {
-            for (unsigned int i = 0; i < colliders.size();
-                 ++i) {
+            m_panel = m_resourceManager->getSprite();
+            m_panel->setLayer(14);
+            sf::Texture * testTexture = m_resourceManager->getTexture(PANEL_KEY);
+            m_panel->setTexture(*testTexture);
+            m_panel->setPosition(PANEL_POS_X_PHYSIC,
+                                 PANEL_POS_Y);
+
+            for (unsigned int i = 0; i < colliders.size(); ++i)
+            {
                 if (colliders[i].isFree() || !colliders[i].isReady())
                     continue;
 
                 ConvexShape *c = m_resourceManager->getConvexShape();
                 c->setLayer(9);
-                c->setWireColor(sf::Color::Cyan);
-                c->setFillColor(sf::Color::Blue);
+                if(colliders[i].getTriggerAction() == nullptr)
+                {
+                    c->setWireColor(sf::Color::Cyan);
+                    c->setFillColor(sf::Color::Cyan);
+                }
+                else
+                {
+                    c->setWireColor(sf::Color::Green);
+                    c->setFillColor(sf::Color::Green);
+                }
                 c->setPointCount(4);
                 c->setPoint(0, colliders[i].getPosition());
 
@@ -120,6 +126,31 @@ void DrawPhysics::draw(sf::RenderWindow * window)
                 c->setPoint(3, sf::Vector2f(colliders[i].getPosition().x,
                                             colliders[i].getPosition().y
                                             + colliders[i].getDimension().y));
+
+                m_shapes.push_back(c);
+            }
+            for (unsigned int i = 0; i < rigidBodies.size(); ++i)
+            {
+                ConvexShape *c = m_resourceManager->getConvexShape();
+                c->setLayer(9);
+                c->setPointCount(4);
+                c->setPoint(0, rigidBodies[i].getPosition());
+
+                c->setPoint(1, sf::Vector2f(rigidBodies[i].getPosition().x
+                                            + rigidBodies[i].getDimension().x+ 10.0f,
+                                            rigidBodies[i].getPosition().y));
+
+                c->setPoint(2, sf::Vector2f(rigidBodies[i].getPosition().x +
+                        rigidBodies[i].getDimension().x + 10.0f,
+                        rigidBodies[i].getPosition().y +
+                        rigidBodies[i].getDimension().y + 10.0f));
+
+                c->setPoint(3, sf::Vector2f(rigidBodies[i].getPosition().x,
+                                            rigidBodies[i].getPosition().y
+                                            + rigidBodies[i].getDimension().y+ 10.0f));
+
+                c->setWireColor(sf::Color::Red);
+                c->setFillColor(sf::Color::Red);
 
                 m_shapes.push_back(c);
             }
@@ -148,10 +179,31 @@ void DrawPhysics::draw(sf::RenderWindow * window)
                                             + colliders[i].getDimension().y));
                 ++j;
             }
+            for (unsigned int i = 0; i < rigidBodies.size(); ++i)
+            {
+                ConvexShape* c = m_shapes[j];
+
+                c->setPoint(0, rigidBodies[i].getPosition());
+
+                c->setPoint(1, sf::Vector2f(rigidBodies[i].getPosition().x
+                                            + rigidBodies[i].getDimension().x+ 10.0f,
+                                            rigidBodies[i].getPosition().y));
+
+                c->setPoint(2, sf::Vector2f(rigidBodies[i].getPosition().x +
+                                            rigidBodies[i].getDimension().x + 10.0f,
+                                            rigidBodies[i].getPosition().y +
+                                            rigidBodies[i].getDimension().y + 10.0f));
+
+                c->setPoint(3, sf::Vector2f(rigidBodies[i].getPosition().x,
+                                            rigidBodies[i].getPosition().y
+                                            + rigidBodies[i].getDimension().y+ 10.0f));
+                ++j;
+            }
         }
     }
     else
     {
+        Sprite::release(m_panel);
         for(unsigned int i = 0; i < m_shapes.size(); ++i)
         {
             ConvexShape::release(m_shapes[i]);
