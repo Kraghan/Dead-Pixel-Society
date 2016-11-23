@@ -22,11 +22,11 @@ void ResourceLoader::init()
     m_resources.push_back(Resource(Resource::TYPE::BLOCK, "block_4", "BLOCK_4"));
 
     // Loading textures
-    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "Player", "PLAYER"));
+    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "DebugTile", "PLAYER"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "TileTest", "BG_FOREST"));
     m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "DebugPanel", "DEBUG_PANEL"));
-    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "BackgroundForet",
+    m_resources.push_back(Resource(Resource::TYPE::TEXTURE, "BackgroundForest",
                                    "BACKGROUND_FOREST"));
 
     // Loading theme

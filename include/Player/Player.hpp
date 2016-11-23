@@ -9,7 +9,8 @@
 #ifndef __PLAYER_HPP
 #define __PLAYER_HPP
 
-#include <GameEngine/Singleton.hpp>
+#include "GameEngine/Singleton.hpp"
+#include "GraphicEngine/Animation.hpp"
 #include "GameEngine/Updatable.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "Player/PlayerConstant.hpp"
@@ -66,6 +67,7 @@ public:
 
 private:
 
+    Animation m_animation;
     Sprite * m_playerSprite;
     ResourceManager * m_resourceManager;
 
