@@ -131,6 +131,9 @@ void DrawPhysics::draw(sf::RenderWindow * window)
             }
             for (unsigned int i = 0; i < rigidBodies.size(); ++i)
             {
+                if (rigidBodies[i].isFree() || !rigidBodies[i].isReady())
+                    continue;
+
                 ConvexShape *c = m_resourceManager->getConvexShape();
                 c->setLayer(9);
                 c->setPointCount(4);
@@ -181,6 +184,8 @@ void DrawPhysics::draw(sf::RenderWindow * window)
             }
             for (unsigned int i = 0; i < rigidBodies.size(); ++i)
             {
+                if (rigidBodies[i].isFree() || !rigidBodies[i].isReady())
+                    continue;
                 ConvexShape* c = m_shapes[j];
 
                 c->setPoint(0, rigidBodies[i].getPosition());
