@@ -53,6 +53,8 @@ public:
 
     static void release(RigidBody* &rigidBody);
 
+    float getVelocityMax();
+
     void slowDown(double dt);
 private:
     float m_mass, m_acceleration,m_velocityMax;

@@ -167,3 +167,7 @@ void RigidBody::slowDown(double dt)
         stopMovementX();
     }
 }
+
+float RigidBody::getVelocityMax() {
+    return m_velocityMax;
+}

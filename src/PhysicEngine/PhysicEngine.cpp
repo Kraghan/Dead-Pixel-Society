@@ -2,6 +2,7 @@
 // Created by Kraghan on 18/10/2016.
 //
 
+#include <GameEngine/TimeManager.hpp>
 #include "PhysicEngine/PhysicEngine.hpp"
 
 PhysicEngine::PhysicEngine()
@@ -83,11 +84,13 @@ void PhysicEngine::update(double dt)
         // Detect collision to set rigid body movement
         if(colliderAssociated != nullptr )
         {
-            sf::Vector2f oldPos = colliderAssociated->getPosition();
-            std::vector<Collision> collisions = collideWith(colliderAssociated);
+
+            std::vector<Collision> collisions = collideWith
+                    (colliderAssociated,m_rigidBody[i].getVelocityMax());
             if(colliderAssociated->getTriggerAction() == nullptr)
             {
                 colliderAssociated->moveRigidBody(&m_rigidBody[i]);
+                sf::Vector2f oldPos = colliderAssociated->getPosition();
 
                 for (unsigned int j = 0; j < collisions.size(); ++j)
                 {
@@ -265,7 +268,8 @@ Collider* PhysicEngine::getColliderAssociated(RigidBody* rigidBody)
     return nullptr;
 }
 
-std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
+std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
+                                                velocityMax)
 {
     std::vector<Collision> collisions;
 
@@ -287,8 +291,7 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
 
         // Collide top
         if((m_colliders[i].getHitBox().contains(pointTopRight)
-           || m_colliders[i].getHitBox().contains(pointTopLeft))
-           && m_colliders[i].getPosition().y + m_colliders[i].getDimension().y >= pos.y)
+           || m_colliders[i].getHitBox().contains(pointTopLeft)))
         {
             intersection = m_colliders[i].getPosition().y+dimension.y - pos.y;
             collisions.push_back(Collision(Collision::UP,&m_colliders[i],intersection));
@@ -301,10 +304,11 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider)
 
         // Collide bottom
         if((m_colliders[i].getHitBox().contains(pointBottomLeft)
-           && m_colliders[i].getPosition().x + m_colliders[i].getDimension().x
-              > pos.x )
+            && m_colliders[i].getPosition().x + m_colliders[i].getDimension()
+                                                                    .x - velocityMax
+               > pos.x)
            || (m_colliders[i].getHitBox().contains(pointBottomRight)
-           && m_colliders[i].getPosition().x < pos.x + dimension.x))
+            && m_colliders[i].getPosition().x + velocityMax < pos.x + dimension.x))
         {
             intersection = m_colliders[i].getPosition().y - dimension.y - pos.y;
             collisions.push_back(Collision(Collision::DOWN,&m_colliders[i],intersection));
