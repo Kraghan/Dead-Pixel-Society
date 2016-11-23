@@ -83,6 +83,7 @@ void PhysicEngine::update(double dt)
         // Detect collision to set rigid body movement
         if(colliderAssociated != nullptr )
         {
+            sf::Vector2f oldPos = colliderAssociated->getPosition();
             std::vector<Collision> collisions = collideWith(colliderAssociated);
             if(colliderAssociated->getTriggerAction() == nullptr)
             {
@@ -102,10 +103,6 @@ void PhysicEngine::update(double dt)
                                 colliderAssociated->getPosition().x
                                 + collisions[j].getDeep(),
                                 colliderAssociated->getPosition().y);
-                        // Move RigidBody
-                        m_rigidBody[i].move(m_rigidBody[i].getPosition().x
-                                            + collisions[j].getDeep(),
-                                            m_rigidBody[i].getPosition().y);
                         // Stop moving
                         hasCollideLeft = true;
                     }
@@ -117,10 +114,6 @@ void PhysicEngine::update(double dt)
                                 colliderAssociated->getPosition().x
                                 + collisions[j].getDeep(),
                                 colliderAssociated->getPosition().y);
-                        // Move RigidBody
-                        m_rigidBody[i].move(m_rigidBody[i].getPosition().x
-                                            + collisions[j].getDeep(),
-                                            m_rigidBody[i].getPosition().y);
                         // Stop moving
                         hasCollideRight = true;
                     }
@@ -137,14 +130,15 @@ void PhysicEngine::update(double dt)
                                     colliderAssociated->getPosition().x,
                                     colliderAssociated->getPosition().y
                                     + collisions[j].getDeep());
-
-                            // Move RigidBody
-                            m_rigidBody[i].move(m_rigidBody[i].getPosition().x,
-                                                m_rigidBody[i].getPosition().y
-                                                + collisions[j].getDeep());
                         }
                     }
                 }
+
+                sf::Vector2f offset = oldPos-colliderAssociated->getPosition();
+
+                m_rigidBody[i].move(colliderAssociated->getPosition().x-offset.x,
+                                    colliderAssociated->getPosition().y-offset.y);
+
             }
             else
             {
