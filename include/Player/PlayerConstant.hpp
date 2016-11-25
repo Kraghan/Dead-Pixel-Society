@@ -20,7 +20,7 @@ public:
     static constexpr const int DEFAULT_X = 5;
     static constexpr const int DEFAULT_Y = 1;
     static constexpr const char * PLAYER_SPRITE = "PLAYER";
-    static constexpr const int PLAYER_SPRITE_SIZE = 64;
+    static constexpr const int PLAYER_SPRITE_SIZE = 63;
 
     static constexpr const float PLAYER_MASS    = 1.0f;
     static constexpr const float MAX_VELOCITY_X = 5.0f;

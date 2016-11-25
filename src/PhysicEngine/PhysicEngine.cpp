@@ -133,6 +133,9 @@ void PhysicEngine::update(double dt)
                         if (collisions[j].getCollisionSide() == Collision::DOWN
                             || collisions[j].getCollisionSide() == Collision::UP)
                         {
+                            if(collisions[j].getCollisionSide() ==
+                                    Collision::UP)
+                                std::cout<< collisions[i].getDeep()<<std::endl;
                             // Move collider
                             colliderAssociated->move(
                                     colliderAssociated->getPosition().x,
@@ -301,6 +304,7 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
     sf::Vector2f pointBottomRight = sf::Vector2f(pos.x+dimension.x,pos.y+dimension.y);
 
     float intersection, intersectionMax = 0.0f;
+    bool collisionUp = false, collisionDown = false;
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
         if(m_colliders[i].isFree() || !m_colliders[i].isReady())
@@ -327,6 +331,8 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
             {
                 intersectionMax = intersection;
             }
+
+            collisionUp = true;
         }
 
         // Collide bottom
@@ -343,16 +349,35 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
             {
                 intersectionMax = intersection;
             }
+
+            collisionDown = true;
         }
     }
 
-    pointBottomLeft = sf::Vector2f(pos.x,
-                                   pos.y + dimension.y + intersectionMax - 1.0f);
-    pointTopLeft = sf::Vector2f(pos.x, pos.y + intersectionMax - 1.0f);
-    pointTopRight = sf::Vector2f(pos.x + dimension.x,
-                                 pos.y + intersectionMax - 1.0f);
-    pointBottomRight = sf::Vector2f(pos.x  + dimension.x,
-                                    pos.y + dimension.y + intersectionMax - 1.0f);
+    if(collisionDown)
+    {
+        pointBottomLeft = sf::Vector2f(pos.x,
+                                       pos.y + dimension.y + intersectionMax -
+                                       1.0f);
+        pointTopLeft = sf::Vector2f(pos.x, pos.y + intersectionMax - 1.0f);
+        pointTopRight = sf::Vector2f(pos.x + dimension.x,
+                                     pos.y + intersectionMax - 1.0f);
+        pointBottomRight = sf::Vector2f(pos.x + dimension.x,
+                                        pos.y + dimension.y + intersectionMax -
+                                        1.0f);
+    }
+    else if(collisionUp)
+    {
+        pointBottomLeft = sf::Vector2f(pos.x,
+                                       pos.y + dimension.y + intersectionMax +
+                                       1.0f);
+        pointTopLeft = sf::Vector2f(pos.x, pos.y + intersectionMax + 1.0f);
+        pointTopRight = sf::Vector2f(pos.x + dimension.x,
+                                     pos.y + intersectionMax + 1.0f);
+        pointBottomRight = sf::Vector2f(pos.x + dimension.x,
+                                        pos.y + dimension.y + intersectionMax +
+                                        1.0f);
+    }
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
