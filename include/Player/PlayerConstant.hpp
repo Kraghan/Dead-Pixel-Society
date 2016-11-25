@@ -18,7 +18,7 @@ public:
     static const int32_t PLAYER_LAYER = 5;
     // Position of the case
     static constexpr const int DEFAULT_X = 5;
-    static constexpr const int DEFAULT_Y = 0;
+    static constexpr const int DEFAULT_Y = 1;
     static constexpr const char * PLAYER_SPRITE = "PLAYER";
     static constexpr const int PLAYER_SPRITE_SIZE = 64;
 

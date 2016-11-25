@@ -28,7 +28,6 @@ void AnimationState::update(double dt)
             }
         }
 
-        std::cout << (int)m_currentStep << std::endl;
         m_sprite->setTextureRect(sf::IntRect(
                 m_position.x + m_currentStep * m_offset,
                 m_position.y,

@@ -2,7 +2,6 @@
 // Created by Kraghan on 18/10/2016.
 //
 
-#include <GameEngine/TimeManager.hpp>
 #include "PhysicEngine/PhysicEngine.hpp"
 
 PhysicEngine::PhysicEngine()
@@ -79,7 +78,7 @@ void PhysicEngine::update(double dt)
         // init
         Collider* colliderAssociated = getColliderAssociated(&m_rigidBody[i]);
         bool hasCollideDown = false, hasCollideLeft = false,
-             hasCollideRight = false;
+             hasCollideRight = false, hasCollideUp = false;
 
         // Detect collision to set rigid body movement
         if(colliderAssociated != nullptr )
@@ -94,6 +93,11 @@ void PhysicEngine::update(double dt)
 
                 for (unsigned int j = 0; j < collisions.size(); ++j)
                 {
+                    if (collisions[j].getCollisionSide() == Collision::UP)
+                    {
+                        hasCollideUp = true;
+                    }
+
                     if (collisions[j].getCollisionSide() == Collision::DOWN)
                     {
                         hasCollideDown = true;
@@ -126,7 +130,8 @@ void PhysicEngine::update(double dt)
                 {
                     for (unsigned int j = 0; j < collisions.size(); ++j)
                     {
-                        if (collisions[j].getCollisionSide() == Collision::DOWN)
+                        if (collisions[j].getCollisionSide() == Collision::DOWN
+                            || collisions[j].getCollisionSide() == Collision::UP)
                         {
                             // Move collider
                             colliderAssociated->move(
@@ -188,21 +193,36 @@ void PhysicEngine::update(double dt)
             }
         }
 
+        if(hasCollideUp)
+        {
+            m_rigidBody[i].stopJumping();
+            m_rigidBody[i].setFalling(true);
+            m_rigidBody[i].stopMovementY();
+        }
         if(!hasCollideDown)
         {
             m_rigidBody[i].setFalling(true);
+            m_rigidBody[i].setOnTheGround(false);
+            m_rigidBody[i].stopJumping();
         }
         else
         {
             m_rigidBody[i].setFalling(false);
             m_rigidBody[i].stopMovementY();
+            m_rigidBody[i].setOnTheGround(true);
         }
         if(hasCollideLeft)
         {
+            if(m_rigidBody[i].isJumping()
+               && m_rigidBody[i].getVelocity().y < 0)
+                m_rigidBody[i].stopMovementY();
             m_rigidBody[i].stopMovingToLeft();
         }
         if(hasCollideRight)
         {
+            if(m_rigidBody[i].isJumping()
+               && m_rigidBody[i].getVelocity().y < 0)
+                m_rigidBody[i].stopMovementY();
             m_rigidBody[i].stopMovingToRight();
         }
     }
@@ -291,9 +311,16 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
 
         // Collide top
         if((m_colliders[i].getHitBox().contains(pointTopRight)
-           || m_colliders[i].getHitBox().contains(pointTopLeft)))
+            && m_colliders[i].getPosition().x
+               + velocityMax < pos.x + dimension.x)
+           || (m_colliders[i].getHitBox().contains(pointTopLeft)
+            && m_colliders[i].getPosition().x
+               + m_colliders[i].getDimension().x - velocityMax > pos.x))
         {
-            intersection = m_colliders[i].getPosition().y+dimension.y - pos.y;
+
+            intersection = (m_colliders[i].getPosition().y
+                           + m_colliders[i].getDimension().y) - pos.y;
+            std::cout << intersection << std::endl;
             collisions.push_back(Collision(Collision::UP,&m_colliders[i],intersection));
 
             if(fabsf(intersection) > intersectionMax)

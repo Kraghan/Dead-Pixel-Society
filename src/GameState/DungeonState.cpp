@@ -15,12 +15,13 @@ void DungeonState::init(StateMachine  * stateMachine,
 
     Collider* floorCollider = resourceManager->getCollider();
     Collider * floorCollider2 = resourceManager->getCollider();
-    //Collider* floorCollider3 = resourceManager->getCollider();
-    //Collider* floorCollider4 = resourceManager->getCollider();
+    Collider* floorCollider3 = resourceManager->getCollider();
+    Collider* floorCollider4 = resourceManager->getCollider();
+
     floorCollider->init(0,11,9,1,64);
     floorCollider2->init(12, 11, 10, 1, 64);
-    //floorCollider3->init(9, 10, 3, 1, 64);
-    //floorCollider4->init(12, 11, 10, 1, 64);
+    floorCollider3->init(9, 10, 3, 1, 64);
+    floorCollider4->init(0, 0, 19, 1, 64);
 
     Collider* leftCollider = resourceManager->getCollider();
     leftCollider->init(0,0,1,11,64);

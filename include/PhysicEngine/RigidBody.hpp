@@ -51,6 +51,8 @@ public:
 
     void startJumping();
 
+    void stopJumping();
+
     bool isJumping();
 
     static void release(RigidBody* &rigidBody);
@@ -58,11 +60,12 @@ public:
     float getVelocityMax();
 
     void slowDown(double dt);
+
+    void setOnTheGround(bool onTheGround);
 private:
     float m_mass, m_acceleration,m_velocityMax,m_jumpingForce;
-    double m_timeInJumpingState, m_maxTimeJumpingState;
     sf::Vector2f m_velocity;
-    bool m_toLeft, m_toRight, m_isFalling, m_isJumping;
+    bool m_toLeft, m_toRight, m_isFalling, m_isJumping, m_isOnTheGround;
 };
 
 
