@@ -17,12 +17,12 @@ void WorldMapState::init(StateMachine  * stateMachine,
 
 /* virtual */ WorldMapState::~WorldMapState()
 {
-    // None
+    m_worldMap.~WorldMap();
 }
 
 /* virtual */ void WorldMapState::update(double dt)
 {
-    // TODO
+    m_worldMap.update();
 }
 
 bool WorldMapState::onEnter()

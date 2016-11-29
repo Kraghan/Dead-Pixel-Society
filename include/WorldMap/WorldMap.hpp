@@ -12,12 +12,12 @@ class WorldMap {
 private:
 
     ResourceManager *m_resourceManager;
-
-    Sprite *m_background;
+    std::vector<Sprite *> m_spots;
 
 public:
     WorldMap();
     void init(ResourceManager *m);
+    void update();
     ~WorldMap();
 };
 
