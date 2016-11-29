@@ -133,9 +133,6 @@ void PhysicEngine::update(double dt)
                         if (collisions[j].getCollisionSide() == Collision::DOWN
                             || collisions[j].getCollisionSide() == Collision::UP)
                         {
-                            if(collisions[j].getCollisionSide() ==
-                                    Collision::UP)
-                                std::cout<< collisions[i].getDeep()<<std::endl;
                             // Move collider
                             colliderAssociated->move(
                                     colliderAssociated->getPosition().x,
@@ -216,6 +213,7 @@ void PhysicEngine::update(double dt)
         }
         if(hasCollideLeft)
         {
+            std::cout << "Collide left" << std::endl;
             if(m_rigidBody[i].isJumping()
                && m_rigidBody[i].getVelocity().y < 0)
                 m_rigidBody[i].stopMovementY();
@@ -223,6 +221,7 @@ void PhysicEngine::update(double dt)
         }
         if(hasCollideRight)
         {
+            std::cout << "Collide right" << std::endl;
             if(m_rigidBody[i].isJumping()
                && m_rigidBody[i].getVelocity().y < 0)
                 m_rigidBody[i].stopMovementY();
@@ -378,6 +377,14 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
                                         pos.y + dimension.y + intersectionMax +
                                         1.0f);
     }
+    else if(!collisionDown && !collisionUp)
+    {
+        pointBottomLeft = sf::Vector2f(pos.x,pos.y + dimension.y - 1.0f);
+        pointTopLeft = sf::Vector2f(pos.x, pos.y + 1.0f);
+        pointTopRight = sf::Vector2f(pos.x + dimension.x,pos.y + 1.0f);
+        pointBottomRight = sf::Vector2f(pos.x + dimension.x,pos.y + dimension.y - 1.0f);
+    }
+
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
