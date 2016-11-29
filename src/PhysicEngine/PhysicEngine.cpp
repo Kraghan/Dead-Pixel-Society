@@ -85,7 +85,8 @@ void PhysicEngine::update(double dt)
         {
 
             std::vector<Collision> collisions = collideWith
-                    (colliderAssociated,m_rigidBody[i].getVelocityMax());
+                    (colliderAssociated,m_rigidBody[i].getVelocityMax(),
+            m_rigidBody[i].getVelocity().x);
             if(colliderAssociated->getTriggerAction() == nullptr)
             {
                 colliderAssociated->moveRigidBody(&m_rigidBody[i]);
@@ -213,7 +214,6 @@ void PhysicEngine::update(double dt)
         }
         if(hasCollideLeft)
         {
-            std::cout << "Collide left" << std::endl;
             if(m_rigidBody[i].isJumping()
                && m_rigidBody[i].getVelocity().y < 0)
                 m_rigidBody[i].stopMovementY();
@@ -221,7 +221,6 @@ void PhysicEngine::update(double dt)
         }
         if(hasCollideRight)
         {
-            std::cout << "Collide right" << std::endl;
             if(m_rigidBody[i].isJumping()
                && m_rigidBody[i].getVelocity().y < 0)
                 m_rigidBody[i].stopMovementY();
@@ -291,7 +290,7 @@ Collider* PhysicEngine::getColliderAssociated(RigidBody* rigidBody)
 }
 
 std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
-                                                velocityMax)
+                                                velocityMax, float velocityY)
 {
     std::vector<Collision> collisions;
 
@@ -320,15 +319,15 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
             && m_colliders[i].getPosition().x
                + m_colliders[i].getDimension().x - velocityMax > pos.x))
         {
-
             intersection = (m_colliders[i].getPosition().y
                            + m_colliders[i].getDimension().y) - pos.y;
-            std::cout << intersection << std::endl;
+            //intersection = -intersection;
+            std::cout << "top : "<< intersection << std::endl;
             collisions.push_back(Collision(Collision::UP,&m_colliders[i],intersection));
 
             if(fabsf(intersection) > intersectionMax)
             {
-                intersectionMax = intersection;
+                intersectionMax = -intersection-velocityY;
             }
 
             collisionUp = true;

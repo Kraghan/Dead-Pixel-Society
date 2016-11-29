@@ -36,7 +36,8 @@ public:
 
     Collider* getColliderAssociated(RigidBody* rigidBody);
 
-    std::vector<Collision> collideWith(Collider* collider, float velocityMax);
+    std::vector<Collision> collideWith(Collider* collider, float velocityMax,
+                                       float velocityY);
 
     unsigned int getColliderCount();
 
