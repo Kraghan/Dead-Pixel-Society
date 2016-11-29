@@ -17,6 +17,8 @@ RigidBody::RigidBody()
     m_isFalling = false;
     m_toLeft = false;
     m_toRight = false;
+    m_isJumping = false;
+    m_isOnTheGround = false;
 }
 
 void RigidBody::init(unsigned int x, unsigned int y, unsigned int size, float
@@ -30,6 +32,9 @@ mass, float acceleration, float velocityMax)
     m_toLeft = false;
     m_toRight = false;
     m_isFalling = false;
+    m_isJumping = false;
+    m_isOnTheGround = false;
+    m_jumpingForce = 3.8f;
 }
 
 float RigidBody::getMass()
@@ -59,10 +64,16 @@ float RigidBody::getAcceleration()
 
 void RigidBody::applyGravity(double dt, float gravity)
 {
-    m_velocity.y += gravity*dt;
-
+    if(m_isFalling)
+    {
+        m_velocity.y += gravity * dt;
+    }
+    else
+    {
+        m_velocity.y = -m_jumpingForce;
+    }
     sf::Vector2f pos = getPosition();
-    move(pos.x,pos.y+m_velocity.y);
+    move(pos.x, pos.y + m_velocity.y);
 }
 
 void RigidBody::stopMovementX()
@@ -87,11 +98,13 @@ void RigidBody::startMovingToRight()
 
 void RigidBody::stopMovingToLeft()
 {
+    m_velocity.x = 0.0f;
     m_toLeft = false;
 }
 
 void RigidBody::stopMovingToRight()
 {
+    m_velocity.x = 0.0f;
     m_toRight = false;
 }
 
@@ -105,63 +118,89 @@ bool RigidBody::isMovingRight()
     return m_toRight;
 }
 
-void RigidBody::goOnLeft(double dt,bool collidingDown)
+void RigidBody::goOnLeft(double dt)
 {
-    if(collidingDown)
-    {
+    //if(collidingDown)
+    //{
         m_velocity.x -= m_acceleration * dt;
         if (m_velocity.x < -m_velocityMax)
             m_velocity.x = -m_velocityMax;
-    }
+    /*}
     else
     {
         m_velocity.x += 2*m_acceleration*dt;
         if(m_velocity.x > 0)
             m_velocity.x = 0;
-    }
+    }*/
     move(getPosition().x+(m_velocity.x),getPosition().y);
 }
 
-void RigidBody::goOnRight(double dt,bool collidingDown)
+void RigidBody::goOnRight(double dt)
 {
-    if(collidingDown)
-    {
+    //if(collidingDown)
+    //{
         m_velocity.x += m_acceleration*dt;
         if(m_velocity.x > m_velocityMax)
             m_velocity.x = m_velocityMax;
-    }
+    /*}
     else
     {
         m_velocity.x -= 2*m_acceleration*dt;
         if(m_velocity.x < 0)
             m_velocity.x = 0;
-    }
+    }*/
     move(getPosition().x+m_velocity.x,getPosition().y);
-}
-
-void RigidBody::addForce(sf::Vector2f force)
-{
-    m_velocity += force;
 }
 
 void RigidBody::slowDown(double dt)
 {
-    std::cout << m_velocity.x << std::endl;
-
-    /*if(m_velocity.x > 0.0f)
+    if(m_velocity.x > 0.0f)
     {
-        m_velocity.x -= m_velocityMax*dt/2;
+        m_velocity.x -= m_velocityMax/2*dt;
     }
     else if(m_velocity.x < 0.0f)
     {
-        m_velocity.x += m_velocityMax*dt/2;
-    }*/
+        m_velocity.x += m_velocityMax/2*dt;
+    }
 
-    /*float tmp = m_velocity.x;
+    float tmp = m_velocity.x;
 
     if(tmp < 0.0f)
         tmp *= -1;
 
     if(tmp < 0.5f)
-        m_velocity.x = 0.0f;*/
+    {
+        stopMovingToLeft();
+        stopMovingToRight();
+        stopMovementX();
+    }
+}
+
+float RigidBody::getVelocityMax()
+{
+    return m_velocityMax;
+}
+
+void RigidBody::startJumping()
+{
+    if(!m_isJumping && m_isOnTheGround)
+    {
+        m_isFalling = false;
+        m_isJumping = true;
+    }
+}
+
+bool RigidBody::isJumping()
+{
+    return m_isJumping;
+}
+
+void RigidBody::stopJumping()
+{
+    m_isJumping = false;
+}
+
+void RigidBody::setOnTheGround(bool onTheGround)
+{
+    m_isOnTheGround = onTheGround;
 }

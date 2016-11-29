@@ -14,10 +14,17 @@ void DungeonState::init(StateMachine  * stateMachine,
 {
 
     Collider* floorCollider = resourceManager->getCollider();
-    floorCollider->init(0,11,20,1,64);
+    Collider* floorCollider2 = resourceManager->getCollider();
+    Collider* floorCollider3 = resourceManager->getCollider();
+    Collider* floorCollider4 = resourceManager->getCollider();
+
+    floorCollider->init(0,11,9,1,64);
+    floorCollider2->init(12, 11, 10, 1, 64);
+    floorCollider3->init(5, 9, 3, 1, 64);
+    floorCollider4->init(0, 0, 19, 1, 64);
 
     Collider* leftCollider = resourceManager->getCollider();
-    leftCollider->init(0,0,1,20,64);
+    leftCollider->init(0,0,1,11,64);
     Collider* rightCollider = resourceManager->getCollider();
     rightCollider->init(19,0,1,11,64);
 
@@ -45,11 +52,12 @@ void DungeonState::init(StateMachine  * stateMachine,
         {
             case Actions::LEFT:
             {
-                if (event->isPressed())
+                if (event->isPressed() && Player::Instance()->getState() !=
+                                                  Player::LEFT)
                 {
                     Player::Instance()->setState(Player::LEFT);
                 }
-                else
+                else if(!event->isPressed())
                 {
                     Player::Instance()->setState(Player::IDLE);
                 }
@@ -57,11 +65,12 @@ void DungeonState::init(StateMachine  * stateMachine,
                 break;
             case Actions::RIGHT:
             {
-                if (event->isPressed())
+                if (event->isPressed() && Player::Instance()->getState() !=
+                                          Player::RIGHT)
                 {
                     Player::Instance()->setState(Player::RIGHT);
                 }
-                else
+                else if(!event->isPressed())
                 {
                     Player::Instance()->setState(Player::IDLE);
                 }
@@ -69,9 +78,9 @@ void DungeonState::init(StateMachine  * stateMachine,
                 break;
             case Actions::JUMP:
             {
-                if (event->isPressed())
+                if (event->isPressed() && !Player::Instance()->isJumping())
                 {
-
+                    Player::Instance()->jump();
                 }
             }
                 break;
@@ -84,6 +93,39 @@ void DungeonState::init(StateMachine  * stateMachine,
     }
     // Mouse button actions
     EventProcessed::Instance()->init();
+
+    // TMP
+    // Buffering player
+    Player * player = Player::Instance();
+
+    // Buffering collider
+    Collider * collider = player->getCollider();
+
+    if(collider != nullptr)
+    {
+        if(collider->getPosition().x > 1270)
+        {
+            if(!m_dungeon->nextBlock())
+            {
+                std::cout << "The dungeon is over (end)!" << std::endl;
+                m_stateMachine->popState();
+            }
+
+            player->getRigidbody()->move(0.0f, player->getRigidbody()->getPosition().y);
+            collider->move(0.0f, collider->getPosition().y);
+        }
+        else if(collider->getPosition().x < -5)
+        {
+            if(!m_dungeon->previousBlock())
+            {
+                std::cout << "The dungeon is over (begin)!" << std::endl;
+                m_stateMachine->popState();
+            }
+
+            player->getRigidbody()->move(1269.0f, player->getRigidbody()->getPosition().y);
+            collider->move(1269.0f, collider->getPosition().y);
+        }
+    }
 }
 
 bool DungeonState::onEnter()

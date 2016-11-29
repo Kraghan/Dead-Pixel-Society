@@ -12,9 +12,9 @@ class TriggerAction {
 public:
     TriggerAction();
 
-    virtual void onTriggerEnter(Collider* collider) = 0;
-    virtual void onTriggerExit(Collider* collider) = 0;
-    virtual void onTriggerStay(Collider* collider) = 0;
+    virtual void onTriggerEnter(Collider* collider);
+    virtual void onTriggerExit(Collider* collider);
+    virtual void onTriggerStay(Collider* collider);
 };
 
 

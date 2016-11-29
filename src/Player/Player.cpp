@@ -46,6 +46,32 @@ void Player::init(ResourceManager * resourceManager)
     m_playerSprite = m_resourceManager->getSprite();
     m_playerSprite->setSmoothMotion(true);
     m_playerSprite->setRigidBody(m_rigidbody);
+    m_playerSprite->setLayer(PlayerConstant::PLAYER_LAYER);
+    m_playerSprite->setWireColor(sf::Color::White);
+
+    m_animation.addState("IDLE",   AnimationState());
+    m_animation.addState("RLEFT",  AnimationState());
+    m_animation.addState("RRIGHT", AnimationState());
+    m_animation.setState("IDLE");
+
+    m_animation.getState("IDLE")->init(
+            m_playerSprite, true,
+            sf::Vector2i(0, 0), sf::Vector2i(64, 64),
+            64, 1, 0.08);
+
+    m_animation.getState("RLEFT")->init(
+            m_playerSprite, true,
+            sf::Vector2i(0, 64), sf::Vector2i(64, 64),
+            64, 4, 0.08);
+
+    m_animation.getState("RRIGHT")->init(
+            m_playerSprite, true,
+            sf::Vector2i(0, 128), sf::Vector2i(64, 64),
+            64, 4, 0.08);
+
+    // Set initial state
+    m_animation.setState("IDLE");
+    m_animation.start();
 
     // Getting his texture
     m_playerSprite->setTexture(
@@ -55,44 +81,11 @@ void Player::init(ResourceManager * resourceManager)
     m_playerSprite->setPosition(
             PlayerConstant::DEFAULT_X*PlayerConstant::PLAYER_SPRITE_SIZE,
             PlayerConstant::DEFAULT_Y*PlayerConstant::PLAYER_SPRITE_SIZE);
-
-    m_playerSprite->setLayer(PlayerConstant::PLAYER_LAYER);
-    m_playerSprite->setWireColor(sf::Color::White);
 }
-
 
 void Player::update(double dt)
 {
-    m_rigidbody->isMovingLeft();
-    switch (m_state)
-    {
-        case LEFT:
-        {
-            m_rigidbody->stopMovingToRight();
-            m_rigidbody->startMovingToLeft();
-        }
-            break;
-        case RIGHT:
-        {
-            m_rigidbody->stopMovingToLeft();
-            m_rigidbody->startMovingToRight();
-        }
-            break;
-        case IDLE:
-        {
-            m_rigidbody->stopMovingToLeft();
-            m_rigidbody->stopMovingToRight();
-            m_rigidbody->stopMovementX();
-            //m_rigidbody->slowDown(dt);
-        }
-            break;
-        default:
-        {
-
-        }
-            break;
-    }
-    m_rigidbody->isMovingLeft();
+    m_animation.update(dt);
     m_playerSprite->setPosition(m_rigidbody->getPosition());
 }
 
@@ -119,6 +112,36 @@ RigidBody * Player::getRigidbody() const
 void Player::setState(Player::PLAYER_STATE state)
 {
     m_state = state;
+    switch (m_state)
+    {
+        case LEFT:
+            m_animation.setState("RLEFT");
+            m_animation.start();
+
+            m_rigidbody->stopMovingToRight();
+            m_rigidbody->startMovingToLeft();
+            break;
+
+        case RIGHT:
+            m_animation.setState("RRIGHT");
+            m_animation.start();
+
+            m_rigidbody->stopMovingToLeft();
+            m_rigidbody->startMovingToRight();
+            break;
+
+        case IDLE:
+            m_animation.setState("IDLE");
+            m_animation.start();
+
+            m_rigidbody->stopMovingToLeft();
+            m_rigidbody->stopMovingToRight();
+            m_rigidbody->stopMovementX();
+            break;
+
+        default : break;
+    }
+
 }
 
 Player::PLAYER_STATE Player::getState() const
@@ -131,3 +154,12 @@ Sprite* Player::getSprite()
     return m_playerSprite;
 }
 
+void Player::jump()
+{
+    m_rigidbody->startJumping();
+}
+
+bool Player::isJumping()
+{
+    return m_rigidbody->isJumping();
+}

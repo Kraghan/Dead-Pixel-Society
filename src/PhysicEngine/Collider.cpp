@@ -3,11 +3,14 @@
 //
 
 #include "PhysicEngine/Collider.hpp"
+#include "Control/TriggerAction.hpp"
 
 Collider::Collider()
 :PhysicObjectBase()
 {
-    m_isTrigger = false;
+    // None
+    m_triggerAction = nullptr;
+    m_collideWith.reserve(15);
 }
 
 void Collider::moveRigidBody(RigidBody* rigidBody)
@@ -24,7 +27,48 @@ void Collider::release(Collider* &collider) {
     collider = nullptr;
 }
 
-bool Collider::isTrigger()
+void Collider::setTrigger(TriggerAction *action)
 {
-    return m_isTrigger;
+    m_triggerAction = action;
 }
+
+TriggerAction *Collider::getTriggerAction()
+{
+    return m_triggerAction;
+}
+
+void Collider::addCollideWith(Collider *collider)
+{
+    if(!isInCollideWith(collider))
+        m_collideWith.push_back(collider);
+}
+
+bool Collider::isInCollideWith(Collider *collider)
+{
+    for(auto c : m_collideWith)
+    {
+        if(c->getId() == collider->getId())
+            return true;
+    }
+    return false;
+}
+
+std::vector<Collider *> Collider::getCollideWith()
+{
+    return m_collideWith;
+}
+
+void Collider::addCollideWith(std::vector<Collider *> colliders)
+{
+    for(unsigned int i = 0; i < colliders.size(); ++i)
+    {
+        addCollideWith(colliders[i]);
+    }
+}
+
+void Collider::clearCollideWith()
+{
+    m_collideWith.clear();
+}
+
+

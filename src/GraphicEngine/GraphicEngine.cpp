@@ -65,6 +65,9 @@ void GraphicEngine::init(ResourceManager * resourceManager,
     m_debugPanel.init(m_resourceManager, spriteCount, textCount);
     m_debugPanel.m_layerCount = m_layerCount;
 
+    // Initializing the physic debug interface
+    m_drawPhysics.init(m_resourceManager);
+
     // Setting fps counter
     m_fpsPrevious = m_clock.getElapsedTime().asSeconds();
 
@@ -232,6 +235,9 @@ void GraphicEngine::draw()
     // Displaying debug panel
     m_debugPanel.draw(m_window);
 
+    // Displaying physic debug interface
+    m_drawPhysics.draw(m_window);
+
     // Swapping buffers
     m_window->display();
 
@@ -283,5 +289,21 @@ void GraphicEngine::setFramerate(double framerate)
 
     // Re-computing delta (time step)
     m_delta = 1 / m_framerate;
+}
+
+void GraphicEngine::toggleWireframe()
+{
+    m_wireframe = !m_wireframe;
+
+    for(uint32_t i = 0; i < m_layerCount; ++i)
+    {
+        m_layers[i].setWireframe(m_wireframe);
+    }
+}
+
+void GraphicEngine::toggleWireframe(uint32_t layer)
+{
+    if(layer >= m_layerCount) return;
+    m_layers[layer].setWireframe(!m_layers[layer].getWireframe());
 }
 

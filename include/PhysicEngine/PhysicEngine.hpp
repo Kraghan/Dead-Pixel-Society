@@ -11,7 +11,7 @@
 #include "Collider.hpp"
 #include "RigidBody.hpp"
 #include "ColliderRigidBodyBinding.hpp"
-#include "PhysicTrigger.hpp"
+#include "Collision.hpp"
 
 class PhysicEngine : public Updatable{
 public:
@@ -29,26 +29,25 @@ public:
 
     Collider* getCollider();
 
-   //PhysicTrigger* getPhysicTrigger();
-
     RigidBody* getRigidBody();
-
-    bool isCollidingDown(Collider* collider, float* intersection,
-                         sf::Vector2f velocity);
-
-    bool isCollidingUp(Collider* collider, float* intersection,
-                       sf::Vector2f velocity);
-
-    bool isCollidingRight(Collider* collider, float* intersection,
-                          sf::Vector2f velocity);
-
-    bool isCollidingLeft(Collider* collider, float* intersection,
-                         sf::Vector2f velocity);
 
     ColliderRigidBodyBinding* bindRigidBodyAndCollider(RigidBody* rigidBody,
                                                        Collider* collider);
 
     Collider* getColliderAssociated(RigidBody* rigidBody);
+
+    std::vector<Collision> collideWith(Collider* collider, float velocityMax);
+
+    unsigned int getColliderCount();
+
+    unsigned int getRigidBodyCount();
+
+    unsigned int getBindingCount();
+
+    std::vector<Collider> getAllColliders();
+
+    std::vector<RigidBody> getAllRigidBodies();
+
 private:
 
     ResourceManager* m_ressourceManager;
@@ -60,5 +59,6 @@ private:
     std::vector<RigidBody> m_rigidBody;
 
     std::vector<ColliderRigidBodyBinding> m_rigidBodiesWithColliders;
+
 };
 #endif //PROJECT_PHYSICENGINE_HPP

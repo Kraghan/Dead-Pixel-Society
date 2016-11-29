@@ -9,7 +9,8 @@
 #ifndef __PLAYER_HPP
 #define __PLAYER_HPP
 
-#include <GameEngine/Singleton.hpp>
+#include "GameEngine/Singleton.hpp"
+#include "GraphicEngine/Animation.hpp"
 #include "GameEngine/Updatable.hpp"
 #include "Memory/ResourceManager.hpp"
 #include "Player/PlayerConstant.hpp"
@@ -61,11 +62,16 @@ public:
     Player::PLAYER_STATE getState(void) const;
 
     /**
-     * \brief   Return true while player is in jumping phase
+     * \brief   Start to jump
      */
+     void jump();
+
+    bool isJumping();
+
 
 private:
 
+    Animation m_animation;
     Sprite * m_playerSprite;
     ResourceManager * m_resourceManager;
 

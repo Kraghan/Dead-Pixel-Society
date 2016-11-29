@@ -23,6 +23,7 @@
 #include "GraphicEngine/DrawableManager.hpp"
 
 #include "GameEngine/Clock.hpp"
+#include "DrawPhysics.hpp"
 
 class GraphicEngine
 {
@@ -85,6 +86,17 @@ public:
     void wireframe(bool state);
 
     /*!
+     * \brief   Invert the wireframe mode
+     */
+    void toggleWireframe();
+
+    /*!
+     * \brief   Invert the wireframe mode for a layer
+     * \param   layer The layer id to set the wireframe mode
+     */
+    void toggleWireframe(uint32_t layer);
+
+    /*!
      * \brief   Set the framerate of the engine
      * \param   framerate The target framerate
      */
@@ -124,6 +136,11 @@ private:
      * \brief   The debug panel of the graphic engine
      */
     DebugPanel m_debugPanel;
+
+    /*!
+     * \brief   The debug interface of the physic engine
+     */
+    DrawPhysics m_drawPhysics;
 
     /*!
      * \brief   The framerate of the game

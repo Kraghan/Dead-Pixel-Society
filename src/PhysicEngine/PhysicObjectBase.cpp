@@ -12,7 +12,7 @@ PhysicObjectBase::PhysicObjectBase()
     m_size = 0;
 }
 
-void PhysicObjectBase::init(unsigned int x, unsigned int y,
+void PhysicObjectBase::init(int x, int y,
                             unsigned int width, unsigned int height, unsigned
                             int size)
 {

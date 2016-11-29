@@ -147,6 +147,22 @@ public:
      */
     Collider * getColliderBindedToRigidBody(RigidBody* rigidBody);
 
+    /*!
+     * \brief   Return the number of collider in memory
+     */
+    unsigned int getTotalCollider();
+
+    /*!
+     * \brief   Return the number of rigid body in memory
+     */
+    unsigned int getTotalRigidBody();
+
+    /*!
+     * \brief   Return the number of colliders associated to
+     *          rigid bodies in memory
+     */
+    unsigned int getTotalBinding();
+
     // TODO BETTER
     PhysicEngine* getPhysicEngine();
 

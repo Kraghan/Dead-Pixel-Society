@@ -1,3 +1,4 @@
+#include <GraphicEngine/GraphicEngine.hpp>
 #include "Dungeon/Dungeon.hpp"
 
 /* explicit */ Dungeon::Dungeon(ResourceManager * resourceManager)
@@ -23,7 +24,7 @@ void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
 {
     // Initializing values to default
     m_theme = theme;
-    m_blockCount = blocks.size();
+    m_blockCount = (uint32_t)blocks.size();
     m_currentBlock = 0;
 
     // Clearing the old vector
@@ -77,13 +78,13 @@ bool Dungeon::nextBlock()
     // Showing the next one
     m_blocks[m_currentBlock]->show();
 
-    return false;
+    return true;
 }
 
 bool Dungeon::previousBlock()
 {
     // The player wants to go out
-    if(m_currentBlock - 1 < 0)
+    if(m_currentBlock == 0)
     {
         m_blocks[m_currentBlock]->hide();
         return false;
@@ -99,5 +100,5 @@ bool Dungeon::previousBlock()
     // Showing the previous one
     m_blocks[m_currentBlock]->show();
 
-    return false;
+    return true;
 }

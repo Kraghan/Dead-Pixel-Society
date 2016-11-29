@@ -124,6 +124,15 @@ public:
     }
 
     /*!
+    * \brief    Return the wireframe state
+    * \return   The wireframe state
+    */
+    inline bool getWireframe()
+    {
+        return m_wireframe;
+    }
+
+    /*!
      * \brief   Return the layer primitive
      */
     inline sf::PrimitiveType getPrimitive() const
@@ -159,6 +168,11 @@ private:
      * \brief   Make a triangle with lines
      */
     void makeTriangleLine(uint32_t index,
+          const sf::Vertex * p1,
+          const sf::Vertex * p2,
+          const sf::Vertex * p3);
+
+    void makeTriangle(uint32_t index,
           const sf::Vertex * p1,
           const sf::Vertex * p2,
           const sf::Vertex * p3);

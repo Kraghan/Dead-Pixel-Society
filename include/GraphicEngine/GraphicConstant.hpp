@@ -12,13 +12,16 @@
 #include <stdint.h>
 
 #define PANEL_POS_X 1100.0f
+#define PANEL_POS_X_PHYSIC 30.0f
 #define PANEL_POS_Y 10.0f
 
 #define TEXT_POS_X  1110.0f
+#define TEXT_POS_X_PHYSIC  40.0f
 #define TEXT_POS_Y  16.0f
 #define TEXT_OFFSET 7.0f
 
 #define INFO_COUNT  8
+#define INFO_COUNT_PHYSIC  5
 #define CHAR_SIZE   12
 
 #define FONT_KEY  "DEBUG_FONT"

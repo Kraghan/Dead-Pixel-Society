@@ -91,7 +91,6 @@ void GameEngine::update()
     // Updating the game
     m_physicEngine.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
     m_game.update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
-    Player::Instance()->update(SECONDS_PER_UPDATE * TimeManager::TimeScale);
 }
 
 void GameEngine::processInput()
@@ -107,7 +106,24 @@ void GameEngine::processInput()
         {
             m_isRunning = false;
         }
-
+        if(event.type == sf::Event::KeyReleased)
+        {
+            switch((int)event.key.code)
+            {
+                case 26 : m_graphicEngine.toggleWireframe(0); continue;
+                case 27 : m_graphicEngine.toggleWireframe(1); continue;
+                case 28 : m_graphicEngine.toggleWireframe(2); continue;
+                case 29 : m_graphicEngine.toggleWireframe(3); continue;
+                case 30 : m_graphicEngine.toggleWireframe(4); continue;
+                case 31 : m_graphicEngine.toggleWireframe(5); continue;
+                case 32 : m_graphicEngine.toggleWireframe(6); continue;
+                case 33 : m_graphicEngine.toggleWireframe(7); continue;
+                case 34 : m_graphicEngine.toggleWireframe(8); continue;
+                case 35 : m_graphicEngine.toggleWireframe(9); continue;
+                case 53 : DrawPhysics::toggleDrawPhysics(); continue;
+                default: break;
+            }
+        }
         m_eventConverter.processEvent(event, &m_controlMap);
     }
 }

@@ -45,19 +45,27 @@ public:
 
     bool isMovingRight();
 
-    void goOnLeft(double dt,bool collidingDown);
+    void goOnLeft(double dt);
 
-    void goOnRight(double dt,bool collidingDown);
+    void goOnRight(double dt);
 
-    void addForce(sf::Vector2f force);
+    void startJumping();
+
+    void stopJumping();
+
+    bool isJumping();
 
     static void release(RigidBody* &rigidBody);
 
+    float getVelocityMax();
+
     void slowDown(double dt);
+
+    void setOnTheGround(bool onTheGround);
 private:
-    float m_mass, m_acceleration,m_velocityMax;
+    float m_mass, m_acceleration,m_velocityMax,m_jumpingForce;
     sf::Vector2f m_velocity;
-    bool m_toLeft, m_toRight, m_isFalling;
+    bool m_toLeft, m_toRight, m_isFalling, m_isJumping, m_isOnTheGround;
 };
 
 

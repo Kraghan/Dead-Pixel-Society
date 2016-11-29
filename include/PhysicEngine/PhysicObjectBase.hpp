@@ -17,7 +17,7 @@ private:
 public:
     PhysicObjectBase();
 
-    void init(unsigned int x, unsigned int y, unsigned int
+    void init(int x, int y, unsigned int
         width, unsigned int height, unsigned int size);
 
     bool isFree();
