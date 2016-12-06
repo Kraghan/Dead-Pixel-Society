@@ -20,12 +20,15 @@ void WorldMap::init(ResourceManager *m) {
         m_spots[i]->setTexture(*m_resourceManager->getTexture("FOREST"));
         m_spots[i]->setTextureRect(sf::IntRect(0, 0, 64, 64));
         m_spots[i]->setLayer(1);
+        m_spots[i]->setVisible(false); ///< TEMP
     }
 
     m_spots[0]->setPosition(sf::Vector2f(250, 125));
     m_spots[1]->setPosition(sf::Vector2f(1030, 125));
     m_spots[2]->setPosition(sf::Vector2f(250, 550));
     m_spots[3]->setPosition(sf::Vector2f(1030, 550));
+
+
 
     //Load clickable point
     /*std::string tmp;
