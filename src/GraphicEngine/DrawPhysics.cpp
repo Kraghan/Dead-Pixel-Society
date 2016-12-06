@@ -47,7 +47,7 @@ void DrawPhysics::init(ResourceManager * resourceManager)
         _text.setPosition(TEXT_POS_X_PHYSIC, TEXT_POS_Y + (index *
                                                     (CHAR_SIZE + TEXT_OFFSET)));
 
-        _text.setColor(sf::Color::White);
+        _text.setFillColor(sf::Color::White);
         _text.setCharacterSize(CHAR_SIZE);
     }
 

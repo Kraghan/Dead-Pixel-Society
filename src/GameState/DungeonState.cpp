@@ -12,7 +12,6 @@
 void DungeonState::init(StateMachine  * stateMachine,
     ResourceManager * resourceManager)
 {
-
     Collider* floorCollider = resourceManager->getCollider();
     Collider* floorCollider2 = resourceManager->getCollider();
     Collider* floorCollider3 = resourceManager->getCollider();

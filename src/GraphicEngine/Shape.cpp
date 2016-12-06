@@ -102,10 +102,10 @@ sf::FloatRect Shape::getGlobalBounds() const
 }
 
 Shape::Shape() :
+m_texture         (NULL),
 m_textureRect     (),
 m_fillColor       (255, 255, 255),
 m_outlineColor    (255, 255, 255),
-m_texture         (NULL),
 m_outlineThickness(0),
 m_vertices        (sf::TrianglesFan),
 m_outlineVertices (sf::TrianglesStrip),
