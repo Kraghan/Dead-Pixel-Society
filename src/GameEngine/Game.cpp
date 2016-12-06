@@ -25,7 +25,7 @@ void Game::init(ResourceManager * resourceManager)
     WorldMapState::Instance()->init(&m_stateMachine, m_resourceManager);
 
     // Pushing the first state =)
-    m_stateMachine.pushState(WorldMapState::Instance());
+    m_stateMachine.pushState(DungeonState::Instance());
 }
 
 void Game::update(double dt)
