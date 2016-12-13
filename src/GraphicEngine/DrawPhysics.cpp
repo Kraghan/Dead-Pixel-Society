@@ -140,27 +140,36 @@ void DrawPhysics::draw(sf::RenderWindow * window)
                     continue;
 
                 ConvexShape *c = m_resourceManager->getConvexShape();
-                c->setLayer(9);
-                c->setPointCount(4);
-                c->setPoint(0, rigidBodies[i].getPosition());
+                if(c != nullptr)
+                {
+                    c->setLayer(9);
+                    c->setPointCount(4);
+                    c->setPoint(0, rigidBodies[i].getPosition());
 
-                c->setPoint(1, sf::Vector2f(rigidBodies[i].getPosition().x
-                                            + rigidBodies[i].getDimension().x+ 10.0f,
-                                            rigidBodies[i].getPosition().y));
+                    c->setPoint(1, sf::Vector2f(rigidBodies[i].getPosition().x
+                                                +
+                                                rigidBodies[i].getDimension().x +
+                                                10.0f,
+                                                rigidBodies[i].getPosition().y));
 
-                c->setPoint(2, sf::Vector2f(rigidBodies[i].getPosition().x +
-                        rigidBodies[i].getDimension().x + 10.0f,
-                        rigidBodies[i].getPosition().y +
-                        rigidBodies[i].getDimension().y + 10.0f));
+                    c->setPoint(2, sf::Vector2f(rigidBodies[i].getPosition().x +
+                                                rigidBodies[i].getDimension().x +
+                                                10.0f,
+                                                rigidBodies[i].getPosition().y +
+                                                rigidBodies[i].getDimension().y +
+                                                10.0f));
 
-                c->setPoint(3, sf::Vector2f(rigidBodies[i].getPosition().x,
-                                            rigidBodies[i].getPosition().y
-                                            + rigidBodies[i].getDimension().y+ 10.0f));
+                    c->setPoint(3, sf::Vector2f(rigidBodies[i].getPosition().x,
+                                                rigidBodies[i].getPosition().y
+                                                +
+                                                rigidBodies[i].getDimension().y +
+                                                10.0f));
 
-                c->setWireColor(sf::Color::Red);
-                c->setFillColor(sf::Color::Red);
+                    c->setWireColor(sf::Color::Red);
+                    c->setFillColor(sf::Color::Red);
 
-                m_shapes.push_back(c);
+                    m_shapes.push_back(c);
+                }
             }
 
             m_drawn = true;
