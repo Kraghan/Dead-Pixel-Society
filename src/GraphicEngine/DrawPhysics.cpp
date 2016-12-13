@@ -183,19 +183,23 @@ void DrawPhysics::draw(sf::RenderWindow * window)
                     continue;
 
                 ConvexShape* c = m_shapes[j];
-                c->setPoint(0, colliders[i].getPosition());
+                if(j < m_shapes.size())
+                {
+                    c->setPoint(0, colliders[i].getPosition());
 
-                c->setPoint(1, sf::Vector2f(colliders[i].getPosition().x
-                                            + colliders[i].getDimension().x,
-                                            colliders[i].getPosition().y));
+                    c->setPoint(1, sf::Vector2f(colliders[i].getPosition().x
+                                                + colliders[i].getDimension().x,
+                                                colliders[i].getPosition().y));
 
-                c->setPoint(2, colliders[i].getPosition() + colliders[i]
-                        .getDimension());
+                    c->setPoint(2, colliders[i].getPosition() + colliders[i]
+                            .getDimension());
 
-                c->setPoint(3, sf::Vector2f(colliders[i].getPosition().x,
-                                            colliders[i].getPosition().y
-                                            + colliders[i].getDimension().y));
-                ++j;
+                    c->setPoint(3, sf::Vector2f(colliders[i].getPosition().x,
+                                                colliders[i].getPosition().y
+                                                +
+                                                colliders[i].getDimension().y));
+                    ++j;
+                }
             }
             for (unsigned int i = 0; i < rigidBodies.size(); ++i)
             {
@@ -203,22 +207,30 @@ void DrawPhysics::draw(sf::RenderWindow * window)
                         || rigidBodies[i].isEnabled())
                     continue;
                 ConvexShape* c = m_shapes[j];
+                if(m_shapes.size() > j)
+                {
+                    c->setPoint(0, rigidBodies[i].getPosition());
 
-                c->setPoint(0, rigidBodies[i].getPosition());
+                    c->setPoint(1, sf::Vector2f(rigidBodies[i].getPosition().x
+                                                +
+                                                rigidBodies[i].getDimension().x +
+                                                10.0f,
+                                                rigidBodies[i].getPosition().y));
 
-                c->setPoint(1, sf::Vector2f(rigidBodies[i].getPosition().x
-                                            + rigidBodies[i].getDimension().x+ 10.0f,
-                                            rigidBodies[i].getPosition().y));
+                    c->setPoint(2, sf::Vector2f(rigidBodies[i].getPosition().x +
+                                                rigidBodies[i].getDimension().x +
+                                                10.0f,
+                                                rigidBodies[i].getPosition().y +
+                                                rigidBodies[i].getDimension().y +
+                                                10.0f));
 
-                c->setPoint(2, sf::Vector2f(rigidBodies[i].getPosition().x +
-                                            rigidBodies[i].getDimension().x + 10.0f,
-                                            rigidBodies[i].getPosition().y +
-                                            rigidBodies[i].getDimension().y + 10.0f));
-
-                c->setPoint(3, sf::Vector2f(rigidBodies[i].getPosition().x,
-                                            rigidBodies[i].getPosition().y
-                                            + rigidBodies[i].getDimension().y+ 10.0f));
-                ++j;
+                    c->setPoint(3, sf::Vector2f(rigidBodies[i].getPosition().x,
+                                                rigidBodies[i].getPosition().y
+                                                +
+                                                rigidBodies[i].getDimension().y +
+                                                10.0f));
+                    ++j;
+                }
             }
         }
     }
