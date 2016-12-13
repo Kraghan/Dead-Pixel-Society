@@ -30,3 +30,7 @@ BlockAttributes const &BlockComponent::getBlockAttribute()
 {
     return m_blockAttributes;
 }
+
+PhysicAttributes const &BlockComponent::getPhysicAttribute() {
+    return m_physicAttributes;
+}

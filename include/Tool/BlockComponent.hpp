@@ -31,6 +31,8 @@ public:
 
     BlockAttributes const& getBlockAttribute();
 
+    PhysicAttributes const& getPhysicAttribute();
+
 private:
 
     BlockAttributes m_blockAttributes;

@@ -31,7 +31,7 @@ public:
      * \brief   Initialize the dungeon with a block attribute
      * @param   blockAttributes
      */
-    void init(std::vector < BlockAttributes * > const& blocks,
+    void init(std::vector < BlockComponent * > const& blocks,
               DungeonTheme * theme);
 
     /*!

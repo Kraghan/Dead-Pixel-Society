@@ -98,40 +98,45 @@ void DrawPhysics::draw(sf::RenderWindow * window)
 
             for (unsigned int i = 0; i < colliders.size(); ++i)
             {
-                if (colliders[i].isFree() || !colliders[i].isReady())
+                if (colliders[i].isFree() || !colliders[i].isReady()
+                    || colliders[i].isEnabled())
                     continue;
 
                 ConvexShape *c = m_resourceManager->getConvexShape();
-                c->setLayer(9);
-                if(colliders[i].getTriggerAction() == nullptr)
+                if(c != nullptr)
                 {
-                    c->setWireColor(sf::Color::Cyan);
-                    c->setFillColor(sf::Color::Cyan);
+                    c->setLayer(9);
+                    if(colliders[i].getTriggerAction() == nullptr)
+                    {
+                        c->setWireColor(sf::Color::Cyan);
+                        c->setFillColor(sf::Color::Cyan);
+                    }
+                    else
+                    {
+                        c->setWireColor(sf::Color::Green);
+                        c->setFillColor(sf::Color::Green);
+                    }
+                    c->setPointCount(4);
+                    c->setPoint(0, colliders[i].getPosition());
+
+                    c->setPoint(1, sf::Vector2f(colliders[i].getPosition().x
+                                                + colliders[i].getDimension().x,
+                                                colliders[i].getPosition().y));
+
+                    c->setPoint(2, colliders[i].getPosition() + colliders[i]
+                            .getDimension());
+
+                    c->setPoint(3, sf::Vector2f(colliders[i].getPosition().x,
+                                                colliders[i].getPosition().y
+                                                + colliders[i].getDimension().y));
+
+                    m_shapes.push_back(c);
                 }
-                else
-                {
-                    c->setWireColor(sf::Color::Green);
-                    c->setFillColor(sf::Color::Green);
-                }
-                c->setPointCount(4);
-                c->setPoint(0, colliders[i].getPosition());
-
-                c->setPoint(1, sf::Vector2f(colliders[i].getPosition().x
-                                            + colliders[i].getDimension().x,
-                                            colliders[i].getPosition().y));
-
-                c->setPoint(2, colliders[i].getPosition() + colliders[i]
-                        .getDimension());
-
-                c->setPoint(3, sf::Vector2f(colliders[i].getPosition().x,
-                                            colliders[i].getPosition().y
-                                            + colliders[i].getDimension().y));
-
-                m_shapes.push_back(c);
             }
             for (unsigned int i = 0; i < rigidBodies.size(); ++i)
             {
-                if (rigidBodies[i].isFree() || !rigidBodies[i].isReady())
+                if (rigidBodies[i].isFree() || !rigidBodies[i].isReady()
+                                               || rigidBodies[i].isEnabled())
                     continue;
 
                 ConvexShape *c = m_resourceManager->getConvexShape();
@@ -164,7 +169,8 @@ void DrawPhysics::draw(sf::RenderWindow * window)
         {
             unsigned int j = 0;
             for (unsigned int i = 0; i < colliders.size(); ++i) {
-                if (colliders[i].isFree() || !colliders[i].isReady())
+                if (colliders[i].isFree() || !colliders[i].isReady()
+                        || colliders[i].isEnabled())
                     continue;
 
                 ConvexShape* c = m_shapes[j];
@@ -184,7 +190,8 @@ void DrawPhysics::draw(sf::RenderWindow * window)
             }
             for (unsigned int i = 0; i < rigidBodies.size(); ++i)
             {
-                if (rigidBodies[i].isFree() || !rigidBodies[i].isReady())
+                if (rigidBodies[i].isFree() || !rigidBodies[i].isReady()
+                        || rigidBodies[i].isEnabled())
                     continue;
                 ConvexShape* c = m_shapes[j];
 

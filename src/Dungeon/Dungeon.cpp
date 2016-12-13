@@ -19,7 +19,7 @@
     }
 }
 
-void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
+void Dungeon::init(std::vector< BlockComponent * > const& blocks,
     DungeonTheme * theme)
 {
     // Initializing values to default
@@ -38,15 +38,16 @@ void Dungeon::init(std::vector< BlockAttributes * > const& blocks,
 
         // Buffering variables
         Block * _block = m_blocks.back();
-        BlockAttributes * _attribute = blocks[index];
+        BlockAttributes const& _attribute = blocks[index]->getBlockAttribute();
 
         // Initializing the block
         _block->init(
-                _attribute->getName(),
-                _attribute->getWidth(),
-                _attribute->getHeight(),
-                _attribute->getSpriteSize(),
-                _attribute->getSpritesData()
+                _attribute.getName(),
+                _attribute.getWidth(),
+                _attribute.getHeight(),
+                _attribute.getSpriteSize(),
+                _attribute.getSpritesData(),
+                blocks[index]->getPhysicAttribute().getColliders()
         );
 
         // Hide the block
@@ -71,12 +72,14 @@ bool Dungeon::nextBlock()
     // There is a next block
     // Hiding the current block
     m_blocks[m_currentBlock]->hide();
+    m_blocks[m_currentBlock]->clearPhysic();
 
     // Incrementing the current block
     m_currentBlock++;
 
     // Showing the next one
     m_blocks[m_currentBlock]->show();
+    m_blocks[m_currentBlock]->loadPhysic();
 
     return true;
 }
@@ -93,12 +96,14 @@ bool Dungeon::previousBlock()
     // There is a next block
     // Hiding the current block
     m_blocks[m_currentBlock]->hide();
+    m_blocks[m_currentBlock]->clearPhysic();
 
     // Decrementing the current block
     m_currentBlock--;
 
     // Showing the previous one
     m_blocks[m_currentBlock]->show();
+    m_blocks[m_currentBlock]->loadPhysic();
 
     return true;
 }

@@ -40,7 +40,8 @@ public:
      *          attribute
      */
     void init(std::string const& name, uint32_t width, uint32_t height,
-              uint32_t spriteSize, std::vector < LayerData > const& layerData);
+              uint32_t spriteSize, std::vector < LayerData > const& layerData,
+              std::vector < Collider > const& colliderData);
 
     /*!
      * \brief   Hide the blocks
@@ -51,6 +52,16 @@ public:
      * \brief   Show the blocks
      */
     void show();
+
+    /*!
+     * \brief   Load the physics
+     */
+    void loadPhysic();
+
+    /*!
+     * \brief   Unload the physics
+     */
+    void clearPhysic();
 
 private:
 

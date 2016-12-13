@@ -34,7 +34,8 @@ void Block::init(
     uint32_t width,
     uint32_t height,
     uint32_t spriteSize,
-    std::vector< LayerData > const& layerData)
+    std::vector< LayerData > const& layerData,
+    std::vector< Collider  > const& colliderData)
 {
     // Getting meta info
     m_blockName = name;
@@ -54,6 +55,23 @@ void Block::init(
         // Extracting raw data from the layers
         std::vector <char > const& _data = _layer->getLayerData();
         getRawData(_data);
+    }
+
+    // Create all collider
+    for(uint32_t index = 0; index < colliderData.size(); ++index)
+    {
+        Collider* _collider = m_resourceManager->getCollider();
+        _collider->init(colliderData[index].getPosition()
+                                .x/colliderData[index].getSize(),
+                        colliderData[index].getPosition()
+                                .y/colliderData[index].getSize(),
+                        colliderData[index].getDimension()
+                                .x/colliderData[index].getSize(),
+                        colliderData[index].getDimension()
+                                .y/colliderData[index].getSize(),
+                        colliderData[index].getSize());
+        _collider->disable();
+
     }
 }
 
@@ -162,6 +180,16 @@ void Block::hide()
 void Block::show()
 {
     setVisible(true);
+}
+
+void Block::loadPhysic()
+{
+
+}
+
+void Block::clearPhysic()
+{
+
 }
 
 void Block::setVisible(bool visible)

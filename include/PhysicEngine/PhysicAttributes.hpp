@@ -17,6 +17,8 @@ public:
     PhysicAttributes(std::vector<Collider> const&colliders);
 
     PhysicAttributes();
+
+    const std::vector<Collider> & getColliders()const;
 };
 
 

@@ -26,7 +26,7 @@ void GameEngine::init()
     m_resourceLoader.load(&m_resourceManager);
 
     // Initializing other engine
-    m_physicEngine.init(&m_resourceManager, 50, 20, 20, 9.81);
+    m_physicEngine.init(&m_resourceManager, 500, 200, 200, 9.81);
     // m_soundEngine.init();
 
     // Initializing the graphic engine

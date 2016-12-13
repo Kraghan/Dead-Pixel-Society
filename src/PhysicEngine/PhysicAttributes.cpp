@@ -14,3 +14,7 @@ PhysicAttributes::PhysicAttributes(std::vector<Collider> const&colliders)
     m_colliders = colliders;
 }
 
+const std::vector<Collider> & PhysicAttributes::getColliders()const {
+    return m_colliders;
+}
+

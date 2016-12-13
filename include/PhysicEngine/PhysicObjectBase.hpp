@@ -12,29 +12,35 @@ class PhysicObjectBase {
 private:
     sf::FloatRect m_hitBox;
     unsigned int m_size;
-    bool m_isFree, m_isReady;
+    bool m_isFree, m_isReady, m_isEnabled;
     unsigned int m_id;
 public:
     PhysicObjectBase();
 
-    void init(int x, int y, unsigned int
-        width, unsigned int height, unsigned int size);
+    void init(float x, float y, float width, float height, unsigned
+                int size);
 
     bool isFree();
 
     bool isReady();
 
-    sf::Vector2f getPosition();
+    bool isEnabled();
 
-    sf::Vector2f getDimension();
+    sf::Vector2f getPosition()const;
+
+    sf::Vector2f getDimension()const;
 
     sf::FloatRect getHitBox();
 
-    unsigned int getSize();
+    unsigned int getSize()const;
 
     void setUsed();
 
     void setFree();
+
+    void enable();
+
+    void disable();
 
     unsigned int getId();
 

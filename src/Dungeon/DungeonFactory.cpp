@@ -80,15 +80,14 @@ DungeonTheme * DungeonFactory::randomTheme()
 void DungeonFactory::generateStructure(DungeonTheme * theme)
 {
     // Temporary vector
-    std::vector < BlockAttributes * > _attributes;
+    std::vector < BlockComponent * > _attributes;
 
     // Getting a size of dungeon
     uint32_t _size = rand() % DungeonRule::MAX_ROOM + DungeonRule::MIN_ROOM;
 
     for(uint32_t count = 0; count < _size; ++count)
     {
-        _attributes.push_back((BlockAttributes *)
-                &m_resourceManager->getRandomBlockComponent()->getBlockAttribute());
+        _attributes.push_back(m_resourceManager->getRandomBlockComponent());
     }
 
     // Initializing the dungeon

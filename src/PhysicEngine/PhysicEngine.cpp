@@ -63,7 +63,8 @@ void PhysicEngine::update(double dt)
     for(unsigned int i = 0; i < m_rigidBody.size(); ++i)
     {
         // No processing if rigidBody not used or not ready
-        if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady())
+        if(m_rigidBody[i].isFree() || !m_rigidBody[i].isReady() ||
+                !m_rigidBody[i].isEnabled())
             continue;
 
         if(m_rigidBody[i].isFalling() || m_rigidBody[i].isJumping())
@@ -305,7 +306,8 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
     bool collisionUp = false, collisionDown = false;
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
-        if(m_colliders[i].isFree() || !m_colliders[i].isReady())
+        if(m_colliders[i].isFree() || !m_colliders[i].isReady()
+                                      || !m_colliders[i].isEnabled())
             continue;
 
         if(m_colliders[i].getId() == collider->getId())
@@ -387,7 +389,8 @@ std::vector<Collision> PhysicEngine::collideWith(Collider *collider, float
 
     for(unsigned int i = 0; i < m_colliders.size(); ++i)
     {
-        if(m_colliders[i].isFree() || !m_colliders[i].isReady())
+        if(m_colliders[i].isFree() || !m_colliders[i].isReady()
+           || !m_colliders[i].isEnabled())
             continue;
 
         if(m_colliders[i].getId() == collider->getId())
