@@ -3,6 +3,7 @@
 //
 
 #include <Tool/Patch.hpp>
+#include <Player/Player.hpp>
 #include "GraphicEngine/DrawPhysics.hpp"
 #include "PhysicEngine/PhysicEngine.hpp"
 bool DrawPhysics::m_active = false;
@@ -88,6 +89,8 @@ void DrawPhysics::draw(sf::RenderWindow * window)
         std::vector<Collider> colliders = m_physicEngine->getAllColliders();
         std::vector<RigidBody> rigidBodies = m_physicEngine->getAllRigidBodies();
 
+        Collider* playerCollider = Player::Instance()->getCollider();
+
         if (!m_drawn) {
             m_panel = m_resourceManager->getSprite();
             m_panel->setLayer(14);
@@ -95,6 +98,8 @@ void DrawPhysics::draw(sf::RenderWindow * window)
             m_panel->setTexture(*testTexture);
             m_panel->setPosition(PANEL_POS_X_PHYSIC,
                                  PANEL_POS_Y);
+
+            
 
             for (unsigned int i = 0; i < colliders.size(); ++i)
             {

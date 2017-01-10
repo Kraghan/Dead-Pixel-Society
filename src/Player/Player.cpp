@@ -30,6 +30,8 @@ void Player::init(ResourceManager * resourceManager)
                      PlayerConstant::DEFAULT_Y,1,1,
                      PlayerConstant::PLAYER_SPRITE_SIZE);
 
+    m_collider->enable();
+
     m_rigidbody = resourceManager->getRigidBody();
 
     m_rigidbody->init(PlayerConstant::DEFAULT_X,
@@ -38,6 +40,8 @@ void Player::init(ResourceManager * resourceManager)
                      PlayerConstant::PLAYER_MASS,
                      PlayerConstant::PLAYER_ACCELARATION,
                      PlayerConstant::MAX_VELOCITY_X);
+
+    m_rigidbody->enable();
 
     resourceManager->bindColliderToRigidBody(Player::Instance()->getCollider(),
                                              Player::Instance()->getRigidbody());

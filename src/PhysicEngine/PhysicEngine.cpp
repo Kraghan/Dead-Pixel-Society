@@ -2,6 +2,7 @@
 // Created by Kraghan on 18/10/2016.
 //
 
+#include <Player/Player.hpp>
 #include "PhysicEngine/PhysicEngine.hpp"
 
 PhysicEngine::PhysicEngine()

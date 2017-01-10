@@ -18,6 +18,7 @@ void PhysicObjectBase::init(float x, float y, float width, float height,
     m_hitBox = sf::FloatRect(x*size,y*size,width*size,height*size);
     m_size = size;
     m_isReady = true;
+    m_isEnabled = false;
 }
 
 bool PhysicObjectBase::isFree()
